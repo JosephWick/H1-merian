@@ -1,4 +1,4 @@
-import ../pynbody
+import '../pynbody'
 import pylab
 
 
