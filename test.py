@@ -1,7 +1,7 @@
 import sys
 import builtins
 
-sys.path.insert(0, '/home/software/pynbody/pynbody/')
+sys.path.insert(0, '/home/jw1624/pynbody/pynbody/')
 import pynbody
 
 
