@@ -1,6 +1,6 @@
 import sys
 #sys.path.insert(0, '/home/software/pynbody/')
-#import pynbody
+import pynbody
 #import pylab
 import numpy as np
 
