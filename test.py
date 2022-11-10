@@ -26,3 +26,15 @@ pynbody.plot.image(h1.g, width=30, cmap='Blues', filename='figures/f1.png')
 # side on
 pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
 pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/f2.png')
+
+# back to face
+s.rotate_x(90)
+
+# star profile
+ps = pynbody.analysis.profile.Profile(h1.s, min=0.01, max=50, type='log')
+pylab.clf()
+pylab.plot(ps['rbins'], ps['density'])
+pylab.seminology()
+pylab.xlabel('$R$ [kpc]')
+pylab.ylabel('$v_{circ}$ [km/s]')
+pylab.legend()
