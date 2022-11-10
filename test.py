@@ -1,5 +1,4 @@
-import '../pynbody'
-import pylab
+import sys
 
 
 dpath = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/'
