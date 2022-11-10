@@ -21,4 +21,8 @@ s['pos'] -= cen_pot
 
 # a first image
 s.physical_units()
-pynbody.plot.image(h1.g, width=250, cmap='Blues', filename='figures/f1.png')
+pynbody.plot.image(h1.g, width=80, cmap='Blues', filename='figures/f1.png')
+
+# side on
+pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
+pynbody.plot.image(h1.g, width = 80, cmap='Blues', filename='figures/f2.png')
