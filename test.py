@@ -9,3 +9,9 @@ f = 'r597.romulus25.3072g1HsbBH.004096'
 
 s = pynbody.load(dpath+f)
 print('loaded')
+
+h = s.halos()
+h1 = h[1]
+
+print('ngas = %e, ndark = %e, nstar = %e\n'%(len(h1.gas),len(h1.dark),len(h1.star)))
+ngas = 7.906000e+04, ndark = 1.610620e+05, nstar = 2.621780e+05
