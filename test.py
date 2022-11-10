@@ -21,4 +21,4 @@ s['pos'] -= cen_pot
 
 # a first image
 s.physical_units()
-pynbody.plot.image(h1.g, width=50, cmap='Blues', filename='figures/f1.png')
+pynbody.plot.image(h1.g, width=250, cmap='Blues', filename='figures/f1.png')
