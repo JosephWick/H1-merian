@@ -35,6 +35,18 @@ ps = pynbody.analysis.profile.Profile(h1.s, min=0.01, max=50, type='log')
 pylab.clf()
 pylab.plot(ps['rbins'], ps['density'])
 pylab.semilogy()
+pylab.title('Stellar Density')
 pylab.xlabel('$R$ [kpc]')
 pylab.ylabel('$\Sigma$ [M$\odot$kpc$^2$]')
 pylab.savefig('figures/f3.png')
+
+pylab.figure()
+pd = pynbody.analysis.profile.Profile(h1.d, min=0.1, max=50, type='log')
+pg = pynbody.analysis.profile.Proflie(h1.g, min=0.1, max=50, type='log')
+p  = pynbody.analysis.profile.Profile(h1,   min=0.1, max=50, type='log')
+for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
+    pylab.plot(prof['rbins'], prof['v_circ'], label=name)
+
+pylab.xlabel('$R$ [kpc]')
+pylab.ylabel('$v_{circ}$ [km/s]')
+pylab.legend()
