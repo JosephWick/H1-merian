@@ -62,6 +62,6 @@ for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
 
 pylab.title('Density')
 pylab.xlabel('$R$ [kpc]')
-pylab.ylabel('$\rho$ [M$_{\odot}$ kpc$^{-3}$')
+pylab.ylabel('density [M$_{\odot}$ kpc$^{-3}$')
 pylab.legend()
 pylab.savefig('figures/f5.png')
