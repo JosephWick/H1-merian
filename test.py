@@ -42,7 +42,7 @@ pylab.savefig('figures/f3.png')
 
 pylab.figure()
 pd = pynbody.analysis.profile.Profile(h1.d, min=0.1, max=50, type='log')
-pg = pynbody.analysis.profile.Proflie(h1.g, min=0.1, max=50, type='log')
+pg = pynbody.analysis.profile.Profile(h1.g, min=0.1, max=50, type='log')
 p  = pynbody.analysis.profile.Profile(h1,   min=0.1, max=50, type='log')
 for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
     pylab.plot(prof['rbins'], prof['v_circ'], label=name)
