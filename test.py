@@ -50,4 +50,5 @@ for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
 pylab.xlabel('$R$ [kpc]')
 pylab.ylabel('$v_{circ}$ [km/s]')
 pylab.legend()
+pylab.title('Rotations')
 pylab.savefig('figures/f4.png')
