@@ -40,10 +40,12 @@ pylab.xlabel('$R$ [kpc]')
 pylab.ylabel('$\Sigma$ [M$\odot$kpc$^2$]')
 pylab.savefig('figures/f3.png')
 
+# rotatation curve
 pylab.figure()
 pd = pynbody.analysis.profile.Profile(h1.d, min=0.1, max=50, type='log')
 pg = pynbody.analysis.profile.Profile(h1.g, min=0.1, max=50, type='log')
 p  = pynbody.analysis.profile.Profile(h1,   min=0.1, max=50, type='log')
+
 for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
     pylab.plot(prof['rbins'], prof['v_circ'], label=name)
 
@@ -52,3 +54,14 @@ pylab.ylabel('$v_{circ}$ [km/s]')
 pylab.legend()
 pylab.title('Rotations')
 pylab.savefig('figures/f4.png')
+
+# density profiles
+pylab.figure()
+for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
+    pylab.plot(prof['rbins'], prof['density'], label=name)
+
+pylab.title('Density')
+pylab.xlabel('$R$ [kpc]')
+pylab.ylabel('$\rho$ [M$_{\odot}$ kpc$^{-3}$')
+pylab.legend()
+pylab.savefig('figures/f5.png')
