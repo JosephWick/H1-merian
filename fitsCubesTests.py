@@ -18,3 +18,8 @@ from astroquery.esasky import ESASky
 from astroquery.utils import TableList
 from astropy.wcs import WCS
 from reproject import reproject_interp
+
+# let's load some data
+dir = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/'
+f = 'r597.alfalfa_hi.x.fits'
+cube = SpectralCube.read(dir+f)
