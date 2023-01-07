@@ -1,9 +1,12 @@
 # fitsCubesTests.py
 # Joseph Wick
 
-import numpy as np
-import astropy.units as u
+import sys
+sys.path.insert(0, '/home/jw1624/miniconda3/pkgs')
 
+import numpy as np
+
+import astropy.units as u
 from astropy.io import fits
 from astropy.utils import data
 
