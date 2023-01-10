@@ -9,6 +9,7 @@ import numpy as np
 import astropy.units as u
 from astropy.io import fits
 from astropy.utils import data
+from astropy.wcs import WCS
 
 import matplotlib.pyplot as plt
 
@@ -25,5 +26,7 @@ f = 'r597.alfalfa_hi.x.fits'
 
 hi_data = fits.open(dir+f)
 hi_data[0].header['CUNIT3'] = 'km/s'
-print(hi_data[0].header['CUNIT3'])
+
+wcs = WCS(hi_data[0].header)
+
 cube = SpectralCube.read(hi_data)
