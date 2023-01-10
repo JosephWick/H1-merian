@@ -24,5 +24,6 @@ dir = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/'
 f = 'r597.alfalfa_hi.x.fits'
 
 hi_data = fits.open(dir+f)
+hi_data[0].header['CUNIT3'] = 'km/s'
 print(hi_data[0].header['CUNIT3'])
 cube = SpectralCube.read(hi_data)
