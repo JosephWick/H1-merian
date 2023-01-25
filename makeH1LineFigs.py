@@ -6,12 +6,13 @@ import matplotlib.pyplot as plt
 # data
 datadir = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH'
 datafiles = glob(datadir+'/r597.alfalfa_hi.*.fits')
+datafiles.append('/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/r597.alfalfa_hi.edge.fits')
 
 print(datafiles)
 
 for fname in datafiles:
     data = fits.open(fname)[0].data
-    ftitle = fname[-17:-4]
+    ftitle = fname[len(datadir)+1:-4]
 
     # define square to integrate over
     start = 0
