@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # data
 datadir = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH'
-datafiles = glob.glob(datadir+'/r597.alfalfa_hi.*.fits')
+datafiles = glob(datadir+'/r597.alfalfa_hi.*.fits')
 
 for fname in datafiles:
     data = fits.open(fname)[0].data
