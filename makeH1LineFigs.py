@@ -29,7 +29,7 @@ for fname in datafiles:
 
     # --- MAKE FIGURE ---
     plt.figure(figsize=(12,8))
-    plt.plot(tot, linewidth=4)
+    plt.plot(I, linewidth=4)
 
     # prettify
     plt.xlabel('velocity [km/s]')
