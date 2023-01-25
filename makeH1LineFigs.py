@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 # data
 datadir = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH'
 datafiles = glob(datadir+'/r597.alfalfa_hi.*.fits')
-datafiles.append('/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/r597.alfalfa_hi.edge.fits')
 
 print(datafiles)
 
