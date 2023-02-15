@@ -30,21 +30,25 @@ pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/f2.png')
 # back to face
 s.rotate_x(90)
 
+# profile range
+pmin = 0.01
+pmax = 100
+
 # star profile
-ps = pynbody.analysis.profile.Profile(h1.s, min=0.01, max=50, type='log')
+ps = pynbody.analysis.profile.Profile(h1.s, min=pmin, max=pmax, type='log')
 pylab.clf()
 pylab.plot(ps['rbins'], ps['density'])
 pylab.semilogy()
 pylab.title('Stellar Density')
 pylab.xlabel('$R$ [kpc]')
 pylab.ylabel('$\Sigma$ [M$\odot$kpc$^2$]')
-pylab.savefig('figures/f3.png')
+pylab.savefig('figures/basic_stellarDensity.png')
 
 # rotatation curve
 pylab.figure()
-pd = pynbody.analysis.profile.Profile(h1.d, min=0.1, max=50, type='log')
-pg = pynbody.analysis.profile.Profile(h1.g, min=0.1, max=50, type='log')
-p  = pynbody.analysis.profile.Profile(h1,   min=0.1, max=50, type='log')
+pd = pynbody.analysis.profile.Profile(h1.d, min=pmin, max=pmax, type='log')
+pg = pynbody.analysis.profile.Profile(h1.g, min=pmin, max=pmax, type='log')
+p  = pynbody.analysis.profile.Profile(h1,   min=pmin, max=pmax, type='log')
 
 for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
     pylab.plot(prof['rbins'], prof['v_circ'], label=name)
