@@ -40,7 +40,7 @@ for i,f in enumerate(files):
 
     # profile range
     pmin = 0.01
-    pmax = 100
+    pmax = pynbody.analysis.halo.virial_radius(h1)
 
     # rotation curve
     plt.figure()
@@ -56,6 +56,7 @@ for i,f in enumerate(files):
     plt.ylabel('$v_{circ}$ [km/s]')
     plt.legend()
     plt.title('Rotations')
+    plt.tight_layout()
     plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_rotation.png')
 
     # density profiles
@@ -67,4 +68,5 @@ for i,f in enumerate(files):
     plt.xlabel('$R$ [kpc]')
     plt.ylabel('density [M$_{\odot}$ kpc$^{-3}$]')
     plt.legend()
+    plt.tight_layout()
     plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_density.png')
