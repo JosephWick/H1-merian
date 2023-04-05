@@ -46,6 +46,7 @@ for i,f in enumerate(files):
     plt.figure()
     pd = pynbody.analysis.profile.Profile(h1.d, rmin=pmin, rmax=pmax, type='lin')
     pg = pynbody.analysis.profile.Profile(h1.g, rmin=pmin, rmax=pmax, type='lin')
+    ps = pynbody.analysis.profile.Profile(h1.s, rmin=pmin, rmax=pmax, type='lin')
     p  = pynbody.analysis.profile.Profile(h1,   rmin=pmin, rmax=pmax, type='lin')
 
     for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
