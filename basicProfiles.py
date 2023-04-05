@@ -65,6 +65,8 @@ for i,f in enumerate(files):
     plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_rotation.png')
 
     # density profiles
+    pmax = pynbody.analysis.halo.virial_radius(h1) / 4
+
     plt.figure()
     for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
         plt.plot(prof['rbins'], prof['density'], label=name)
