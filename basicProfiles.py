@@ -1,71 +1,68 @@
 import pynbody
-import pylab
+import matplotlib.pyplot as plt
 import numpy as np
 
 from matplotlib import pyplot as plt
 
-dpath = '/data/REPOSITORY/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/'
-f = 'r597.romulus25.3072g1HsbBH.004096'
+# note these are all CDM
+files = ['/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r431.romulus25.3072g1HsbBH/r431.romulus25.3072g1HsbBH.004096/r431.romulus25.3072g1HsbBH.004096',
+         '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r468.romulus25.3072g1HsbBH/r468.romulus25.3072g1HsbBH.004096/r468.romulus25.3072g1HsbBH.004096',
+         '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r492.romulus25.3072g1HsbBH/r492.romulus25.3072g1HsbBH.004096/r492.romulus25.3072g1HsbBH.004096',
+         '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r502.romulus25.3072g1HsbBH/r502.romulus25.3072g1HsbBH.004096/r502.romulus25.3072g1HsbBH.004096',
+         '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r569.romulus25.3072g1HsbBH/r569.romulus25.3072g1HsbBH.004096/r569.romulus25.3072g1HsbBH.004096']
+haloIDs = [431, 468, 492, 502, 569]
 
-s = pynbody.load(dpath+f)
+for i,f in enumerate(files):
 
-# get first halo
-h = s.halos()
-h1 = h[1]
+    s = pynbody.load(f)
 
-#print('ngas = %e, ndark = %e, nstar = %e\n'%(len(h1.gas),len(h1.dark),len(h1.star)))
+    # get first halo
+    h = s.halos()
+    h1 = h[1]
 
-# centering based on 1st halo
-cen_pot = pynbody.analysis.halo.center(h1, mode='pot', retcen=True)
-s['pos'] -= cen_pot
+    #print('ngas = %e, ndark = %e, nstar = %e\n'%(len(h1.gas),len(h1.dark),len(h1.star)))
 
-# a first image
-s.physical_units()
-pynbody.plot.image(h1.g, width=30, cmap='Blues', filename='figures/f1.png')
+    # centering based on 1st halo
+    cen_pot = pynbody.analysis.halo.center(h1, mode='pot', retcen=True)
+    s['pos'] -= cen_pot
 
-# side on
-pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
-pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/f2.png')
+    # a first image
+    s.physical_units()
+    pynbody.plot.image(h1.g, width=30, cmap='Blues', filename='figures/r'+str(haloIDs[i])+'CDM_img1.png')
 
-# back to face
-s.rotate_x(90)
+    # side on
+    pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
+    pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/r'+str(haloIDs[i])+'CDM_img2.png')
 
-# profile range
-pmin = 0.01
-pmax = 100
+    # back to face
+    s.rotate_x(90)
 
-# star profile
-ps = pynbody.analysis.profile.Profile(h1.s, min=pmin, max=pmax, type='log')
-pylab.clf()
-pylab.plot(ps['rbins'], ps['density'])
-pylab.semilogy()
-pylab.title('Stellar Density')
-pylab.xlabel('$R$ [kpc]')
-pylab.ylabel('$\Sigma$ [M$\odot$kpc$^2$]')
-pylab.savefig('figures/basic_stellarDensity.png')
+    # profile range
+    pmin = 0.01
+    pmax = 100
 
-# rotatation curve
-pylab.figure()
-pd = pynbody.analysis.profile.Profile(h1.d, min=pmin, max=pmax, type='log')
-pg = pynbody.analysis.profile.Profile(h1.g, min=pmin, max=pmax, type='log')
-p  = pynbody.analysis.profile.Profile(h1,   min=pmin, max=pmax, type='log')
+    # rotation curve
+    plt.figure()
+    pd = pynbody.analysis.profile.Profile(h1.d, rmin=pmin, rmax=pmax, type='lin')
+    pg = pynbody.analysis.profile.Profile(h1.g, rmin=pmin, rmax=pmax, type='lin')
+    p  = pynbody.analysis.profile.Profile(h1,   rmin=pmin, rmax=pmax, type='lin')
 
-for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
-    pylab.plot(prof['rbins'], prof['v_circ'], label=name)
+    for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
+        plt.plot(prof['rbins'], prof['v_circ'], label=name)
 
-pylab.xlabel('$R$ [kpc]')
-pylab.ylabel('$v_{circ}$ [km/s]')
-pylab.legend()
-pylab.title('Rotations')
-pylab.savefig('figures/f4.png')
+    plt.xlabel('$R$ [kpc]')
+    plt.ylabel('$v_{circ}$ [km/s]')
+    plt.legend()
+    plt.title('Rotations')
+    plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_rotation.png')
 
-# density profiles
-pylab.figure()
-for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
-    pylab.plot(prof['rbins'], prof['density'], label=name)
+    # density profiles
+    plt.figure()
+    for prof, name in zip([p,pd,ps,pg], ['total', 'dm', 'stars', 'gas']):
+        plt.plot(prof['rbins'], prof['density'], label=name)
 
-pylab.title('Density')
-pylab.xlabel('$R$ [kpc]')
-pylab.ylabel('density [M$_{\odot}$ kpc$^{-3}$]')
-pylab.legend()
-pylab.savefig('figures/f5.png')
+    plt.title('Density')
+    plt.xlabel('$R$ [kpc]')
+    plt.ylabel('density [M$_{\odot}$ kpc$^{-3}$]')
+    plt.legend()
+    plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_density.png')
