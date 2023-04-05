@@ -13,7 +13,7 @@ files = ['/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r431.romulus25.3072g1HsbB
 haloIDs = [431, 468, 492, 502, 569]
 
 for i,f in enumerate(files):
-    print('Working on halo'+str(haloIDs[i]))
+    print('Working on halo '+str(haloIDs[i]))
 
     s = pynbody.load(f)
 
