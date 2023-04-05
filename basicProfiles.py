@@ -40,7 +40,8 @@ for i,f in enumerate(files):
 
     # profile range
     pmin = 0.01
-    pmax = pynbody.analysis.halo.virial_radius(h1) / 4
+    #pmax = pynbody.analysis.halo.virial_radius(h1) / 4
+    pmax = 4
 
     # rotation curve
     plt.figure()
