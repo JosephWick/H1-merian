@@ -29,7 +29,7 @@ for i,f in enumerate(files):
 
     # a first image
     s.physical_units()
-    pynbody.plot.image(h1.g, width=30, cmap='Blues', filename='figures/r'+str(haloIDs[i])+'CDM_img1.png')
+    pynbody.plot.image(h1.g, qty='rho', units='g cm^-3', width=50, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img1.png')
 
     # side on
     pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
