@@ -12,7 +12,7 @@ files = ['/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r431.romulus25.3072g1HsbB
          '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r569.romulus25.3072g1HsbBH/r569.romulus25.3072g1HsbBH.004096/r569.romulus25.3072g1HsbBH.004096']
 haloIDs = [431, 468, 492, 502, 569]
 
-for i,f in enumerate(files):
+for i,f in enumerate([files[0]]):
     print('Working on halo '+str(haloIDs[i]))
 
     s = pynbody.load(f)
@@ -29,11 +29,11 @@ for i,f in enumerate(files):
 
     # a first image
     s.physical_units()
-    pynbody.plot.image(h1.g, qty='rho', units='g cm^-3', width=50, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img1.png')
+    pynbody.plot.image(h1.s, qty='rho', units='g cm^-3', width=20, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img1.png')
 
     # side on
     pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
-    pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/r'+str(haloIDs[i])+'CDM_img2.png')
+    pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img2.png')
 
     # back to face
     s.rotate_x(90)
@@ -62,7 +62,7 @@ for i,f in enumerate(files):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_rotation.png')
+    #plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_rotation.png')
 
     # density profiles
     pmax = pynbody.analysis.halo.virial_radius(h1) / 2
@@ -80,4 +80,4 @@ for i,f in enumerate(files):
     plt.legend()
 
     plt.tight_layout()
-    plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_density.png')
+    #plt.savefig('figures/r'+str(haloIDs[i])+'_CDM_density.png')
