@@ -25,6 +25,7 @@ for i,f in enumerate([files[0]]):
 
     # centering based on 1st halo
     cen_pot = pynbody.analysis.halo.center(h1, mode='pot', retcen=True)
+    pynbody.analysis.angmom.faceon(h1)
     s['pos'] -= cen_pot
 
     # a first image
@@ -32,8 +33,8 @@ for i,f in enumerate([files[0]]):
     pynbody.plot.image(h1.s, qty='rho', units='g cm^-3', width=100, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img1.png')
 
     # side on
-    #pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
-    #pynbody.plot.image(h1.g, width = 30, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img2.png')
+    pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
+    #pynbody.plot.image(h1.g, width = 200, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img2.png')
 
     # back to face
     s.rotate_x(90)
