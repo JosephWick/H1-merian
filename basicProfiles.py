@@ -1,6 +1,7 @@
 import pynbody
 import matplotlib.pyplot as plt
 import numpy as np
+import pynbody.plot.sph as sph
 
 from matplotlib import pyplot as plt
 
@@ -24,13 +25,13 @@ for i,f in enumerate([files[0]]):
     #print('ngas = %e, ndark = %e, nstar = %e\n'%(len(h1.gas),len(h1.dark),len(h1.star)))
 
     # centering based on 1st halo
-    cen_pot = pynbody.analysis.halo.center(h1, mode='pot', retcen=True)
+    #cen_pot = pynbody.analysis.halo.center(h1, mode='pot', retcen=True)
     pynbody.analysis.angmom.faceon(h1)
-    s['pos'] -= cen_pot
+    #s['pos'] -= cen_pot
 
     # a first image
     s.physical_units()
-    pynbody.plot.image(h1.s, qty='rho', units='g cm^-3', width=100, cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img1.png')
+    sph.image(h1.g, qty='rho', units='g cm^-3', cmap='Blues', filename='figures/images/r'+str(haloIDs[i])+'CDM_img1.png')
 
     # side on
     pynbody.analysis.angmom.sideon(h1, cen=(0,0,0))
