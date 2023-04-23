@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 import glob
 
 def makeHIprofile(hID, withSIDM=False):
+    f=open('../h1lines/widths.txt', 'w')
+    f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
+
     dpath = '/home/jw1624/H1-merian/h1lines/'
 
     # style params
@@ -53,6 +56,7 @@ def makeHIprofile(hID, withSIDM=False):
 
         # do line widths of cmd
         vmax = max(cdmy)
+        wids = [-1,-1,-1,-1,-1,-1]
         for j,p in enumerate(Ws):
             val = (p/100)*vmax
 
@@ -62,6 +66,7 @@ def makeHIprofile(hID, withSIDM=False):
             x2 = (cdmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
 
             width = x2-x1
+            wids[j] = width
             #print('CDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
             axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw)
@@ -84,16 +89,22 @@ def makeHIprofile(hID, withSIDM=False):
                 x2 = (sidmx[idxs_mass[1]]+sidmx[idxs_mass[1]+1])/2
 
                 width = x2-x1
+                wids[j+3] = width
                 #print('SIDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
                 axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw)
                 axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
+
+        for w in range(len(wids)-1):
+            f.write(str(w)+'\t')
+        f.write(str(wids[-1])+'\n')
 
     plt.tight_layout()
     if withSIDM:
         plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'_2.png')
     else:
         plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'.png')
+
 # end makeHIprofile
 
 # get haloIDs
