@@ -97,7 +97,7 @@ def makeHIprofile(hID, withSIDM=False):
                 axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
 
         for w in range(len(wids)-1):
-            f.write(str(w)+'\t')
+            f.write(str(wids[w])+'\t')
         f.write(str(wids[-1])+'\n')
 
     f.close()
@@ -114,11 +114,10 @@ cdmHalos, sidmHalos = util.getGalaxies()
 
 print('Making HI Profiles')
 # make figs
+f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'w')
+f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
+f.close()
 for g in cdmHalos:
-    f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'w')
-    f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
-    f.close()
-
     print(' halo '+str(g)+'...', end='')
     if g in sidmHalos:
         makeHIprofile(g, withSIDM=True)
