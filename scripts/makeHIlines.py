@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import glob
 
 def makeHIprofile(hID, withSIDM=False):
-    f=open('../h1lines/widths.txt', 'a')
+    f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'a')
 
     dpath = '/home/jw1624/H1-merian/h1lines/'
 
