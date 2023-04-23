@@ -103,7 +103,8 @@ def makeHIprofile(hID, withSIDM=False):
     f.close()
     plt.tight_layout()
     if withSIDM:
-        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'_2.png')
+        plt.legend(['CDM','SIDM'])
+        axs[0].savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'_2.png')
     else:
         plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'.png')
 
