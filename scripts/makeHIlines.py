@@ -24,6 +24,7 @@ def makeHIprofile(hID, withSIDM=False):
     cSIDMw = 'r'
 
     orientations = ['x','y','z']
+    markers=['o','^','x']
 
     # widths to measure
     Ws = [50,20,10]
@@ -69,7 +70,7 @@ def makeHIprofile(hID, withSIDM=False):
             print('CDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
             axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw)
-            axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, c=cCDMw)
+            axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cCDMw)
 
         # do line widths of sidm
         if withSIDM:
