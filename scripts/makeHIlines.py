@@ -9,8 +9,7 @@ import matplotlib.pyplot as plt
 import glob
 
 def makeHIprofile(hID, withSIDM=False):
-    f=open('../h1lines/widths.txt', 'w')
-    f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
+    f=open('../h1lines/widths.txt', 'a')
 
     dpath = '/home/jw1624/H1-merian/h1lines/'
 
@@ -45,6 +44,8 @@ def makeHIprofile(hID, withSIDM=False):
     # plot
     plt.suptitle('HI Profile for Galaxy '+str(hID), fontsize=tsize)
     for i in range(len(fcdm)):
+        f.write(str(hID)+'_'+orientations[i]+'\t')
+
         cdmx = pd.read_csv(fcdm[i], sep='\s+', header=None)[0]
         cdmy = pd.read_csv(fcdm[i], sep='\s+', header=None)[1]
 
@@ -99,6 +100,7 @@ def makeHIprofile(hID, withSIDM=False):
             f.write(str(w)+'\t')
         f.write(str(wids[-1])+'\n')
 
+    f.close()
     plt.tight_layout()
     if withSIDM:
         plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'_2.png')
@@ -113,6 +115,10 @@ cdmHalos, sidmHalos = util.getGalaxies()
 print('Making HI Profiles')
 # make figs
 for g in cdmHalos:
+    f=open('../h1lines/widths.txt', 'w')
+    f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
+    f.close()
+
     print(' halo '+str(g)+'...', end='')
     if g in sidmHalos:
         makeHIprofile(g, withSIDM=True)
