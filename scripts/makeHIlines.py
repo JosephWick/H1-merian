@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../util/')
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
 import pandas as pd
