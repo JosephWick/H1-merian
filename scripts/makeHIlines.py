@@ -46,11 +46,7 @@ def makeHIprofile(hID, withSIDM=False):
         cdmx = pd.read_csv(fcdm[i], sep='\s+', header=None)[0]
         cdmy = pd.read_csv(fcdm[i], sep='\s+', header=None)[1]
 
-        sidmx = pd.read_csv(fsidm[i], sep='\s+', header=None)[0]
-        sidmy = pd.read_csv(fsidm[i], sep='\s+', header=None)[1]
-
         axs[i].plot(cdmx, cdmy, linewidth=lw+1, c=cCDM)
-        axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
 
         axs[i].set_title(orientations[i]+' Orientation')
         axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize)
@@ -74,6 +70,11 @@ def makeHIprofile(hID, withSIDM=False):
 
         # do line widths of sidm
         if withSIDM:
+            sidmx = pd.read_csv(fsidm[i], sep='\s+', header=None)[0]
+            sidmy = pd.read_csv(fsidm[i], sep='\s+', header=None)[1]
+
+            axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
+
             vmax = max(sidmy)
             for j,p in enumerate(Ws):
                 val = (p/100)*vmax
