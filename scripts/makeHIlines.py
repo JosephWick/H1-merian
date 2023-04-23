@@ -21,9 +21,9 @@ def makeHIprofile(hID, withSIDM=False):
     lwW = 2
 
     cCDM = 'firebrick'
-    cCDMw = 'b'
+    cCDMw = 'r'
     cSIDM = 'royalblue'
-    cSIDMw = 'r'
+    cSIDMw = 'b'
 
     orientations = ['x','y','z']
     markers=['o','^','x']
