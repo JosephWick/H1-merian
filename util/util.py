@@ -35,7 +35,7 @@ class util:
         returns halo ids foor present [CDM,SIDM] galaxies
         '''
 
-        df = pd.read_csv('../util/currentGals.tsv', sep='\t')
+        df = pd.read_csv('/home/jw1624/H1-merian/util/currentGals.tsv', sep='\t')
         cdm = df[df['CDM']==1]['HaloID'].to_numpy().flatten()
         sidm = df[df['SIDM']==1]['HaloID'].to_numpy().flatten()
 
