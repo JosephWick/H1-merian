@@ -11,7 +11,7 @@ import matplotlib.pylab as plt
 cdmHalos, sidmHalos = getGalaxies()
 
 # image function 
-def makeStarImage(hID, width=10, sidm=0):
+def makeStarImage(hID, width=15, sidm=0):
     fileadd = '.romulus25.3072g1HsbBH.004096'
     if sidm:
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
@@ -33,6 +33,8 @@ def makeStarImage(hID, width=10, sidm=0):
     tag = 'CDM'
     if sidm: tag = 'SIDM'
     plt.title('r'+str(hID) + ' '+tag, fontsize=20, fontfamily='serif')
+
+    plt.tight_layout()
 
     if sidm:
         plt.savefig('../figures/images/r'+str(hID)+'SIDMStarImg.png')
