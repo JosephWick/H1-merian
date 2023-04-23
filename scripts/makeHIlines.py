@@ -20,9 +20,9 @@ def makeHIprofile(hID, withSIDM=False):
     lw = 5
     lwW = 2
 
-    cCDM = 'tab:blue'
+    cCDM = 'firebrick'
     cCDMw = 'b'
-    cSIDM = 'tab:orange'
+    cSIDM = 'royalblue'
     cSIDMw = 'r'
 
     orientations = ['x','y','z']
