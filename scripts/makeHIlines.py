@@ -62,7 +62,7 @@ def makeHIprofile(hID, withSIDM=False):
             x2 = (cdmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
 
             width = x2-x1
-            print('CDM W'+str(p)+'_'+orientations[i]+': '+str(width))
+            #print('CDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
             axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw)
             axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cCDMw)
@@ -84,7 +84,7 @@ def makeHIprofile(hID, withSIDM=False):
                 x2 = (sidmx[idxs_mass[1]]+sidmx[idxs_mass[1]+1])/2
 
                 width = x2-x1
-                print('SIDM W'+str(p)+'_'+orientations[i]+': '+str(width))
+                #print('SIDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
                 axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw)
                 axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
