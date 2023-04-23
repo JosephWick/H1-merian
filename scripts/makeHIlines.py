@@ -70,7 +70,7 @@ def makeHIprofile(hID, withSIDM=False):
             wids[j] = width
             #print('CDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
-            axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw)
+            axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw, label='_nolegend_')
             axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cCDMw)
 
         # do line widths of sidm
@@ -93,7 +93,7 @@ def makeHIprofile(hID, withSIDM=False):
                 wids[j+3] = width
                 #print('SIDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
-                axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw)
+                axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw, label='_nolegend_')
                 axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
 
         for w in range(len(wids)-1):
