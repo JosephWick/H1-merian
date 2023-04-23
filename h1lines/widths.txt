@@ -1,0 +1,4 @@
+galaxy	w50_cdm	w20_cdm	w10_cdm	w50_sidm	w20_sidm	w10_sidm
+569_x	0	1	2	3	4	-1
+569_y	0	1	2	3	4	-1
+569_z	0	1	2	3	4	-1
