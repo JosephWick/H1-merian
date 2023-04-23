@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import glob
 
 def makeHIprofile(hID, withSIDM=False):
+    dpath = '/home/jw1624/H1-merian/h1lines/'
+
     # style params
     tsize = 24
     asize = 18
@@ -91,9 +93,7 @@ def makeHIprofile(hID, withSIDM=False):
         plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'_2.png')
     else:
         plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'.png')
-
-
-    #
+# end makeHIprofile
 
 # get haloIDs
 cdmHalos, sidmHalos = util.getGalaxies()

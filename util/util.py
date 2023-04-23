@@ -2,16 +2,16 @@
 # Joseph Wick
 # H1-merian
 #
-# utility functions for H1 merian 
-# 
+# utility functions for H1 merian
+#
 
-import numpy as np 
+import numpy as np
 import pandas as pd
 
 class util:
 
     # getfilepath()
-    # returns filepath for zoom of halo h 
+    # returns filepath for zoom of halo h
     @staticmethod
     def getfilepath(h):
         '''
