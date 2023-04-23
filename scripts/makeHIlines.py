@@ -30,8 +30,7 @@ def makeHIprofile(hID, withSIDM=False):
     Ws = [50,20,10]
 
     # fig setup
-    fig,axs = plt.subplots(1,3, figsize=(14,5))
-    plt.figure(facecolor='white')
+    fig,axs = plt.subplots(1,3, figsize=(14,5), facecolor='white')
 
     # get the data
     fcdm = glob.glob(dpath+'r'+str(hID)+'_cdm*')
