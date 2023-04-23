@@ -103,9 +103,9 @@ def makeHIprofile(hID, withSIDM=False):
     f.close()
     plt.tight_layout()
     if withSIDM:
-        plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'_2.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'_2.png')
     else:
-        plt.savefig('../figures/HIProfiles/HI_'+str(hID)+'.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'.png')
 
 # end makeHIprofile
 
@@ -115,7 +115,7 @@ cdmHalos, sidmHalos = util.getGalaxies()
 print('Making HI Profiles')
 # make figs
 for g in cdmHalos:
-    f=open('../h1lines/widths.txt', 'w')
+    f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'w')
     f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
     f.close()
 
