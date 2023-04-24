@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../util/')
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
 import pynbody
@@ -7,10 +7,10 @@ import pynbody.plot.sph as sph
 import matplotlib.pylab as plt
 
 
-# get current halos 
+# get current halos
 cdmHalos, sidmHalos = getGalaxies()
 
-# image function 
+# image function
 def makeStarImage(hID, width=15, sidm=0):
     fileadd = '.romulus25.3072g1HsbBH.004096'
     if sidm:
@@ -37,15 +37,13 @@ def makeStarImage(hID, width=15, sidm=0):
     plt.tight_layout()
 
     if sidm:
-        plt.savefig('../figures/images/r'+str(hID)+'SIDMStarImg.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg.png')
     else:
-        plt.savefig('../figures/images/r'+str(hID)+'CDMStarImg.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg.png')
 # end make StarImage
 
-# now actually make the image 
+# now actually make the image
 for cdmg in cdmHalos:
     makeStarImage(cdmg)
 for sidmg in sidmHalos:
     makeStarImage(sidmg)
-
-

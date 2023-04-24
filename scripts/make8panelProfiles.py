@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../util/')
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
 import tangos
@@ -140,9 +140,9 @@ def eightPanelProfiles(hID, withSIDM=False):
     fig.tight_layout()
 
     if withSIDM:
-        plt.savefig('../figures/DenRotProfiles/r'+str(hID)+'_8panel_2.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel_2.png')
     else:
-        plt.savefig('../figures/DenRotProfiles/r'+str(hID)+'_8panel.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel.png')
     # end
 
 # get haloIDs
