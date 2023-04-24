@@ -98,6 +98,16 @@ def eightPanelProfiles(hID, withSIDM=False):
     axs[1,2].set_title('Rotation of Stars', fontsize=16)
     axs[1,3].set_title('Rotation of All', fontsize=16)
 
+    # axis labels
+    for i in range(2):
+        for j in range(2):
+            axs[i,j].set_xlabel('radius [kpc]', fontsize=14)
+            axs[i,j].set_ylabel(r'density [$M_\odot$]', fontsize=14)
+    for i in range(2,4):
+        for j in range(2,4):
+            axs[i,j].set_xlabel('radius [kpc]', fontsize=14)
+            axs[i,j].set_ylabel(r'rotation velocity [km/s]', fontsize=14)
+
     if withSIDM:
         sidmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
 
@@ -133,18 +143,16 @@ def eightPanelProfiles(hID, withSIDM=False):
         plt.savefig('../figures/DenRotProfiles/r'+str(hID)+'_8panel_2.png')
     else:
         plt.savefig('../figures/DenRotProfiles/r'+str(hID)+'_8panel.png')
-    # end 
+    # end
 
 # get haloIDs
 cdmHalos, sidmHalos = util.getGalaxies()
 
 print('Making 8 Panel Profiles')
-# make figs 
+# make figs
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
     if g in sidmHalos:
         eightPanelProfiles(g, withSIDM=True)
     eightPanelProfiles(g)
     print('done')
-
-
