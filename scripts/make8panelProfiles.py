@@ -103,7 +103,7 @@ def eightPanelProfiles(hID, withSIDM=False):
         for j in range(2):
             axs[i,j].set_xlabel('radius [kpc]', fontsize=14)
             axs[i,j].set_ylabel(r'density [$M_\odot$]', fontsize=14)
-    for i in range(2,4):
+    for i in range(2):
         for j in range(2,4):
             axs[i,j].set_xlabel('radius [kpc]', fontsize=14)
             axs[i,j].set_ylabel(r'rotation velocity [km/s]', fontsize=14)
