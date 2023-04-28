@@ -146,7 +146,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         hAd = sAd.halos()[1]
 
         cen_pot = pynbody.analysis.halo.center(hAd, mode='pot', retcen=True)
-        sSIDM['pos'] -= cen_pot
+        sAd['pos'] -= cen_pot
 
         pdAd = pynbody.analysis.profile.Profile(hAd.d, rmin=pmin, rmax=pmax, type='lin')
         pgAd = pynbody.analysis.profile.Profile(hAd.g, rmin=pmin, rmax=pmax, type='lin')
