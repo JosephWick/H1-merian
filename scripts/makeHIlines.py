@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 import glob
 
-def makeHIprofile(hID, withSIDM=False):
+def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'a')
 
     dpath = '/home/jw1624/H1-merian/h1lines/'
@@ -44,8 +44,6 @@ def makeHIprofile(hID, withSIDM=False):
     # plot
     plt.suptitle('HI Profile for Galaxy '+str(hID), fontsize=tsize)
     for i in range(len(fcdm)):
-        f.write(str(hID)+'_'+orientations[i]+'\t')
-
         cdmx = pd.read_csv(fcdm[i], sep='\s+', header=None)[0]
         cdmy = pd.read_csv(fcdm[i], sep='\s+', header=None)[1]
 
@@ -96,9 +94,11 @@ def makeHIprofile(hID, withSIDM=False):
                 axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw, label='_nolegend_')
                 axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
 
-        for w in range(len(wids)-1):
-            f.write(str(wids[w])+'\t')
-        f.write(str(wids[-1])+'\n')
+        if doExport:
+            f.write(str(hID)+'_'+orientations[i]+'\t')
+            for w in range(len(wids)-1):
+                f.write(str(wids[w])+'\t')
+            f.write(str(wids[-1])+'\n')
 
     f.close()
     plt.tight_layout()
@@ -121,6 +121,8 @@ f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
     if g in sidmHalos:
-        makeHIprofile(g, withSIDM=True)
-    makeHIprofile(g)
+        makeHIprofile(g, withSIDM=True, doExport=True)
+        makeHIprofile(g, withSIDM=False,doExport=False)
+    else:
+        makeHIprofile(g, withSIDM=False,doExport=True)
     print('done')
