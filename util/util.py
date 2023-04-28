@@ -40,6 +40,7 @@ class util:
         df = pd.read_csv('/home/jw1624/H1-merian/util/currentGals.tsv', sep='\t')
         cdm = df[df['CDM']==1]['HaloID'].to_numpy().flatten()
         sidm = df[df['SIDM']==1]['HaloID'].to_numpy().flatten()
+        adiabatic = df[df['adiabatic']==1]['HaloID'].to_numpy().flatten()
 
-        return [cdm,sidm]
+        return [cdm,sidm, adiabatic]
     # end getGalaxies()
