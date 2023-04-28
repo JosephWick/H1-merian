@@ -24,9 +24,9 @@ class util:
         sidm = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r'+str(h)+'.romulus25cvdXsec.3072g1HsbBH/r'+str(h)
         sidm +='.romulus25cvdXsec.3072g1HsbBH.004096'
 
-        adiabatic = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r'+str(h)+'.romulus25.3072g1HsbBH/adiabatic
+        adiabatic = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r'+str(h)+'.romulus25.3072g1HsbBH/adiabatic'
 
-        return [cdm,sidm]
+        return [cdm,sidm, adiabatic]
     # end getfilepath()
 
     # getGalaxies()

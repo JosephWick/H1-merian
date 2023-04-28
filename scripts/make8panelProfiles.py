@@ -23,9 +23,9 @@ from reproject import reproject_interp
 
 import glob
 
-def eightPanelProfiles(hID, withSIDM=False):
+def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     # get data paths for specified halo
-    cdmPath, sidmPath = util.getfilepath(hID)
+    cdmPath, sidmPath, adiabaticPath = util.getfilepath(hID)
 
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
 
@@ -56,6 +56,7 @@ def eightPanelProfiles(hID, withSIDM=False):
 
     cdmC = 'firebrick'
     sidmC = 'royalblue'
+    adiabatC = 'g'
     lw = 3
 
     axs[0,0].plot(pdCDM['rbins'], pdCDM['density'], c=cdmC, linewidth=lw)
@@ -137,16 +138,47 @@ def eightPanelProfiles(hID, withSIDM=False):
 
         axs[0,0].legend(['CDM', 'SIDM'])
 
+    if withAdiabat:
+        adiabatFile = adiabaticPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
+
+        sAd = pynbody.load(adiabatFile)
+        sAd.physical_units()
+        hAd = sAd.halos()[1]
+
+        cen_pot = pynbody.analysis.halo.center(hAd, mode='pot', retcen=True)
+        sSIDM['pos'] -= cen_pot
+
+        pdAd = pynbody.analysis.profile.Profile(hAd.d, rmin=pmin, rmax=pmax, type='lin')
+        pgAd = pynbody.analysis.profile.Profile(hAd.g, rmin=pmin, rmax=pmax, type='lin')
+        psAd = pynbody.analysis.profile.Profile(hAd.s, rmin=pmin, rmax=pmax, type='lin')
+        pAd  = pynbody.analysis.profile.Profile(hAd,   rmin=pmin, rmax=pmax, type='lin')
+
+        axs[0,0].plot(pdAd['rbins'], pdAd['density'], c=adiabatC, linewidth=lw)
+        axs[0,1].plot(pgAd['rbins'], pgAd['density'], c=adiabatC, linewidth=lw)
+        axs[1,0].plot(psAd['rbins'], psAd['density'], c=adiabatC, linewidth=lw)
+        axs[1,1].plot(pAd['rbins'], pAd['density'], c=adiabatC, linewidth=lw)
+
+        pdSIDM2 = pynbody.analysis.profile.v_circ(pdSIDM)
+
+        axs[0,2].plot(pdAd['rbins'], pdAd['v_circ'], c=adiabatC, linewidth=lw)
+        axs[0,3].plot(pgAd['rbins'], pgAd['v_circ'], c=adiabatC, linewidth=lw)
+        axs[1,2].plot(psAd['rbins'], psAd['v_circ'], c=adiabatC, linewidth=lw)
+        axs[1,3].plot(pAd['rbins'], pAd['v_circ'], c=adiabatC, linewidth=lw)
+
+        axs[0,0].legend(['CDM', 'Adiabatic CDM'])
+
     fig.tight_layout()
 
     if withSIDM:
         plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel_2.png')
+    if withAdiabat:
+        plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel_A.png')
     else:
         plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel.png')
     # end
 
 # get haloIDs
-cdmHalos, sidmHalos = util.getGalaxies()
+cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 
 print('Making 8 Panel Profiles')
 # make figs
@@ -154,5 +186,7 @@ for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
     if g in sidmHalos:
         eightPanelProfiles(g, withSIDM=True)
+    if g in adiabaticHalos:
+        eightPanelProfiles(g, withAdiabat=True)
     eightPanelProfiles(g)
     print('done')
