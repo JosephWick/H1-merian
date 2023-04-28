@@ -158,7 +158,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         axs[1,0].plot(psAd['rbins'], psAd['density'], c=adiabatC, linewidth=lw)
         axs[1,1].plot(pAd['rbins'], pAd['density'], c=adiabatC, linewidth=lw)
 
-        pdSIDM2 = pynbody.analysis.profile.v_circ(pdSIDM)
+        pdSIDM2 = pynbody.analysis.profile.v_circ(pdAd)
 
         axs[0,2].plot(pdAd['rbins'], pdAd['v_circ'], c=adiabatC, linewidth=lw)
         axs[0,3].plot(pgAd['rbins'], pgAd['v_circ'], c=adiabatC, linewidth=lw)
