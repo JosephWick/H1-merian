@@ -64,7 +64,5 @@ def makeStarImage(hID, width=20, sidm=0):
 # now actually make the image
 for cdmg in cdmHalos:
     makeStarImage(cdmg)
-    break
 for sidmg in sidmHalos:
     makeStarImage(sidmg, sidm=1)
-    break
