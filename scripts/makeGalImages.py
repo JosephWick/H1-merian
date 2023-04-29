@@ -16,7 +16,7 @@ def makeStarImage(hID, width=15, sidm=0):
     if sidm:
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
 
-    fig, axs = plt.subplots(2,2, figsize=(8,8), facecolor='w')
+    fig = plt.figure(figsize=(12,5), facecolor='w')
 
     f = util.getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
 
@@ -26,12 +26,14 @@ def makeStarImage(hID, width=15, sidm=0):
     h = s.halos()
 
     # center on the largest halo and align the disk
+    ax = fig.add_subplot(1,2,1)
     pynbody.analysis.angmom.faceon(h[1])
-    pynbody.plot.stars.render(s, subplot=axs[0], width=str(width)+' kpc')
+    pynbody.plot.stars.render(s, width=str(width)+' kpc')
 
     # side on
+    ax = fig.add_subplot(1,2,2)
     pynbody.analysis.angmom.sideon(h[1])
-    pynbody.plot.stars.render(s, subplot=axs[1], width=str(width)+' kpc')
+    pynbody.plot.stars.render(s, width=str(width)+' kpc')
 
     tag = 'CDM'
     if sidm: tag = 'SIDM'
@@ -43,10 +45,13 @@ def makeStarImage(hID, width=15, sidm=0):
         plt.savefig('/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg.png')
     else:
         plt.savefig('/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg.png')
+    print('Finished halo '+str(hID) + ' in '+tag)
 # end make StarImage
 
 # now actually make the image
 for cdmg in cdmHalos:
     makeStarImage(cdmg)
+    break
 for sidmg in sidmHalos:
     makeStarImage(sidmg)
+    break
