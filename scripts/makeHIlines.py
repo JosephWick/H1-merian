@@ -8,6 +8,21 @@ import matplotlib.pyplot as plt
 
 import glob
 
+
+# mu_n for kurtosis (defn from El Bhadri et al 2018)
+def mu_n(v,s, n):
+    # s is line profile
+    # v is velocity bins
+    vbar = np.array(s*v).mean()
+
+    top = (s*(v-vbar)**n).sum()
+    bottom = s.sum()
+    return top/bottom
+
+# getKurtosis
+def getKurtosis(v,s):
+    return mu_n(v,s,4)/mu_n(v,s,3) - 3
+
 def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'a')
 
@@ -43,9 +58,12 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
     # plot
     plt.suptitle('HI Profile for Galaxy '+str(hID), fontsize=tsize)
+    K_cdm = -1
     for i in range(len(fcdm)):
         cdmx = pd.read_csv(fcdm[i], sep='\s+', header=None)[0]
         cdmy = pd.read_csv(fcdm[i], sep='\s+', header=None)[1]
+
+        K_cdm = getKurtosis(np.array(cdmx), np.array(cdmy))
 
         axs[i].plot(cdmx, cdmy, linewidth=lw+1, c=cCDM)
 
@@ -72,11 +90,14 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cCDMw)
 
         # do line widths of sidm
+        K_sidm = -1
         if withSIDM:
             sidmx = pd.read_csv(fsidm[i], sep='\s+', header=None)[0]
             sidmy = pd.read_csv(fsidm[i], sep='\s+', header=None)[1]
 
             axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
+
+            K_sidm = getKurtosis(np.array(sidmx), np.array(sidmy))
 
             vmax = max(sidmy)
             for j,p in enumerate(Ws):
@@ -110,6 +131,12 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
                 dW_sidm = (wids[4] - wids[3])/wids[3]
             f.write(str(dW_cdm)+'\t'+str(dW_sidm)+'\n')
 
+            # kurtosis
+            K_cdm = getKurtosis()
+            K_sidm= -1
+
+
+
 
     f.close()
     plt.tight_layout()
@@ -129,7 +156,8 @@ print('Making HI Profiles')
 f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'w')
 f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\t')
 f.write('w50_sidm\tw20_sidm\tw10_sidm\t')
-f.write('dW_cdm\tdW_sidm\n')
+f.write('dW_cdm\tdW_sidm\t')
+f.write('K_cdm\tK_sidm\n')
 f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
