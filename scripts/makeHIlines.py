@@ -129,11 +129,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
                 dW_cdm = (wids[1] - wids[0])/wids[0]
             if wids[3] != -1 and wids[4] != -1:
                 dW_sidm = (wids[4] - wids[3])/wids[3]
-            f.write(str(dW_cdm)+'\t'+str(dW_sidm)+'\n')
+            f.write(str(dW_cdm)+'\t'+str(dW_sidm)+'\t')
 
             # kurtosis
-            K_cdm = getKurtosis()
-            K_sidm= -1
+            f.write(str(K_cdm)+'\t'+str(K_sidm)+'\n')
 
 
     f.close()
