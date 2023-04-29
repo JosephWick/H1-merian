@@ -53,5 +53,5 @@ for cdmg in cdmHalos:
     makeStarImage(cdmg)
     break
 for sidmg in sidmHalos:
-    makeStarImage(sidmg)
+    makeStarImage(sidmg, sidm=1)
     break
