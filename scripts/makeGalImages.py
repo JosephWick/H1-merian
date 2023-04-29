@@ -16,7 +16,7 @@ def makeStarImage(hID, width=20, sidm=0):
     if sidm:
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
 
-    fig = plt.figure(figsize=(12,5), facecolor='w')
+    fig = plt.figure(figsize=(8,8), facecolor='w')
 
     f = util.getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
 
@@ -26,13 +26,7 @@ def makeStarImage(hID, width=20, sidm=0):
     h = s.halos()
 
     # center on the largest halo and align the disk
-    ax1 = fig.add_subplot(1,2,1)
     pynbody.analysis.angmom.faceon(h[1])
-    pynbody.plot.stars.render(s, width=str(width)+' kpc')
-
-    # side on
-    ax2 = fig.add_subplot(1,2,2)
-    pynbody.analysis.angmom.sideon(h[1])
     pynbody.plot.stars.render(s, width=str(width)+' kpc')
 
     tag = 'CDM'
@@ -42,9 +36,28 @@ def makeStarImage(hID, width=20, sidm=0):
     plt.tight_layout()
 
     if sidm:
-        plt.savefig('/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg.png')
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg_f.png'
+        plt.savefig(fname)
     else:
-        plt.savefig('/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg.png')
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_f.png'
+        plt.savefig(fname)
+
+    # side on
+    fig = plt.figure(figsize=(8,8), facecolor='w')
+    pynbody.analysis.angmom.sideon(h[1])
+    pynbody.plot.stars.render(s, width=str(width)+' kpc')
+
+    plt.title('r'+str(hID) + ' '+tag, fontsize=20, fontfamily='serif')
+
+    plt.tight_layout()
+
+    if sidm:
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg_f.png'
+        plt.savefig(fname)
+    else:
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_f.png'
+        plt.savefig(fname)
+
     print('Finished halo '+str(hID) + ' in '+tag)
 # end make StarImage
 
