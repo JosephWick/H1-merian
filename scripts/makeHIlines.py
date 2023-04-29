@@ -136,8 +136,6 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             K_sidm= -1
 
 
-
-
     f.close()
     plt.tight_layout()
     if withSIDM:
