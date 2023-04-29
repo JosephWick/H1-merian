@@ -18,7 +18,7 @@ def makeStarImage(hID, width=15, sidm=0):
 
     fig, axs = plt.subplots(2,2, figsize=(8,8), facecolor='w')
 
-    f = getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
+    f = util.getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
 
     s = pynbody.load(f)
     s.physical_units()
