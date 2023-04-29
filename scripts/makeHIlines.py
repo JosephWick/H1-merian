@@ -116,10 +116,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
                 axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
 
         if doExport:
-            f.write(str(hID)+'_'+orientations[i]+'\t')
+            f.write(str(hID)+'_'+orientations[i]+',')
             for w in range(len(wids)-1):
-                f.write(str(wids[w])+'\t')
-            f.write(str(wids[-1])+'\t')
+                f.write(str(wids[w])+',')
+            f.write(str(wids[-1])+',')
 
             # calculate dW
             # dW = (W_20 - W_50)/W_50 (el Bhadri 2018)
@@ -129,10 +129,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
                 dW_cdm = (wids[1] - wids[0])/wids[0]
             if wids[3] != -1 and wids[4] != -1:
                 dW_sidm = (wids[4] - wids[3])/wids[3]
-            f.write(str(dW_cdm)+'\t'+str(dW_sidm)+'\t')
+            f.write(str(dW_cdm)+','+str(dW_sidm)+',')
 
             # kurtosis
-            f.write(str(K_cdm)+'\t'+str(K_sidm)+'\n')
+            f.write(str(K_cdm)+','+str(K_sidm)+'\n')
 
 
     f.close()
@@ -151,10 +151,10 @@ cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 print('Making HI Profiles')
 # make figs
 f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'w')
-f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\t')
-f.write('w50_sidm\tw20_sidm\tw10_sidm\t')
-f.write('dW_cdm\tdW_sidm\t')
-f.write('K_cdm\tK_sidm\n')
+f.write('galaxy,w50_cdm,w20_cdm,w10_cdm,')
+f.write('w50_sidm,w20_sidm,w10_sidm,')
+f.write('dW_cdm,dW_sidm,')
+f.write('K_cdm,K_sidm\n')
 f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
