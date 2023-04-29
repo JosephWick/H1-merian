@@ -11,7 +11,7 @@ import matplotlib.pylab as plt
 cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 
 # image function
-def makeStarImage(hID, width=15, sidm=0):
+def makeStarImage(hID, width=20, sidm=0):
     fileadd = '.romulus25.3072g1HsbBH.004096'
     if sidm:
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
