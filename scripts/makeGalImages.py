@@ -52,10 +52,10 @@ def makeStarImage(hID, width=20, sidm=0):
     plt.tight_layout()
 
     if sidm:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg_f.png'
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg_s.png'
         plt.savefig(fname)
     else:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_f.png'
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_s.png'
         plt.savefig(fname)
 
     print('Finished halo '+str(hID) + ' in '+tag)
