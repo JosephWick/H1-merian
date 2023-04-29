@@ -26,12 +26,12 @@ def makeStarImage(hID, width=15, sidm=0):
     h = s.halos()
 
     # center on the largest halo and align the disk
-    ax = fig.add_subplot(1,2,1)
+    ax1 = fig.add_subplot(1,2,1)
     pynbody.analysis.angmom.faceon(h[1])
     pynbody.plot.stars.render(s, width=str(width)+' kpc')
 
     # side on
-    ax = fig.add_subplot(1,2,2)
+    ax2 = fig.add_subplot(1,2,2)
     pynbody.analysis.angmom.sideon(h[1])
     pynbody.plot.stars.render(s, width=str(width)+' kpc')
 
