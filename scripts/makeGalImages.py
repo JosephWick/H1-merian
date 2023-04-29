@@ -16,7 +16,7 @@ def makeStarImage(hID, width=15, sidm=0):
     if sidm:
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
 
-    fig = plt.figure(figsize=(8,8), facecolor='w')
+    fig, axs = plt.subplots(2,2, figsize=(8,8), facecolor='w')
 
     f = getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
 
@@ -27,8 +27,11 @@ def makeStarImage(hID, width=15, sidm=0):
 
     # center on the largest halo and align the disk
     pynbody.analysis.angmom.faceon(h[1])
+    pynbody.plot.stars.render(s, subplot=axs[0], width=str(width)+' kpc')
 
-    pynbody.plot.stars.render(s,width=str(width)+' kpc')
+    # side on
+    pynbody.analysis.angmom.sideon(h[1])
+    pynbody.plot.stars.render(s, subplot=axs[1], width=str(width)+' kpc')
 
     tag = 'CDM'
     if sidm: tag = 'SIDM'
