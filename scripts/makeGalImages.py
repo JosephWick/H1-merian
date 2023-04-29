@@ -8,7 +8,7 @@ import matplotlib.pylab as plt
 
 
 # get current halos
-cdmHalos, sidmHalos = getGalaxies()
+cdmHalos, sidmHalos = util.getGalaxies()
 
 # image function
 def makeStarImage(hID, width=15, sidm=0):
