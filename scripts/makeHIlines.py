@@ -98,7 +98,18 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             f.write(str(hID)+'_'+orientations[i]+'\t')
             for w in range(len(wids)-1):
                 f.write(str(wids[w])+'\t')
-            f.write(str(wids[-1])+'\n')
+            f.write(str(wids[-1])+'\t')
+
+            # calculate dW
+            # dW = (W_20 - W_50)/W_50 (el Bhadri 2018)
+            dW_cdm = -1
+            dW_sidm= -1
+            if wids[0] != -1 and wids[1] != -1:
+                dW_cdm = (wids[1] - wids[0])/wids[0]
+            if wids[3] != -1 and wids[4] != -1:
+                dW_sidm = (wids[4] - wids[3])/wids[3]
+            f.write(str(dW_cdm)+'\t'+str(dW_sidm)+'\n')
+
 
     f.close()
     plt.tight_layout()
@@ -116,7 +127,9 @@ cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 print('Making HI Profiles')
 # make figs
 f=open('/home/jw1624/H1-merian/h1lines/widths.txt', 'w')
-f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\tw50_sidm\tw20_sidm\tw10_sidm\n')
+f.write('galaxy\tw50_cdm\tw20_cdm\tw10_cdm\t')
+f.write('w50_sidm\tw20_sidm\tw10_sidm\t')
+f.write('dW_cdm\tdW_sidm\n')
 f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
