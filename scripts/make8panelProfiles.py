@@ -56,7 +56,11 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     pCDM  = pynbody.analysis.profile.Profile(hCDM,   rmin=pmin, rmax=pmax, type='lin')
 
     pdCDM2 = pynbody.analysis.profile.v_circ(pdCDM)
+
+    f = open('/home/jw1624/H1-merian/csvs/vMaxGasSIDM.txt', 'a')
     vMaxGasCDM = np.array(pgCDM['v_circ']).max()
+    f.write(str(hID)+','+str(vMasGasCDM)+'\n')
+    f.close()
 
     cdmC = 'firebrick'
     sidmC = 'royalblue'
@@ -134,7 +138,11 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         axs[1,1].plot(pSIDM['rbins'], pSIDM['density'], c=sidmC, linewidth=lw)
 
         pdSIDM2 = pynbody.analysis.profile.v_circ(pdSIDM)
+
+        f = open('/home/jw1624/H1-merian/csvs/xMaxGasSIDM.txt', 'a')
         vMaxGasSIDM = np.array(pgSIDM['v_circ']).max()
+        f.write(str(hID)+','+str(vMaxGasSIDM)+'\n')
+        f.close()
 
         axs[0,2].plot(pdSIDM['rbins'], pdSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[0,3].plot(pgSIDM['rbins'], pgSIDM['v_circ'], c=sidmC, linewidth=lw)
@@ -198,9 +206,9 @@ f.close()
 # make figs
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
+    eightPanelProfiles(g)
     if g in sidmHalos:
         eightPanelProfiles(g, withSIDM=True)
     if g in adiabaticHalos:
         eightPanelProfiles(g, withAdiabat=True)
-    eightPanelProfiles(g)
     print('done')
