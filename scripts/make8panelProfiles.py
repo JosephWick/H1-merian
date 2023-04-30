@@ -139,7 +139,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
 
         pdSIDM2 = pynbody.analysis.profile.v_circ(pdSIDM)
 
-        f = open('/home/jw1624/H1-merian/csvs/xMaxGasSIDM.txt', 'a')
+        f = open('/home/jw1624/H1-merian/csvs/vMaxGasSIDM.txt', 'a')
         vMaxGasSIDM = np.array(pgSIDM['v_circ']).max()
         f.write(str(hID)+','+str(vMaxGasSIDM)+'\n')
         f.close()
@@ -199,7 +199,7 @@ print('Making 8 Panel Profiles')
 f = open('/home/jw1624/H1-merian/csvs/vMaxGasCDM.txt', 'w')
 f.write('galaxy,VmaxGas\n')
 f.close()
-f = open('/home/jw1624/H1-merian/csvs/xMaxGasSIDM.txt', 'w')
+f = open('/home/jw1624/H1-merian/csvs/vMaxGasSIDM.txt', 'w')
 f.write('galaxy,VmaxGas\n')
 f.close()
 
