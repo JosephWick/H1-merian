@@ -1,3 +1,6 @@
+# makeGalImages.py
+# also exports median v_disp for each galaxy
+
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
@@ -16,6 +19,8 @@ def makeStarImage(hID, width=20, sidm=0):
     if sidm:
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
 
+    v_disp = -1
+
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     f = util.getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
@@ -24,6 +29,7 @@ def makeStarImage(hID, width=20, sidm=0):
     s.physical_units()
 
     h = s.halos()
+    v_disp = np.median(np.array(h[1].g['v_disp']))
 
     # center on the largest halo and align the disk
     pynbody.analysis.angmom.faceon(h[1])
@@ -58,10 +64,26 @@ def makeStarImage(hID, width=20, sidm=0):
         fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_s.png'
         plt.savefig(fname)
 
+    # write v_disp
+    if sidm:
+        f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'a')
+        f.write(str(hID)+','+str(v_disp)+'\n')
+        f.close()
+    else:
+        f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'a')
+        f.write(str(hID)+','+str(v_disp)+'\n')
+        f.close()
+
     print('Finished halo '+str(hID) + ' in '+tag)
 # end make StarImage
 
 # now actually make the image
+f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'w')
+f.write('galaxy,v_disp\n')
+f.close()
+f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'w')
+f.write('galaxy,v_disp\n')
+f.close()
 for cdmg in cdmHalos:
     makeStarImage(cdmg)
 for sidmg in sidmHalos:
