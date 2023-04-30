@@ -59,7 +59,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
 
     f = open('/home/jw1624/H1-merian/csvs/vMaxGasSIDM.txt', 'a')
     vMaxGasCDM = np.array(pgCDM['v_circ']).max()
-    f.write(str(hID)+','+str(vMasGasCDM)+'\n')
+    f.write(str(hID)+','+str(vMaxGasCDM)+'\n')
     f.close()
 
     cdmC = 'firebrick'
