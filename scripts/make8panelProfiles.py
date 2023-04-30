@@ -25,6 +25,9 @@ import glob
 
 def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     # get data paths for specified halo
+    vmaxGasCDM = -1
+    vmaxGasSIDM = -1
+
     cdmPath, sidmPath, adiabaticPath = util.getfilepath(hID)
 
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
@@ -53,6 +56,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     pCDM  = pynbody.analysis.profile.Profile(hCDM,   rmin=pmin, rmax=pmax, type='lin')
 
     pdCDM2 = pynbody.analysis.profile.v_circ(pdCDM)
+    vMaxGasCDM = np.array(pgCDM['v_circ']).max()
 
     cdmC = 'firebrick'
     sidmC = 'royalblue'
@@ -130,6 +134,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         axs[1,1].plot(pSIDM['rbins'], pSIDM['density'], c=sidmC, linewidth=lw)
 
         pdSIDM2 = pynbody.analysis.profile.v_circ(pdSIDM)
+        vMaxGasSIDM = np.array(pgSIDM['v_circ']).max()
 
         axs[0,2].plot(pdSIDM['rbins'], pdSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[0,3].plot(pgSIDM['rbins'], pgSIDM['v_circ'], c=sidmC, linewidth=lw)
@@ -182,7 +187,13 @@ cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 
 print('Making 8 Panel Profiles')
 
-# set up csv 
+# set up csv
+f = open('/home/jw1624/H1-merian/csvs/vMaxGasCDM.txt', 'w')
+f.write('galaxy,VmaxGas\n')
+f.close()
+f = open('/home/jw1624/H1-merian/csvs/xMaxGasSIDM.txt', 'w')
+f.write('galaxy,VmaxGas\n')
+f.close()
 
 # make figs
 for g in cdmHalos:
