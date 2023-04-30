@@ -1,1 +1,1 @@
-galaxy,v_disp,VmaxGas
+galaxy,v_disp
