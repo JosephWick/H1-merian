@@ -181,6 +181,9 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
 cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 
 print('Making 8 Panel Profiles')
+
+# set up csv 
+
 # make figs
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
