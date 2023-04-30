@@ -21,6 +21,7 @@ def makeStarImage(hID, width=20, sidm=0):
         fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
 
     v_disp = -1
+    vmaxGas = -1
 
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
@@ -31,6 +32,7 @@ def makeStarImage(hID, width=20, sidm=0):
 
     h = s.halos()
     v_disp = np.median(np.array(h[1].g['v_disp']))
+    vmaxGas = np.max(np.array(h[1].g['v_circ']))
 
     # center on the largest halo and align the disk
     pynbody.analysis.angmom.faceon(h[1])
@@ -80,10 +82,10 @@ def makeStarImage(hID, width=20, sidm=0):
 
 # now actually make the image
 f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'w')
-f.write('galaxy,v_disp\n')
+f.write('galaxy,v_disp,VmaxGas\n')
 f.close()
 f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'w')
-f.write('galaxy,v_disp\n')
+f.write('galaxy,v_disp,VmaxGas\n')
 f.close()
 for cdmg in cdmHalos:
     makeStarImage(cdmg)
