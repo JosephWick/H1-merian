@@ -6,6 +6,7 @@ sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
 import pynbody
+import numpy as np
 import pynbody.plot.sph as sph
 import matplotlib.pylab as plt
 
