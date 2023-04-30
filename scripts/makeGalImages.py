@@ -74,7 +74,7 @@ def makeStarImage(hID, width=20, sidm=0):
         f.close()
     else:
         f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'a')
-        f.write(str(hID)+','+str(v_disp)+'\n')
+        f.write(str(hID)+','+str(v_disp)+','+str(vmaxGas)+'\n')
         f.close()
 
     print('Finished halo '+str(hID) + ' in '+tag)
