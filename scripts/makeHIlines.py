@@ -14,11 +14,9 @@ def mu_n(v,s, n):
     # s is line profile
     # v is velocity bins
     vbar = sum(np.array(s*v))/sum(s)
-    print('vbar: '+str(vbar))
 
     top = (s*(v-vbar)**n).sum()
     bottom = s.sum()
-    print('mun: '+str(top/bottom))
     return top/bottom
 
 # getKurtosis
@@ -169,4 +167,3 @@ for g in cdmHalos:
     else:
         makeHIprofile(g, withSIDM=False,doExport=True)
     print('done')
-    break
