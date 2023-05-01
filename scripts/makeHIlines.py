@@ -21,7 +21,7 @@ def mu_n(v,s, n):
 
 # getKurtosis
 def getKurtosis(v,s):
-    return mu_n(v,s,4)/mu_n(v,s,3) - 3
+    return mu_n(v,s,4)/mu_n(v,s,2) - 3
 
 def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
