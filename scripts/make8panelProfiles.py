@@ -57,10 +57,11 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
 
     pdCDM2 = pynbody.analysis.profile.v_circ(pdCDM)
 
-    f = open('/home/jw1624/H1-merian/csvs/vMaxGasCDM.txt', 'a')
-    vMaxGasCDM = np.array(pgCDM['v_circ']).max()
-    f.write(str(hID)+','+str(vMaxGasCDM)+'\n')
-    f.close()
+    if !withSIDM and !withAdiabat:
+        f = open('/home/jw1624/H1-merian/csvs/vMaxGasCDM.txt', 'a')
+        vMaxGasCDM = np.array(pgCDM['v_circ']).max()
+        f.write(str(hID)+','+str(vMaxGasCDM)+'\n')
+        f.close()
 
     cdmC = 'firebrick'
     sidmC = 'royalblue'
