@@ -14,6 +14,7 @@ def mu_n(v,s, n):
     # s is line profile
     # v is velocity bins
     vbar = np.array(s*v).mean()
+    print('vbar: '+str(vbar))
 
     top = (s*(v-vbar)**n).sum()
     bottom = s.sum()
@@ -167,3 +168,4 @@ for g in cdmHalos:
     else:
         makeHIprofile(g, withSIDM=False,doExport=True)
     print('done')
+    break
