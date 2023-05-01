@@ -13,7 +13,7 @@ import glob
 def mu_n(v,s, n):
     # s is line profile
     # v is velocity bins
-    vbar = np.array(s*v).mean()
+    vbar = sum(np.array(s*v))/sum(s)
     print('vbar: '+str(vbar))
 
     top = (s*(v-vbar)**n).sum()
