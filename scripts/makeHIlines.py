@@ -15,7 +15,7 @@ def mu_n(v,s, n):
     # v is velocity bins
     vbar = sum(np.array(s*v))/sum(s)
 
-    top = (s*(v-vbar)**n).sum()
+    top = (s*((v-vbar)**n)).sum()
     bottom = s.sum()
     return top/bottom
 
