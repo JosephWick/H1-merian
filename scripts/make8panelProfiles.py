@@ -213,9 +213,9 @@ f.close()
 # make figs
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
-    eightPanelProfiles(g)
     if g in sidmHalos:
         eightPanelProfiles(g, withSIDM=True)
     if g in adiabaticHalos:
         eightPanelProfiles(g, withAdiabat=True)
+    eightPanelProfiles(g)
     print('done')
