@@ -40,6 +40,8 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
 
+    pynbody.analysis.angmom.faceon(hCDM)
+
     # center based on potential
     cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
     sCDM['pos'] -= cen_pot
@@ -125,6 +127,8 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         sSIDM.physical_units()
         hSIDM = sSIDM.halos()[1]
 
+        pynbody.analysis.angmom.faceon(hSIDM)
+
         cen_pot = pynbody.analysis.halo.center(hSIDM, mode='pot', retcen=True)
         sSIDM['pos'] -= cen_pot
 
@@ -158,6 +162,8 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         sAd = pynbody.load(adiabatFile)
         sAd.physical_units()
         hAd = sAd.halos()[1]
+
+        pynbody.analysis.angmom.faceon(hAd)
 
         cen_pot = pynbody.analysis.halo.center(hAd, mode='pot', retcen=True)
         sAd['pos'] -= cen_pot
