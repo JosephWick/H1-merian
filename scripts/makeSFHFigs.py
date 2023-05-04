@@ -23,7 +23,7 @@ def sfhFigs(hID, withSIDM=False):
 
 cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 
-for g in cdmalos:
+for g in cdmHalos:
     sfhFigs(g)
     if g in sidmHalos:
         sfhFigs(g, withSIDM=True)
