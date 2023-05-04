@@ -17,7 +17,7 @@ def mu_n(v,s, n):
 
     top = (s*((v-vbar)**n)).sum()
     bottom = s.sum()
-    return top/bottom
+    return top/(bottom**2)
 
 # getKurtosis
 def getKurtosis(v,s):
