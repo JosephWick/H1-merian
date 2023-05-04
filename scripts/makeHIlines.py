@@ -24,11 +24,11 @@ def mu_n(v,s, n):
 
     top = (s*((v-vbar)**n)).sum()
     bottom = s.sum()
-    return top/(bottom**2)
+    return top/bottom
 
 # getKurtosis
 def getKurtosis(v,s):
-    return mu_n(v,s,4)/mu_n(v,s,2) - 3
+    return mu_n(v,s,4)/(mu_n(v,s,2)**2) - 3
 
 def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
@@ -109,6 +109,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
             axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
 
+            S21 = getFluxDensity(cdmy, dv,D)
             K_sidm = getKurtosis(np.array(sidmx), np.array(sidmy))
 
             vmax = max(sidmy)
