@@ -26,7 +26,7 @@ def sfhFigs(hID, withSIDM=False):
         sSIDM.physical_units()
 
         sfhsidm1 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0])
-        sfhsidm2 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0], massform=True)
+        sfhsidm2 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[1], massform=True)
 
     if withSIDM:
         plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH_2.png')
