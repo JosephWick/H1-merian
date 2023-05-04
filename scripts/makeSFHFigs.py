@@ -15,11 +15,21 @@ def sfhFigs(hID, withSIDM=False):
 
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
-    hCDM = sCDM.halos()[1]
 
-    sfh1 = pynbody.plot.stars.sfh(sCDM)
-    plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH.png')
+    sfhcdm1 = pynbody.plot.stars.sfh(sCDM)
 
+    if withSIDM:
+        cdmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
+
+        sSIDM = pynbody.load(sidmFile)
+        sSIDM.physical_units()
+
+        sfhsidm1 = pynbody.plot.stars.sfh(sSIDM)
+
+    if withSIDM:
+        plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH_2.png')
+    else:
+        plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH.png')
 #
 
 cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
