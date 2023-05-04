@@ -16,7 +16,7 @@ def sfhFigs(hID, withSIDM=False):
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
 
-    sfh1 = pynbody.plot.stars(sCDM)
+    sfh1 = pynbody.plot.stars.sfh(sCDM)
     plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH.png')
 
 #
