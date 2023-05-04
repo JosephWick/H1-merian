@@ -8,6 +8,13 @@ import matplotlib.pyplot as plt
 
 import glob
 
+# flux density
+def getFluxDensity(hi, dv, D):
+    S21 = []
+    for m in hi:
+        s = (1/(2.36e5)) * (m/(1.998847e30))*(1/dv)*((1/D)**2)
+        S21.append(s)
+    return np.array(S21)
 
 # mu_n for kurtosis (defn from El Bhadri et al 2018)
 def mu_n(v,s, n):
@@ -27,6 +34,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
 
     dpath = '/home/jw1624/H1-merian/h1lines/'
+
+    # flux density params
+    D = 70 #Mpc (distance observed at)
+    dv=11.2 #km/s (velocity resolution)
 
     # style params
     tsize = 24
@@ -63,7 +74,8 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         cdmx = pd.read_csv(fcdm[i], sep='\s+', header=None)[0]
         cdmy = pd.read_csv(fcdm[i], sep='\s+', header=None)[1]
 
-        K_cdm = getKurtosis(np.array(cdmx), np.array(cdmy))
+        S21 = getFluxDensity(cdmy, dv,D)
+        K_cdm = getKurtosis(np.array(cdmx), S21)
 
         axs[i].plot(cdmx, cdmy, linewidth=lw+1, c=cCDM)
 
