@@ -8,8 +8,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def sfhFigs(hID, withSIDM=False):
-    cdmPath, sidmPath, _ = util.getfilepath(hID)
+    fig = plt.figure()
 
+    cdmPath, sidmPath, _ = util.getfilepath(hID)
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
 
     sCDM = pynbody.load(cdmFile)
