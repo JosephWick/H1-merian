@@ -28,7 +28,7 @@ def sfhFigs(hID, withSIDM=False):
         sSIDM = pynbody.load(sidmFile)
         sSIDM.physical_units()
 
-        sfhsidm1 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0], color='sidmC)
+        sfhsidm1 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0], color=sidmC)
         sfhsidm2 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[1], massform=False, color='sidmC)
 
     # prettify
