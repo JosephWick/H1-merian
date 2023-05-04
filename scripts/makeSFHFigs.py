@@ -38,3 +38,4 @@ for g in cdmHalos:
     sfhFigs(g)
     if g in sidmHalos:
         sfhFigs(g, withSIDM=True)
+    print('halo '+str(g)+' ... done')
