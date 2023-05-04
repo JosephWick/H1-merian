@@ -17,7 +17,7 @@ def sfhFigs(hID, withSIDM=False):
     sCDM.physical_units()
 
     sfhcdm1 = pynbody.plot.stars.sfh(sCDM, subplot=axs[0])
-    sfhcdm2 = pynbody.plot.stars.sfh(sCDM, subplot=axs[1], massform=True)
+    sfhcdm2 = pynbody.plot.stars.sfh(sCDM, subplot=axs[1], massform=False)
 
     if withSIDM:
         sidmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
@@ -26,7 +26,10 @@ def sfhFigs(hID, withSIDM=False):
         sSIDM.physical_units()
 
         sfhsidm1 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0])
-        sfhsidm2 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[1], massform=True)
+        sfhsidm2 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[1], massform=False)
+
+    # prettify
+    axs[0].set_title('')
 
     if withSIDM:
         plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH_2.png')
