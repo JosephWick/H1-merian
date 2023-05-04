@@ -41,7 +41,7 @@ def sfhFigs(hID, withSIDM=False):
     axs[1].set_xlabel('Time [Gyr]')
     axs[1].set_ylabel(r'SFR $[M_{\odot} yr^{-1}]$')
 
-    axs[0].set_legend(['CDM', 'SIDM'])
+    axs[0].legend(['CDM', 'SIDM'])
 
     plt.tight_layout()
 
