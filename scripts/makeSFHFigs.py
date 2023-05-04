@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def sfhFigs(hID, withSIDM=False):
-    fig = plt.figure()
+    fig,axs = plt.subplots(1,2)
 
     cdmPath, sidmPath, _ = util.getfilepath(hID)
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
@@ -16,7 +16,8 @@ def sfhFigs(hID, withSIDM=False):
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
 
-    sfhcdm1 = pynbody.plot.stars.sfh(sCDM)
+    sfhcdm1 = pynbody.plot.stars.sfh(sCDM, subplot=axs[0])
+    sfhcdm2 = pynbody.plot.stars.sfh(sCDM, subplot=axs[1], massform=True)
 
     if withSIDM:
         sidmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
@@ -24,7 +25,8 @@ def sfhFigs(hID, withSIDM=False):
         sSIDM = pynbody.load(sidmFile)
         sSIDM.physical_units()
 
-        sfhsidm1 = pynbody.plot.stars.sfh(sSIDM)
+        sfhsidm1 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0])
+        sfhsidm2 = pynbody.plot.stars.sfh(sSIDM, subplot=axs[0], massform=True)
 
     if withSIDM:
         plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH_2.png')
