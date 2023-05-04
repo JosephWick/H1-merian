@@ -12,7 +12,7 @@ import glob
 def getFluxDensity(hi, dv, D):
     S21 = []
     for m in hi:
-        s = (1/(2.36e5)) * (m/(1.998847e30))*(1/dv)*((1/D)**2)
+        s = (1/(2.36e5)) * (m/(1.998847e30)) * (1/dv)*((1/D)**2)
         S21.append(s)
     return np.array(S21)
 
