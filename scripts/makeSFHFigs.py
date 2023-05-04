@@ -32,11 +32,11 @@ def sfhFigs(hID, withSIDM=False):
     axs[0].set_title('SFH with Original Star mass')
     axs[1].set_title('SFH with Final (Observed) Star Mass')
 
-    axs[0].set_xlabel('Gyr')
-    axs[0].set_ylabel('SFR')
+    axs[0].set_xlabel('Time [Gyr]')
+    axs[0].set_ylabel(r'SFR $[M_{\odot} yr^{-1}]$')
 
-    axs[1].set_xlabel('Gyr')
-    axs[1].set_ylabel('SFR')
+    axs[1].set_xlabel('Time [Gyr]')
+    axs[1].set_ylabel(r'SFR $[M_{\odot} yr^{-1}]$')
 
     if withSIDM:
         plt.savefig('/home/jw1624/H1-merian/figures/sfh/r'+str(hID)+'_SFH_2.png')
