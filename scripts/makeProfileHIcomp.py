@@ -60,7 +60,8 @@ def profileHI(hID, withSIDM=False):
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
 
-
+    # do HI
+    # using 'y' orientation for all gals, as x and z sometimes are poor 
 
     fig.tight_layout()
     plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)+'_4panel.png')
@@ -69,7 +70,6 @@ def profileHI(hID, withSIDM=False):
 # get galaxies
 cdmHalos,sidmHalos,_ = util.getGalaxies()
 
-whichHI = []
 for g in cdmHalos:
     profileHI(g, withSIDM=False)
     break
