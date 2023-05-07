@@ -79,7 +79,7 @@ def profileHI(hID, withSIDM=False):
     axs[3].set_ylabel(r'mass [M$_\odot$]')
 
     if withSIDM:
-        sidmFile = sidmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
+        sidmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
 
         sSIDM = pynbody.load(sidmFile)
         sSIDM.physical_units()
