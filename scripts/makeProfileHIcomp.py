@@ -69,6 +69,6 @@ def profileHI(hID, withSIDM=False):
 # get galaxies
 cdmHalos,sidmHalos,_ = util.getGalaxies()
 
-for g in cdmHalos:
+for g in cdmHalos[1:]:
     profileHI(g, withSIDM=False)
     break
