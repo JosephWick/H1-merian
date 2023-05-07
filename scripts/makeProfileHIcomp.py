@@ -8,9 +8,21 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import glob
 
+# flux density
+def getFluxDensity(hi, dv, D):
+    S21 = []
+    for m in hi:
+        s = (1/(2.36e5)) * (m/(1)) * (1/dv)*((1/D)**2)
+        S21.append(s)
+    return np.array(S21)
+
 def profileHI(hID, withSIDM=False):
     # four panel figure, 1x4
     # rot curve; gas surface density; gas dispersion; HI
+
+    # flux density params
+    D = 70 #Mpc
+    dv= 11.2 #km/s
 
     cdmPath, sidmPath, _ = util.getfilepath(hID)
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
@@ -72,11 +84,12 @@ def profileHI(hID, withSIDM=False):
 
     cdmx = pd.read_csv(fcdm[1], sep='\s+', header=None)[0]
     cdmy = pd.read_csv(fcdm[1], sep='\s+', header=None)[1]
+    cdmy = getFluxDensity(cdmy, dv,D)
 
     axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
     axs[3].set_title('HI profile')
     axs[3].set_xlabel('velocity [km/s]')
-    axs[3].set_ylabel(r'mass [M$_\odot$]')
+    axs[3].set_ylabel('flux density [Jy]')
 
     if withSIDM:
         sidmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
@@ -113,11 +126,9 @@ def profileHI(hID, withSIDM=False):
 
         sidmx = pd.read_csv(fsidm[1], sep='\s+', header=None)[0]
         sidmy = pd.read_csv(fsidm[1], sep='\s+', header=None)[1]
+        sidmy = getFluxDensity(sidmy, dv,D)
 
         axs[3].plot(sidmx, sidmy, c=sidmC, linewidth=lw)
-        axs[3].set_title('HI profile')
-        axs[3].set_xlabel('velocity [km/s]')
-        axs[3].set_ylabel(r'mass [M$_\odot$]')
 
     fig.tight_layout()
     if withSIDM:

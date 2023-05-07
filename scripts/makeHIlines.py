@@ -37,7 +37,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
     # flux density params
     D = 70 #Mpc (distance observed at)
-    dv=11.2 #km/s (velocity resolution)
+    dv= 11.2 #km/s (velocity resolution)
 
     # style params
     tsize = 24
