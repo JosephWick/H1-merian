@@ -82,7 +82,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
         axs[i].set_title(orientations[i]+' Orientation')
         axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize)
-        axs[i].set_ylabel(r'Mass [$M_\odot$]', fontsize=asize)
+        axs[i].set_ylabel('Flux Density [Jy]', fontsize=asize)
 
         # do line widths of cmd
         vmax = max(cdmy)
@@ -112,6 +112,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
             S21 = getFluxDensity(cdmy, dv,D)
             K_sidm = getKurtosis(np.array(sidmx), np.array(sidmy))
+            sidmy = S21
 
             vmax = max(sidmy)
             for j,p in enumerate(Ws):
