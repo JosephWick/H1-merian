@@ -37,14 +37,12 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
-    sCDM.physical_units()
-    hCDM = sCDM.halos()[1]
-
-    pynbody.analysis.angmom.faceon(hCDM)
 
     # center based on potential
     cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
     sCDM['pos'] -= cen_pot
+
+    pynbody.analysis.angmom.faceon(hCDM)
 
     # profile range
     pmin = '0.01 kpc'
