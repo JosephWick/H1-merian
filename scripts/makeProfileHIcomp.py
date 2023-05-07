@@ -29,10 +29,10 @@ def profileHI(hID, withSIDM=False):
     cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
     sCDM['pos'] -= cen_pot
 
-    pynbody.analysis.angmom.faceon(hCDM)
-
     # gas dispersion
     vdisp = hCDM.g['v_disp']
+
+    pynbody.analysis.angmom.faceon(hCDM)
 
     # profile range; based on El-Bhadry 2018 fig A1
     pmin = '0.01 kpc'
@@ -69,6 +69,7 @@ def profileHI(hID, withSIDM=False):
 # get galaxies
 cdmHalos,sidmHalos,_ = util.getGalaxies()
 
+whichHI = []
 for g in cdmHalos:
     profileHI(g, withSIDM=False)
     break
