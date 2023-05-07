@@ -5,6 +5,7 @@ from util import util
 import pynbody
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 import glob
 
 def profileHI(hID, withSIDM=False):
