@@ -63,7 +63,7 @@ def profileHI(hID, withSIDM=False):
 
 
     fig.tight_layout()
-    plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)'_4panel.png')
+    plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)+'_4panel.png')
     # end
 
 # get galaxies
