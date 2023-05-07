@@ -89,4 +89,4 @@ cdmHalos,sidmHalos,_ = util.getGalaxies()
 
 for g in cdmHalos:
     profileHI(g, withSIDM=False)
-    
+    print('halo '+str(g)+'... done')
