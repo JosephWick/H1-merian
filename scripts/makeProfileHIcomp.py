@@ -45,17 +45,17 @@ def profileHI(hID, withSIDM=False):
     vdisp = hCDM.g['v_disp']
 
     # plot first three panels
-    axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=CDMc, linewidth=lw)
+    axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=cdmC, linewidth=lw)
     axs[0].set_title('rotation curve')
     axs[0].set_xlabel('radius [kpc]')
     axs[0].set_ylabel('velocity [km/s]')
 
-    axs[1].plot(pCDM['rbins'], sigma, c=CDMc, linewidth=lw)
+    axs[1].plot(pCDM['rbins'], sigma, c=cdmC, linewidth=lw)
     axs[1].set_title('gas surface density')
     axs[1].set_xlabel('radius [kpc]')
     axs[1].set_ylabel(r'$\Sigma (r)$ [$M_\odot \text{kpc}^{-2}$]')
 
-    axs[2].plot(pCDM['rbins'], vdisp, c=CDMc, linewidth=lw)
+    axs[2].plot(pCDM['rbins'], vdisp, c=cdmC, linewidth=lw)
     axs[2].set_title('gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
