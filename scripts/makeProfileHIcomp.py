@@ -62,7 +62,7 @@ def profileHI(hID, withSIDM=False):
     axs[2].set_title('median gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
-    axs[2].set_ylim([0,15])
+    axs[2].set_xlim([0,15])
 
     # do HI
     # using 'y' orientation for all gals, as x and z sometimes are poor
@@ -89,4 +89,4 @@ cdmHalos,sidmHalos,_ = util.getGalaxies()
 
 for g in cdmHalos:
     profileHI(g, withSIDM=False)
-    break
+    
