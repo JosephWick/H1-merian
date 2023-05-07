@@ -77,7 +77,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         S21 = getFluxDensity(cdmy, dv,D)
         K_cdm = getKurtosis(np.array(cdmx), S21)
 
-        axs[i].plot(cdmx, cdmy, linewidth=lw+1, c=cCDM)
+        axs[i].plot(cdmx, S21, linewidth=lw+1, c=cCDM)
 
         axs[i].set_title(orientations[i]+' Orientation')
         axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize)
