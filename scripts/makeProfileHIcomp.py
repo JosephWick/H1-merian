@@ -55,7 +55,7 @@ def profileHI(hID, withSIDM=False):
     axs[1].set_xlabel('radius [kpc]')
     axs[1].set_ylabel(r'$\Sigma (r)$ [$M_\odot \text{kpc}^{-2}$]')
 
-    axs[2].plot(pCDM['rbins'], vdisp, c=cdmC, linewidth=lw)
+    #axs[2].plot(pCDM['rbins'], vdisp, c=cdmC, linewidth=lw)
     axs[2].set_title('gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
