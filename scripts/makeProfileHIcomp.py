@@ -14,7 +14,7 @@ def profileHI(hID, withSIDM=False):
     cdmPath, sidmPath, _ = util.getfilepath(hID)
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
 
-    fig, axs = plt.figure(1,4, figsize=(16,4), facecolor='white')
+    fig, axs = plt.subplots(1,4, figsize=(16,4), facecolor='white')
     cdmC = 'firebrick'
     sidmC = 'royalblue'
     adiabatC = 'g'
