@@ -21,7 +21,6 @@ def profileHI(hID, withSIDM=False):
     adiabatC = 'g'
     lw = 3
 
-
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
@@ -78,10 +77,68 @@ def profileHI(hID, withSIDM=False):
     axs[3].set_xlabel('velocity [km/s]')
     axs[3].set_ylabel(r'mass [M$_\odot$]')
 
+    if withSIDM:
+        sSIDM = pynbody.load(sidmFile)
+        sSIDM.physical_units()
+        hSIDM = sSIDM.halos()[1]
 
+        # center based on potential
+        cen_pot = pynbody.analysis.halo.center(hSIDM, mode='pot', retcen=True)
+        sSIDM['pos'] -= cen_pot
+
+        # gas dispersion
+        vdisp = hSIDM.g['v_disp']
+
+        pynbody.analysis.angmom.faceon(hSIDM)
+
+        # profile range; based on El-Bhadry 2018 fig A1
+        pmin = '0.01 kpc'
+        pmax = '15 kpc'
+
+        # rotation curve (global?)
+        pCDM = pynbody.analysis.profile.Profile(hSIDM, rmin=pmin, rmax=pmax, type='lin')
+
+        # gas surface density
+        sigma = pSIDM['mass']/(12.57*pSIDM['rbins']*pSIDM['rbins'])
+
+        # plot first three panels
+        axs[0].plot(pSIDM['rbins'], pSIDM['v_circ'], c=sidmC, linewidth=lw)
+        axs[0].set_title('rotation curve')
+        axs[0].set_xlabel('radius [kpc]')
+        axs[0].set_ylabel('velocity [km/s]')
+        axs[0].set_xlim([0,15])
+
+        axs[1].plot(pSIDM['rbins'], sigma, c=sidmC, linewidth=lw)
+        axs[1].set_title('gas surface density')
+        axs[1].set_xlabel('radius [kpc]')
+        axs[1].set_ylabel(r'$\Sigma$ (r) [$M_\odot$ kpc$^{-2}$]')
+        axs[1].set_xlim([0,15])
+
+        axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=sidmC, linewidth=lw)
+        axs[2].set_title('median gas dispersion')
+        axs[2].set_xlabel('radius [kpc]')
+        axs[2].set_ylabel('velocity [km/s]')
+        axs[2].set_xlim([0,15])
+
+        # do HI
+        # using 'y' orientation for all gals, as x and z sometimes are poor
+        dpath = '/home/jw1624/H1-merian/h1lines/'
+        fcdm = glob.glob(dpath+'r'+str(hID)+'_sidm*')
+        fcdm.sort()
+
+        sidmx = pd.read_csv(fsidm[1], sep='\s+', header=None)[0]
+        sidmy = pd.read_csv(fsidm[1], sep='\s+', header=None)[1]
+
+        axs[3].plot(sidmx, sidmy, c=sidmC, linewidth=lw)
+        axs[3].set_title('HI profile')
+        axs[3].set_xlabel('velocity [km/s]')
+        axs[3].set_ylabel(r'mass [M$_\odot$]')
 
     fig.tight_layout()
-    plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)+'_4panel.png')
+    if withSIDM:
+        plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)+'_4panel_2.png')
+    else:
+        plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)+'_4panel.png')
     # end
 
 # get galaxies
