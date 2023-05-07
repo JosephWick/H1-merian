@@ -31,6 +31,9 @@ def profileHI(hID, withSIDM=False):
 
     pynbody.analysis.angmom.faceon(hCDM)
 
+    # gas dispersion
+    vdisp = hCDM.g['v_disp']
+
     # profile range; based on El-Bhadry 2018 fig A1
     pmin = '0.01 kpc'
     pmax = '15 kpc'
@@ -40,9 +43,6 @@ def profileHI(hID, withSIDM=False):
 
     # gas surface density
     sigma = pCDM['mass']/(12.57*pCDM['rbins']*pCDM['rbins'])
-
-    # gas dispersion
-    vdisp = hCDM.g['v_disp']
 
     # plot first three panels
     axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=cdmC, linewidth=lw)
@@ -55,8 +55,8 @@ def profileHI(hID, withSIDM=False):
     axs[1].set_xlabel('radius [kpc]')
     axs[1].set_ylabel(r'$\Sigma$ (r) [$M_\odot$ kpc$^{-2}$]')
 
-    #axs[2].plot(pCDM['rbins'], vdisp, c=cdmC, linewidth=lw)
-    axs[2].set_title('gas dispersion')
+    axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=cdmC, linewidth=lw)
+    axs[2].set_title('median gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
 
@@ -69,6 +69,6 @@ def profileHI(hID, withSIDM=False):
 # get galaxies
 cdmHalos,sidmHalos,_ = util.getGalaxies()
 
-for g in cdmHalos[1:]:
+for g in cdmHalos:
     profileHI(g, withSIDM=False)
     break
