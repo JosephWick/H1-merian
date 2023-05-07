@@ -95,7 +95,7 @@ def profileHI(hID, withSIDM=False):
         pynbody.analysis.angmom.faceon(hSIDM)
 
         # rotation curve (global?)
-        pCDM = pynbody.analysis.profile.Profile(hSIDM, rmin=pmin, rmax=pmax, type='lin')
+        pSIDM = pynbody.analysis.profile.Profile(hSIDM, rmin=pmin, rmax=pmax, type='lin')
 
         # gas surface density
         sigma = pSIDM['mass']/(12.57*pSIDM['rbins']*pSIDM['rbins'])
