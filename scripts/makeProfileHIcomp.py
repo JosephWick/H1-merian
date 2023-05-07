@@ -27,7 +27,7 @@ def profileHI(hID, withSIDM=False):
 
     # center based on potential
     cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
-    sCDMD['pos'] -= cen_pot
+    sCDM['pos'] -= cen_pot
 
     pynbody.analysis.angmom.faceon(hCDM)
 
