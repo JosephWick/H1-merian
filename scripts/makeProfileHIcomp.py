@@ -49,19 +49,35 @@ def profileHI(hID, withSIDM=False):
     axs[0].set_title('rotation curve')
     axs[0].set_xlabel('radius [kpc]')
     axs[0].set_ylabel('velocity [km/s]')
+    axs[0].set_xlim([0,15])
 
     axs[1].plot(pCDM['rbins'], sigma, c=cdmC, linewidth=lw)
     axs[1].set_title('gas surface density')
     axs[1].set_xlabel('radius [kpc]')
     axs[1].set_ylabel(r'$\Sigma$ (r) [$M_\odot$ kpc$^{-2}$]')
+    axs[1].set_xlim([0,15])
 
     axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=cdmC, linewidth=lw)
     axs[2].set_title('median gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
+    axs[2].set_ylim([0,15])
 
     # do HI
-    # using 'y' orientation for all gals, as x and z sometimes are poor 
+    # using 'y' orientation for all gals, as x and z sometimes are poor
+    dpath = '/home/jw1624/H1-merian/h1lines/'
+    fcdm = glob.glob(dpath+'r'+str(hID)+'_cdm*')
+    fcdm.sort()
+
+    cdmx = pd.read_csv(fcdm[1], sep='\s+', header=None)[0]
+    cdmy = pd.read_csv(fcdm[1], sep='\s+', header=None)[1]
+
+    axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
+    axs[3].set_title('HI profile')
+    axs[3].set_xlabel('velocity [km/s]')
+    axs[3].set_ylabel(r'mass [M$_\odot$]')
+
+
 
     fig.tight_layout()
     plt.savefig('/home/jw1624/H1-merian/figures/toyModel/r'+str(hID)+'_4panel.png')
