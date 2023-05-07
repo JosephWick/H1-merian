@@ -110,7 +110,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
             axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
 
-            S21 = getFluxDensity(cdmy, dv,D)
+            S21 = getFluxDensity(sidmy, dv,D)
             K_sidm = getKurtosis(np.array(sidmx), np.array(sidmy))
             sidmy = S21
 
