@@ -108,11 +108,11 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             sidmx = pd.read_csv(fsidm[i], sep='\s+', header=None)[0]
             sidmy = pd.read_csv(fsidm[i], sep='\s+', header=None)[1]
 
-            axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
-
             S21 = getFluxDensity(sidmy, dv,D)
             K_sidm = getKurtosis(np.array(sidmx), np.array(sidmy))
             sidmy = S21
+
+            axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
 
             vmax = max(sidmy)
             for j,p in enumerate(Ws):
