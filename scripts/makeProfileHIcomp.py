@@ -74,7 +74,7 @@ def profileHI(hID, withSIDM=False):
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
     axs[2].set_xlim([0,15])
-    axs[2].set_ylim([0,100])
+    #axs[2].set_ylim([0,100])
 
     # do HI
     # using 'y' orientation for all gals, as x and z sometimes are poor
