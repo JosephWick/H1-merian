@@ -69,8 +69,8 @@ def profileHI(hID, withSIDM=False):
     axs[1].set_ylabel(r'$\Sigma$ (r) [$M_\odot$ kpc$^{-2}$]')
     axs[1].set_xlim([0,15])
 
-    axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=cdmC, linewidth=lw)
-    axs[2].set_title('median gas dispersion')
+    axs[2].plot([0,15], [np.mean(vdisp),np.mean(vdisp)], c=cdmC, linewidth=lw)
+    axs[2].set_title('mean gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
     axs[2].set_xlim([0,15])
@@ -116,7 +116,7 @@ def profileHI(hID, withSIDM=False):
         # plot first three panels
         axs[0].plot(pSIDM['rbins'], pSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[1].plot(pSIDM['rbins'], sigma, c=sidmC, linewidth=lw)
-        axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=sidmC, linewidth=lw)
+        axs[2].plot([0,15], [np.mean(vdisp),np.mean(vdisp)], c=sidmC, linewidth=lw)
 
         # do HI
         # using 'y' orientation for all gals, as x and z sometimes are poor
