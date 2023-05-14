@@ -79,13 +79,13 @@ def superprofile(hID, withSIDM=False):
 
     # do figure
     fig = plt.figure(figsize=(8,8), facecolor='w')
+
+    plt.plot(xaxis, g, linewidth=2)
+    plt.plot(xaxis, hiprof, linewidth=2)
     plt.fill_between(xaxis, hiprof, g, color='g', alpha=0.5)
 
-    plt.plot(xaxis, g, linewidth=5)
-    plt.plot(xaxis, hiprof, linewidth=5)
-
     # prettify
-    plt.title('Superprofile and Gaussian Fit', fontsize=22)
+    plt.title('Halo '+str(hID), fontsize=22)
     plt.xlabel('Offset Velocity [km/s]', fontsize=20)
     plt.ylabel(r'Flux Density [$M_\odot$]', fontsize=20)
     plt.legend(['Gaussian Fit', 'HI Superprofile'])
