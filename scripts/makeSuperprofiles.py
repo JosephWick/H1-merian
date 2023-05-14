@@ -29,7 +29,6 @@ def gaussian(x, A, mu, s):
 def superprofile(hID, withSIDM=False):
     cdmPath, sidmPath, _ = util.getfilepath(hID)
 
-    print(cdmPath)
     h1files = glob.glob(cdmPath+'/*.fits')
     h1files.sort()
     if len(h1files) == 4: h1files = h1files[1:]
