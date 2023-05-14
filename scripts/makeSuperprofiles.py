@@ -67,8 +67,8 @@ def superprofile(hID, withSIDM=False):
                 fity = gaussHermite(xaxis, p[0],p[1],p[2],p[3])
                 vmaxfit = xaxis[np.where(fity == fity.max())][0]
 
-            # shift array such that vmax is over zero
-            S[:,i,j] = np.roll(S[:,i,j], math.ceil(-vmaxfit/dv))
+                # shift array such that vmax is over zero
+                S[:,i,j] = np.roll(S[:,i,j], math.ceil(-vmaxfit/dv))
 
     # sum along spectral axis
     hiprof = np.sum(np.sum(S,1),1)
