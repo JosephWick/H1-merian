@@ -33,8 +33,8 @@ def superprofile(hID, withSIDM=False):
     h1files.sort()
     if len(h1files) == 4: h1files = h1files[1:]
 
-    # load data
-    f = fits.open(h1files[0], do_not_scale_image_data=True)
+    # load data (yhat orientation for now)
+    f = fits.open(h1files[1], do_not_scale_image_data=True)
     bscale = f[0].header['BSCALE']
     bzero = f[0].header['BZERO']
     blank = f[0].header['BLANK']
