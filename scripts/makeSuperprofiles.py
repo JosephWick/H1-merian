@@ -102,7 +102,7 @@ cdmHalos,sidmHalos,_ = util.getGalaxies()
 
 for g in cdmHalos:
     if g in sidmHalos:
-        profileHI(g, withSIDM=True)
-    profileHI(g, withSIDM=False)
+        superprofile(g, withSIDM=True)
+    superprofile(g, withSIDM=False)
     print('halo '+str(g)+'... done')
     break
