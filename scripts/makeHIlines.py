@@ -42,7 +42,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     # one galaxy we had edge on
     if len(h1files_cdm) == 4: h1files = h1files_cdm[1:]
 
-    h1files_sidm = glob.glob(sidmPath+'/*.fits')
+    h1files_sidm = glob.glob(sidmPath+'/*alfalfa*.fits')
     h1files_sidm.sort()
     # i think not really necessary for sidm
     if len(h1files_sidm) == 4: h1files = h1files_sidm[1:]
