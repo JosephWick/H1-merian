@@ -47,6 +47,9 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     # i think not really necessary for sidm
     if len(h1files_sidm) == 4: h1files = h1files_sidm[1:]
 
+    print(h1files_cdm)
+    print(h1files_sidm)
+
     # flux density params
     D = 70 #Mpc (distance observed at; note this is kinda arbitrary atm)
     dv= 11.2 #km/s (velocity resolution)
