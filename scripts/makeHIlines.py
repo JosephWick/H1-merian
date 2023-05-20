@@ -227,4 +227,3 @@ for g in cdmHalos:
     else:
         makeHIprofile(g, withSIDM=False,doExport=True)
     print('done')
-    break
