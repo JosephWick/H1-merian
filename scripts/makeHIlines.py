@@ -40,15 +40,12 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     h1files_cdm = glob.glob(cdmPath+'/*alfalfa*.fits')
     h1files_cdm.sort()
     # one galaxy we had edge on
-    if len(h1files_cdm) == 4: h1files = h1files_cdm[1:]
+    if len(h1files_cdm) == 4: h1files_cdm = h1files_cdm[1:]
 
     h1files_sidm = glob.glob(sidmPath+'/*alfalfa*.fits')
     h1files_sidm.sort()
     # i think not really necessary for sidm
     if len(h1files_sidm) == 4: h1files = h1files_sidm[1:]
-
-    print(len(h1files_cdm))
-    print(len(h1files_sidm))
 
     # flux density params
     D = 70 #Mpc (distance observed at; note this is kinda arbitrary atm)
