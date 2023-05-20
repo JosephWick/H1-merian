@@ -117,8 +117,8 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
             idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),val)))).flatten()
             if len(idxs_mass) < 2: continue
-            x1 = (cdmx[idxs_mass[0]]+cdmx[idxs_mass[0]+1])/2
-            x2 = (cdmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
+            x1 = (xaxis[idxs_mass[0]]+xaxis[idxs_mass[0]+1])/2
+            x2 = (xaxis[idxs_mass[1]]+xaxis[idxs_mass[1]+1])/2
 
             width = x2-x1
             wids[j] = width
@@ -165,8 +165,8 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
                 idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),val)))).flatten()
                 if len(idxs_mass) < 2: continue
-                x1 = (sidmx[idxs_mass[0]]+sidmx[idxs_mass[0]+1])/2
-                x2 = (sidmx[idxs_mass[1]]+sidmx[idxs_mass[1]+1])/2
+                x1 = (xaxis[idxs_mass[0]]+xaxis[idxs_mass[0]+1])/2
+                x2 = (xaxis[idxs_mass[1]]+xaxis[idxs_mass[1]+1])/2
 
                 width = x2-x1
                 wids[j+3] = width
