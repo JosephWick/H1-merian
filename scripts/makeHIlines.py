@@ -101,7 +101,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         # sum along spectral axis
         hiprof = np.sum(np.sum(S,1),1)
 
-        K_cdm = getKurtosis(xaxis, S)
+        K_cdm = getKurtosis(xaxis, hiprof)
 
         axs[i].plot(xaxis, S, linewidth=lw+1, c=cCDM)
 
@@ -152,7 +152,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             # velocities
             xaxis = np.arange(vstart, vstart+(dv*len(S[:,0,0])), dv)
 
-            K_sidm = getKurtosis(xaxis, S)
+            # sum along spectral axis
+            hiprof = np.sum(np.sum(S,1),1)
+
+            K_sidm = getKurtosis(xaxis, hiprof)
 
             axs[i].plot(xaxis, S, linewidth=lw-1, c=cSIDM)
 
