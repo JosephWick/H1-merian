@@ -33,18 +33,26 @@ def getKurtosis(v,s):
 def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
 
-    dpath = '/home/jw1624/H1-merian/h1lines/'
+    h1files_cdm = glob.glob(cdmPath+'/*.fits')
+    h1files_cdm.sort()
+    # one galaxy we had edge on
+    if len(h1files_cdm) == 4: h1files = h1files_cdm[1:]
+
+    h1files_sidm = glob.glob(sidmPath+'/*.fits')
+    h1files_sidm.sort()
+    # i think not really necessary for sidm
+    if len(h1files_sidm) == 4: h1files = h1files_sidm[1:]
 
     # flux density params
-    D = 70 #Mpc (distance observed at)
+    D = 70 #Mpc (distance observed at; note this is kinda arbitrary atm)
     dv= 11.2 #km/s (velocity resolution)
 
     # style params
     tsize = 24
     asize = 18
 
-    lw = 5
-    lwW = 2
+    lw = 5  # profile linewidth
+    lwW = 2 # width linewidth
 
     cCDM = 'firebrick'
     cCDMw = 'r'
@@ -60,25 +68,38 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     # fig setup
     fig,axs = plt.subplots(1,3, figsize=(14,5), facecolor='white')
 
-    # get the data
-    fcdm = glob.glob(dpath+'r'+str(hID)+'_cdm*')
-    fsidm= glob.glob(dpath+'r'+str(hID)+'_sidm*')
-
-    fcdm.sort()
-    fsidm.sort()
-
     # plot
     plt.suptitle('HI Profile for Galaxy '+str(hID), fontsize=tsize)
     K_cdm = -1
     for i in range(len(fcdm)):
-        cdmx = pd.read_csv(fcdm[i], sep='\s+', header=None)[0]
-        cdmy = pd.read_csv(fcdm[i], sep='\s+', header=None)[1]
+        # read data
+        # no scaling so I can follow Alyson's IDL code precisely
+        f = fits.open(h1files_cdm[i], do_not_scale_image_data=True)
+        bscale = f[0].header['BSCALE']
+        bzero = f[0].header['BZERO']
+        blank = f[0].header['BLANK']
+        data = f[0].data
 
-        S21 = getFluxDensity(cdmy, dv,D)
-        K_cdm = getKurtosis(np.array(cdmx), S21)
-        cdmy = S21
+        vstart = f[0].header['CRVAL3']
+        dv = f[0].header['CDELT3']
 
-        axs[i].plot(cdmx, cdmy, linewidth=lw+1, c=cCDM)
+        # initial scaling
+        data = data * bscale + bzero
+        data = np.power(np.full(data.shape,10), data)
+        data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
+
+        # velocities
+        xaxis = np.arange(vstart, vstart+(dv*len(S[:,i,j])), dv)
+
+        # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
+        S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
+
+        # sum along spectral axis
+        hiprof = np.sum(np.sum(S,1),1)
+
+        K_cdm = getKurtosis(xaxis, S)
+
+        axs[i].plot(xaxis, S, linewidth=lw+1, c=cCDM)
 
         axs[i].set_title(orientations[i]+' Orientation')
         axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize)
@@ -105,16 +126,33 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         # do line widths of sidm
         K_sidm = -1
         if withSIDM:
-            sidmx = pd.read_csv(fsidm[i], sep='\s+', header=None)[0]
-            sidmy = pd.read_csv(fsidm[i], sep='\s+', header=None)[1]
+            # read data
+            # no scaling so I can follow Alyson's IDL code precisely
+            f = fits.open(h1files_sidm[i], do_not_scale_image_data=True)
+            bscale = f[0].header['BSCALE']
+            bzero = f[0].header['BZERO']
+            blank = f[0].header['BLANK']
+            data = f[0].data
 
-            S21 = getFluxDensity(sidmy, dv,D)
-            K_sidm = getKurtosis(np.array(sidmx), np.array(sidmy))
-            sidmy = S21
+            vstart = f[0].header['CRVAL3']
+            dv = f[0].header['CDELT3']
 
-            axs[i].plot(sidmx, sidmy, linewidth=lw-1, c=cSIDM)
+            # initial scaling
+            data = data * bscale + bzero
+            data = np.power(np.full(data.shape,10), data)
+            data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
 
-            vmax = max(sidmy)
+            # velocities
+            xaxis = np.arange(vstart, vstart+(dv*len(S[:,i,j])), dv)
+
+            # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
+            S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
+            K_sidm = getKurtosis(xaxis, S)
+            sidmy = S
+
+            axs[i].plot(xaxis, S, linewidth=lw-1, c=cSIDM)
+
+            vmax = max(S)
             for j,p in enumerate(Ws):
                 val = (p/100)*vmax
 
@@ -182,3 +220,4 @@ for g in cdmHalos:
     else:
         makeHIprofile(g, withSIDM=False,doExport=True)
     print('done')
+    break
