@@ -78,14 +78,14 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     for i in range(len(h1files_cdm)):
         # read data
         # no scaling so I can follow Alyson's IDL code precisely
-        f = fits.open(h1files_cdm[i], do_not_scale_image_data=True)
-        bscale = f[0].header['BSCALE']
-        bzero = f[0].header['BZERO']
-        blank = f[0].header['BLANK']
-        data = f[0].data
+        fcdm = fits.open(h1files_cdm[i], do_not_scale_image_data=True)
+        bscale = fcdm[0].header['BSCALE']
+        bzero = fcdm[0].header['BZERO']
+        blank = fcdm[0].header['BLANK']
+        data = fcdm[0].data
 
-        vstart = f[0].header['CRVAL3']
-        dv = f[0].header['CDELT3']
+        vstart = fcdm[0].header['CRVAL3']
+        dv = fcdm[0].header['CDELT3']
 
         # initial scaling
         data = data * bscale + bzero
@@ -132,14 +132,14 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         if withSIDM:
             # read data
             # no scaling so I can follow Alyson's IDL code precisely
-            f = fits.open(h1files_sidm[i], do_not_scale_image_data=True)
-            bscale = f[0].header['BSCALE']
-            bzero = f[0].header['BZERO']
-            blank = f[0].header['BLANK']
-            data = f[0].data
+            fsidm = fits.open(h1files_sidm[i], do_not_scale_image_data=True)
+            bscale = fsidm[0].header['BSCALE']
+            bzero = fsidm[0].header['BZERO']
+            blank = fsidm[0].header['BLANK']
+            data = fsidm[0].data
 
-            vstart = f[0].header['CRVAL3']
-            dv = f[0].header['CDELT3']
+            vstart = fsidm[0].header['CRVAL3']
+            dv = fsidm[0].header['CDELT3']
 
             # initial scaling
             data = data * bscale + bzero
