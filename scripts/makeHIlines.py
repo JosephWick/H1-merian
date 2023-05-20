@@ -73,7 +73,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     # plot
     plt.suptitle('HI Profile for Galaxy '+str(hID), fontsize=tsize)
     K_cdm = -1
-    for i in range(len(fcdm)):
+    for i in range(len(h1files_cdm)):
         # read data
         # no scaling so I can follow Alyson's IDL code precisely
         f = fits.open(h1files_cdm[i], do_not_scale_image_data=True)
