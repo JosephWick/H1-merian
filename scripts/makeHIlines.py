@@ -103,7 +103,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
         K_cdm = getKurtosis(xaxis, hiprof)
 
-        axs[i].plot(xaxis, S, linewidth=lw+1, c=cCDM)
+        axs[i].plot(xaxis, hiprof, linewidth=lw+1, c=cCDM)
 
         axs[i].set_title(orientations[i]+' Orientation')
         axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize)
@@ -157,7 +157,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
             K_sidm = getKurtosis(xaxis, hiprof)
 
-            axs[i].plot(xaxis, S, linewidth=lw-1, c=cSIDM)
+            axs[i].plot(xaxis, hiprof, linewidth=lw-1, c=cSIDM)
 
             vmax = max(S)
             for j,p in enumerate(Ws):
