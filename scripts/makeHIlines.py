@@ -33,7 +33,7 @@ def getKurtosis(v,s):
 def makeHIprofile(hID, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
 
-    cdmpath, sidmpath, _ = util.getfilepath(hID)
+    cdmPath, sidmPath, _ = util.getfilepath(hID)
 
     h1files_cdm = glob.glob(cdmPath+'/*.fits')
     h1files_cdm.sort()
