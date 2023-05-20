@@ -110,12 +110,12 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         axs[i].set_ylabel('Flux Density [Jy]', fontsize=asize)
 
         # do line widths of cmd
-        vmax = max(cdmy)
+        vmax = max(hiprof)
         wids = [-1,-1,-1,-1,-1,-1]
         for j,p in enumerate(Ws):
             val = (p/100)*vmax
 
-            idxs_mass = np.argwhere(np.diff(np.sign(cdmy - np.full(len(cdmy),val)))).flatten()
+            idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),val)))).flatten()
             if len(idxs_mass) < 2: continue
             x1 = (cdmx[idxs_mass[0]]+cdmx[idxs_mass[0]+1])/2
             x2 = (cdmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
@@ -163,7 +163,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             for j,p in enumerate(Ws):
                 val = (p/100)*vmax
 
-                idxs_mass = np.argwhere(np.diff(np.sign(sidmy - np.full(len(sidmy),val)))).flatten()
+                idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),val)))).flatten()
                 if len(idxs_mass) < 2: continue
                 x1 = (sidmx[idxs_mass[0]]+sidmx[idxs_mass[0]+1])/2
                 x2 = (sidmx[idxs_mass[1]]+sidmx[idxs_mass[1]+1])/2
