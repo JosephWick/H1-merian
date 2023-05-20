@@ -92,11 +92,11 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         data = np.power(np.full(data.shape,10), data)
         data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
 
-        # velocities
-        xaxis = np.arange(vstart, vstart+(dv*len(S[:,i,j])), dv)
-
         # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
         S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
+
+        # velocities
+        xaxis = np.arange(vstart, vstart+(dv*len(S[:,i,j])), dv)
 
         # sum along spectral axis
         hiprof = np.sum(np.sum(S,1),1)
@@ -146,13 +146,13 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             data = np.power(np.full(data.shape,10), data)
             data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
 
+            # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
+            S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
+
             # velocities
             xaxis = np.arange(vstart, vstart+(dv*len(S[:,i,j])), dv)
 
-            # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
-            S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
             K_sidm = getKurtosis(xaxis, S)
-            sidmy = S
 
             axs[i].plot(xaxis, S, linewidth=lw-1, c=cSIDM)
 
