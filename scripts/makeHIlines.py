@@ -159,7 +159,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
 
             axs[i].plot(xaxis, hiprof, linewidth=lw-1, c=cSIDM)
 
-            vmax = max(S)
+            vmax = max(hiprof)
             for j,p in enumerate(Ws):
                 val = (p/100)*vmax
 
