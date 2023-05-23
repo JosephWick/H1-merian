@@ -26,11 +26,6 @@ class util:
 
         adiabatic = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r'+str(h)+'.romulus25.3072g1HsbBH/adiabatic'
 
-        if str(h)=='597':
-            return ['/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/r597.romulus25.3072g1HsbBH.004096',
-                    '',
-                    '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/adiabatic/r597.romulus25.3072g1HsbBH.004096']
-
         return [cdm,sidm, adiabatic]
     # end getfilepath()
 
