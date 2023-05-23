@@ -26,6 +26,11 @@ class util:
 
         adiabatic = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r'+str(h)+'.romulus25.3072g1HsbBH/adiabatic'
 
+        if h==597:
+            return ['/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/r597.romulus25.3072g1HsbBH.004096',
+                    '',
+                    '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms/r597.romulus25.3072g1HsbBH/adiabatic/r597.romulus25.3072g1HsbBH.004096']
+
         return [cdm,sidm, adiabatic]
     # end getfilepath()
 
@@ -34,7 +39,7 @@ class util:
     @staticmethod
     def getGalaxies():
         '''
-        returns halo ids foor present [CDM,SIDM] galaxies
+        returns halo ids foor present [CDM,SIDM,adiabatic] galaxies
         '''
 
         df = pd.read_csv('/home/jw1624/H1-merian/util/currentGals.tsv', sep='\t')
