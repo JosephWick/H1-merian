@@ -27,7 +27,7 @@ def gaussian(x, A, mu, s):
 
 # makes figures
 def superprofile(hID, withSIDM=False):
-    f=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'a')
+    fcsv=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'a')
 
     cdmPath, sidmPath, _ = util.getfilepath(hID)
 
@@ -106,9 +106,9 @@ def superprofile(hID, withSIDM=False):
     a = a/sumSmG
 
     # write to table
-    f.write(str(hID)+','+str(sigmaCentral)+','+str(fwings)+','
+    fcsv.write(str(hID)+','+str(sigmaCentral)+','+str(fwings)+','
         +str(sigmaWings)+','+str(a)+'\n')
-    f.close()
+    fcsv.close()
 
     # do figure
     fig = plt.figure(figsize=(8,8), facecolor='w')
@@ -133,9 +133,9 @@ def superprofile(hID, withSIDM=False):
 cdmHalos,sidmHalos,_ = util.getGalaxies()
 
 # set up file
-f=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'w')
-f.write('galaxy,sigmaCentral,fWings,sigmaWings,a')
-f.close()
+fcsv=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'w')
+fcsv.write('galaxy,sigmaCentral,fWings,sigmaWings,a')
+fcsv.close()
 
 for g in cdmHalos:
     if g in sidmHalos:
