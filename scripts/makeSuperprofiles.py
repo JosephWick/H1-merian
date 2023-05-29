@@ -27,8 +27,6 @@ def gaussian(x, A, mu, s):
 
 # makes figures
 def superprofile(hID, withSIDM=False):
-    fcsv=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'a')
-
     cdmPath, sidmPath, _ = util.getfilepath(hID)
 
     h1files = glob.glob(cdmPath+'/*.fits')
@@ -79,39 +77,39 @@ def superprofile(hID, withSIDM=False):
     p,_ = scipy.optimize.curve_fit(gaussian, xaxis, hiprof, maxfev=100000, p0=p0)
     g = gaussian(xaxis, p[0],p[1],p[2])
 
-    # get superprofile params
-    sigmaCentral = p[1]
-    hwhm = 2*np.sqrt(2*np.log(2))*sigmaCentral
+    if !withSIDM:
+        # get superprofile params
+        fcsv=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'a')
 
-    print(sigmaCentral)
-    print(hwhm)
+        sigmaCentral = p[1]
+        hwhm = 2*np.sqrt(2*np.log(2))*sigmaCentral
 
-    fwings = 0
-    sumS = 0
-    for i,v in enumerate(xaxis):
-        if abs(v)>hwhm:
-            fwings += (hiprof[i] - gaussian(v, p[0],p[1],p[2]))
-            sumS += hiprof[i]
-    fwings = fwings/sumS
+        fwings = 0
+        sumS = 0
+        for i,v in enumerate(xaxis):
+            if abs(v)>hwhm:
+                fwings += (hiprof[i] - gaussian(v, p[0],p[1],p[2]))
+                sumS += hiprof[i]
+        fwings = fwings/sumS
 
-    sigmaWings = 0
-    sumSmG = 0
-    for i,v in enumerate(xaxis):
-        if abs(v) > hwhm:
-            sigmaWings += (hiprof[i] - gaussian(v,p[0],p[1],p[2]))*(v**2)
-            sumSmG += hiprof[i] - gaussian(v,p[0],p[1],p[2])
-    sigmaWings = np.sqrt(sigmaWings/sumSmG)
+        sigmaWings = 0
+        sumSmG = 0
+        for i,v in enumerate(xaxis):
+            if abs(v) > hwhm:
+                sigmaWings += (hiprof[i] - gaussian(v,p[0],p[1],p[2]))*(v**2)
+                sumSmG += hiprof[i] - gaussian(v,p[0],p[1],p[2])
+        sigmaWings = np.sqrt(sigmaWings/sumSmG)
 
-    a = 0
-    for i,v in enumerate(xaxis):
-        if abs(v) > hwhm:
-            a += np.sqrt((hiprof[i] - hiprof[-i-1])**2)
-    a = a/sumSmG
+        a = 0
+        for i,v in enumerate(xaxis):
+            if abs(v) > hwhm:
+                a += np.sqrt((hiprof[i] - hiprof[-i-1])**2)
+        a = a/sumSmG
 
-    # write to table
-    fcsv.write(str(hID)+','+str(sigmaCentral)+','+str(fwings)+','
-        +str(sigmaWings)+','+str(a)+'\n')
-    fcsv.close()
+        # write to table
+        fcsv.write(str(hID)+','+str(sigmaCentral)+','+str(fwings)+','
+            +str(sigmaWings)+','+str(a)+'\n')
+        fcsv.close()
 
     # do figure
     fig = plt.figure(figsize=(8,8), facecolor='w')
