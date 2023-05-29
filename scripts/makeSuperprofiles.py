@@ -82,29 +82,30 @@ def superprofile(hID, withSIDM=False):
     # get superprofile params
     sigmaCentral = p[1]
     hwhm = 2*np.sqrt(2*np.log(2))*sigmaCentral
+
     print(sigmaCentral)
     print(hwhm)
-    print(xaxis)
+
     fwings = 0
     sumS = 0
     for i,v in enumerate(xaxis):
         if abs(v)>hwhm:
-            fwings += (S[i] - gaussian(v, p[0],p[1],p[2]))
-            sumS += S[i]
+            fwings += (hiprof[i] - gaussian(v, p[0],p[1],p[2]))
+            sumS += hiprof[i]
     fwings = fwings/sumS
 
     sigmaWings = 0
     sumSmG = 0
     for i,v in enumerate(xaxis):
         if abs(v) > hwhm:
-            sigmaWings += (S[i] - gaussian(v,p[0],p[1],p[2]))*(v**2)
-            sumSmG += S[i] - gaussian(v,p[0],p[1],p[2])
+            sigmaWings += (hiprof[i] - gaussian(v,p[0],p[1],p[2]))*(v**2)
+            sumSmG += hiprof[i] - gaussian(v,p[0],p[1],p[2])
     sigmaWings = np.sqrt(sigmaWings/sumSmG)
 
     a = 0
     for i,v in enumerate(xaxis):
         if abs(v) > hwhm:
-            a += np.sqrt((S[i] - S[-i-1])**2)
+            a += np.sqrt((hiprof[i] - hiprof[-i-1])**2)
     a = a/sumSmG
 
     # write to table
