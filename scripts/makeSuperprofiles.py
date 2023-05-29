@@ -84,6 +84,7 @@ def superprofile(hID, withSIDM=False):
     hwhm = 2*np.sqrt(2*np.log(2))*sigmaCentral
     print(sigmaCentral)
     print(hwhm)
+    print(xaxis)
     fwings = 0
     sumS = 0
     for i,v in enumerate(xaxis):
