@@ -27,6 +27,8 @@ def gaussian(x, A, mu, s):
 
 # makes figures
 def superprofile(hID, withSIDM=False):
+    f=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'a')
+
     cdmPath, sidmPath, _ = util.getfilepath(hID)
 
     h1files = glob.glob(cdmPath+'/*.fits')
@@ -77,6 +79,37 @@ def superprofile(hID, withSIDM=False):
     p,_ = scipy.optimize.curve_fit(gaussian, xaxis, hiprof, maxfev=100000, p0=p0)
     g = gaussian(xaxis, p[0],p[1],p[2])
 
+    # get superprofile params
+    sigmaCentral = p[1]
+    hwhm = 2*np.sqrt(2*np.log(2))*sigmaCentral
+
+    fwings = 0
+    sumS = 0
+    for v,i in enumerate(xaxis):
+        if abs(v)>hwhm:
+            fwings += (S[i] - g(v, p[0],p[1],p[2]))
+            sumS += S[i]
+    fwings = fwings/sumS
+
+    sigmaWings = 0
+    sumSmG = 0
+    for v,i in enumerate(xaxis):
+        if abs(v) > hwhm:
+            sigmaWings += (S[i] - g(v,p[0],p[1],p[2]))*(v**2)
+            sumSmG += S[i] - g(v,p[0],p[1],p[2])
+    sigmaWings = np.sqrt(sigmaWings/sumSmG)
+
+    a = 0
+    for v,i in enumerate(xaxis):
+        if abs(v) > hwhm:
+            a += np.sqrt((S[i] - S[-i-1])**2)
+    a = a/sumSmG
+
+    # write to table
+    f.write(str(hID)+','str(sigmaCentral)+','+str(fwings)+','
+        +str(sigmaWings)+','+str(a)+'\n')
+    f.close()
+
     # do figure
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
@@ -98,6 +131,11 @@ def superprofile(hID, withSIDM=False):
 
 # get galaxies
 cdmHalos,sidmHalos,_ = util.getGalaxies()
+
+# set up file
+f=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'w')
+f.write('galaxy,sigmaCentral,fWings,sigmaWings,a')
+f.close()
 
 for g in cdmHalos:
     if g in sidmHalos:
