@@ -87,7 +87,7 @@ def superprofile(hID, withSIDM=False):
     sumS = 0
     for i,v in enumerate(xaxis):
         if abs(v)>hwhm:
-            fwings += (S[i] - g(v, p[0],p[1],p[2]))
+            fwings += (S[i] - gaussian(v, p[0],p[1],p[2]))
             sumS += S[i]
     fwings = fwings/sumS
 
@@ -95,8 +95,8 @@ def superprofile(hID, withSIDM=False):
     sumSmG = 0
     for i,v in enumerate(xaxis):
         if abs(v) > hwhm:
-            sigmaWings += (S[i] - g(v,p[0],p[1],p[2]))*(v**2)
-            sumSmG += S[i] - g(v,p[0],p[1],p[2])
+            sigmaWings += (S[i] - gaussian(v,p[0],p[1],p[2]))*(v**2)
+            sumSmG += S[i] - gaussian(v,p[0],p[1],p[2])
     sigmaWings = np.sqrt(sigmaWings/sumSmG)
 
     a = 0
