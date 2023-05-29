@@ -106,7 +106,7 @@ def superprofile(hID, withSIDM=False):
     a = a/sumSmG
 
     # write to table
-    f.write(str(hID)+','str(sigmaCentral)+','+str(fwings)+','
+    f.write(str(hID)+','+str(sigmaCentral)+','+str(fwings)+','
         +str(sigmaWings)+','+str(a)+'\n')
     f.close()
 
