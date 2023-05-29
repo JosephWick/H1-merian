@@ -77,7 +77,7 @@ def superprofile(hID, withSIDM=False):
     p,_ = scipy.optimize.curve_fit(gaussian, xaxis, hiprof, maxfev=100000, p0=p0)
     g = gaussian(xaxis, p[0],p[1],p[2])
 
-    if !withSIDM:
+    if not withSIDM:
         # get superprofile params
         fcsv=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'a')
 
