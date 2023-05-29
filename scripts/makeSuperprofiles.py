@@ -104,7 +104,7 @@ def superprofile(hID, withSIDM=False):
         for i,v in enumerate(xaxis):
             if abs(v) > hwhm:
                 a += np.sqrt((hiprof[i] - hiprof[-i-1])**2)
-        a = a/sumSmG
+        a = (a/sumSmG)/2 # divide by two to account for double counting
 
         # write to table
         fcsv.write(str(hID)+','+str(sigmaCentral)+','+str(fwings)+','
