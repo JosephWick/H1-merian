@@ -113,7 +113,7 @@ def superprofile(hID, withSIDM=False):
     # do figure
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
-    plt.plot(xaxis, hiprof, linewidth=2, 'k')
+    plt.plot(xaxis, hiprof, linewidth=2, c='k')
     plt.plot(xaxis, g, linewidth=2, 'r--')
     plt.fill_between(xaxis, hiprof, g, color='g', alpha=0.5)
 
