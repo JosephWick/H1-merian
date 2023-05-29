@@ -143,4 +143,3 @@ for g in cdmHalos:
         superprofile(g, withSIDM=True)
     superprofile(g, withSIDM=False)
     print('halo '+str(g)+'... done')
-    break
