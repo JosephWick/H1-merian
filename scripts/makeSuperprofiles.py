@@ -82,7 +82,8 @@ def superprofile(hID, withSIDM=False):
     # get superprofile params
     sigmaCentral = p[1]
     hwhm = 2*np.sqrt(2*np.log(2))*sigmaCentral
-
+    print(sigmaCentral)
+    print(hwhm)
     fwings = 0
     sumS = 0
     for i,v in enumerate(xaxis):
@@ -134,7 +135,7 @@ cdmHalos,sidmHalos,_ = util.getGalaxies()
 
 # set up file
 fcsv=open('/home/jw1624/H1-merian/csvs/superProfiles.txt', 'w')
-fcsv.write('galaxy,sigmaCentral,fWings,sigmaWings,a')
+fcsv.write('galaxy,sigmaCentral,fWings,sigmaWings,a\n')
 fcsv.close()
 
 for g in cdmHalos:
@@ -142,3 +143,4 @@ for g in cdmHalos:
         superprofile(g, withSIDM=True)
     superprofile(g, withSIDM=False)
     print('halo '+str(g)+'... done')
+    break
