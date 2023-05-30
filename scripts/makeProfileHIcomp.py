@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import glob
 
+import scipy.integrate as integrate
+
 # flux density
 def getFluxDensity(hi, dv, D):
     S21 = []
@@ -75,18 +77,22 @@ def profileHI(hID, withSIDM=False):
     def sigmaGasofR(r):
         return sigma[int((r/15)*100)]
 
-    def sigmaVofR(r):
-        return sigma
-
     def vphi(r):
         return pCDM['v_circ'][int((r/15)*100)]
 
-    def integrand(r,v):
-        np.exp()
-
     def M(v):
+        def integrand(r,vbar):
+            a = np.exp(- ((v-vbar)**2)/(2*vDispMed**2))
+            b = r*sigmaGasofR(r)
+            c = vDispMed*np.sqrt( vphi(r)**2 -vbar**2 )
 
-        i2 =1
+            return (a*b)/c
+
+        i2 = integrate.dblquad(integrad, -1000,1000, 0,15)
+
+        return np.sqrt(2/np.pi)*i2
+
+    print(M(1))
 
     # plot first three panels
     axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=cdmC, linewidth=lw)
