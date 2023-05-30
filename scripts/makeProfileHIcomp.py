@@ -81,7 +81,7 @@ def profileHI(hID, withSIDM=False):
     def negVphi(r): return -1*vphi(r)
 
     def M(v):
-        def integrand(r, vbar):
+        def integrand(vbar, r):
             a = np.exp(- ((v-vbar)**2)/(2*vDispMed**2))
             b = r*sigmaGasofR(r)
             c = vDispMed*np.sqrt( vphi(r)**2 -vbar**2 )
