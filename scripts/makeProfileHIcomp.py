@@ -57,7 +57,7 @@ def profileHI(hID, withSIDM=False):
 
     rxaxisFiltered = sigmaOfR[sigmaOfR>0]
     sigmaFiltered = sigmaOfR[sigmaOfR>0]
-    vDispMean = np.mean(sigmaFiltered[0:15000])
+    vDispMed = np.median(sigmaFiltered[0:15000])
 
     pynbody.analysis.angmom.faceon(hCDM)
     # profile range; based on El-Bhadry 2018 fig A1
@@ -83,7 +83,7 @@ def profileHI(hID, withSIDM=False):
     axs[1].set_ylabel(r'$\Sigma$ (r) [$M_\odot$ kpc$^{-2}$]')
     axs[1].set_xlim([0,15])
 
-    axs[2].plot([0,15], [vDispMean,vDispMean], c=cdmC, linewidth=lw)
+    axs[2].plot([0,15], [vDispMed,vDispMed], c=cdmC, linewidth=lw)
     axs[2].set_title('median gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
@@ -132,7 +132,7 @@ def profileHI(hID, withSIDM=False):
 
         rxaxisFiltered = sigmaOfR[sigmaOfR>0]
         sigmaFiltered = sigmaOfR[sigmaOfR>0]
-        vDispMean = np.mean(sigmaFiltered[0:15000])
+        vDispMed = np.median(sigmaFiltered[0:15000])
 
         pynbody.analysis.angmom.faceon(hSIDM)
 
@@ -145,7 +145,7 @@ def profileHI(hID, withSIDM=False):
         # plot first three panels
         axs[0].plot(pSIDM['rbins'], pSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[1].plot(pSIDM['rbins'], sigma, c=sidmC, linewidth=lw)
-        axs[2].plot([0,15], [vDispMean,vDispMean], c=sidmC, linewidth=lw)
+        axs[2].plot([0,15], [vDispMed,vDispMed], c=sidmC, linewidth=lw)
 
         # do HI
         # using 'y' orientation for all gals, as x and z sometimes are poor
