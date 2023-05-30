@@ -81,7 +81,7 @@ def profileHI(hID, withSIDM=False):
     def negVphi(r): return -1*vphi(r)
 
     def M(v):
-        def integrand(vbar, r):
+        def integrand(r, vbar):
             a = np.exp(- ((v-vbar)**2)/(2*vDispMed**2))
             b = r*sigmaGasofR(r)
             c = vDispMed*np.sqrt( vphi(r)**2 -vbar**2 )
@@ -130,7 +130,7 @@ def profileHI(hID, withSIDM=False):
     sPred = getFluxDensity(Mpred, dv,D)
     print(sPred)
 
-    axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
+    #axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
     axs[3].plot(cdmx, sPred, c='k', linestyle='-')
     axs[3].set_title('HI profile')
     axs[3].set_xlabel('velocity [km/s]')
