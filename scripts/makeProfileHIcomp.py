@@ -130,6 +130,24 @@ def profileHI(hID, withSIDM=False):
     sPred = getFluxDensity(Mpred, dv,D)
     sPred = (sPred/max(sPred))*max(cdmy)
 
+    # get linewidths of sPred
+    Ws = [50,20]
+    wids = [-1,-1]
+    for j,p in enumerate(Ws):
+        val = (p/100)*vmax
+
+        idxs_mass = np.argwhere(np.diff(np.sign(sPred - np.full(len(sPred),val)))).flatten()
+        if len(idxs_mass) < 2: continue
+        x1 = (cmx[idxs_mass[0]]+cdmx[idxs_mass[0]+1])/2
+        x2 = (cmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
+
+        width = x2-x1
+        wids[j] = width
+
+    fwid = open('/home/jw1624/H1-merian/csvs/HI_widths_pred.txt', 'a')
+    fwid.write(str(hID)+','+str(wids[0])+','+str(wids[1])+'\n')
+    fwid.close()
+
     axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
     axs[3].plot(cdmx, sPred, c='k', linestyle='-')
     axs[3].set_title('HI profile')
@@ -199,6 +217,10 @@ def profileHI(hID, withSIDM=False):
 
 # get galaxies
 cdmHalos,sidmHalos,_ = util.getGalaxies()
+
+fwid = open('/home/jw1624/H1-merian/csvs/HI_widths_pred.txt', 'w')
+fwid.write('galaxy,w50,w20\n')
+fwid.close()
 
 for g in cdmHalos:
     if g in sidmHalos:
