@@ -89,7 +89,7 @@ def profileHI(hID, withSIDM=False):
             return (a*b)/c
 
         vcrit = max(pCDM['v_circ'])
-        i2 = integrate.dblquad(integrand, -0,15000, negVphi,vphi)[0]
+        i2 = integrate.dblquad(integrand, -0,15, negVphi,vphi)[0]
 
         return np.sqrt(2/np.pi)*i2
 
@@ -128,6 +128,7 @@ def profileHI(hID, withSIDM=False):
         Mpred.append(M(x))
 
     sPred = getFluxDensity(Mpred, dv,D)
+    sPred = (sPred/max(sPred))*max(cdmy)
     print(sPred)
 
     #axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
