@@ -56,8 +56,8 @@ def profileHI(hID, withSIDM=False):
     sigmaOfR = sigmaOfR/numPerR
 
     rxaxisFiltered = sigmaOfR[sigmaOfR>0]
-    vDispMean = sigmaFiltered = sigmaOfR[sigmaOfR>0]
-    np.mean(sigmaFiltered[0:15000])
+    sigmaFiltered = sigmaOfR[sigmaOfR>0]
+    vDispMean = np.mean(sigmaFiltered[0:15000])
 
     pynbody.analysis.angmom.faceon(hCDM)
     # profile range; based on El-Bhadry 2018 fig A1
