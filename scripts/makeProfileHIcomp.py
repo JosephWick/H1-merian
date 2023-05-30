@@ -117,7 +117,22 @@ def profileHI(hID, withSIDM=False):
         sSIDM['pos'] -= cen_pot
 
         # gas dispersion
-        vdisp = hSIDM.g['v_disp']
+        s_r = sSIDM.g['r']
+        s_vd = sSIDM.g['v_disp']
+
+        s_r_int = np.array(s_r, dtype=int)
+        sigmaOfR = np.zeros(max(s_r_int))
+        numPerR = np.zeros(max(s_r_int))
+
+        for idx,r in enumerate(s_r_int):
+            sigmaOfR[r-1] += s_vd[r-1]
+            numPerR[r-1] += 1
+
+        sigmaOfR = sigmaOfR/numPerR
+
+        rxaxisFiltered = sigmaOfR[sigmaOfR>0]
+        sigmaFiltered = sigmaOfR[sigmaOfR>0]
+        vDispMean = np.mean(sigmaFiltered[0:15000])
 
         pynbody.analysis.angmom.faceon(hSIDM)
 
@@ -130,7 +145,7 @@ def profileHI(hID, withSIDM=False):
         # plot first three panels
         axs[0].plot(pSIDM['rbins'], pSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[1].plot(pSIDM['rbins'], sigma, c=sidmC, linewidth=lw)
-        axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=sidmC, linewidth=lw)
+        axs[2].plot([0,15], [vDispMean,vDispMean], c=sidmC, linewidth=lw)
 
         # do HI
         # using 'y' orientation for all gals, as x and z sometimes are poor
