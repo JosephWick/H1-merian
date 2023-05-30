@@ -139,8 +139,8 @@ def profileHI(hID, withSIDM=False):
 
         idxs_mass = np.argwhere(np.diff(np.sign(sPred - np.full(len(sPred),val)))).flatten()
         if len(idxs_mass) < 2: continue
-        x1 = (cmx[idxs_mass[0]]+cdmx[idxs_mass[0]+1])/2
-        x2 = (cmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
+        x1 = (cdmx[idxs_mass[0]]+cdmx[idxs_mass[0]+1])/2
+        x2 = (cdmx[idxs_mass[1]]+cdmx[idxs_mass[1]+1])/2
 
         width = x2-x1
         wids[j] = width
