@@ -129,9 +129,8 @@ def profileHI(hID, withSIDM=False):
 
     sPred = getFluxDensity(Mpred, dv,D)
     sPred = (sPred/max(sPred))*max(cdmy)
-    print(sPred)
 
-    #axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
+    axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
     axs[3].plot(cdmx, sPred, c='k', linestyle='-')
     axs[3].set_title('HI profile')
     axs[3].set_xlabel('velocity [km/s]')
@@ -206,4 +205,3 @@ for g in cdmHalos:
         profileHI(g, withSIDM=True)
     profileHI(g, withSIDM=False)
     print('halo '+str(g)+'... done')
-    break
