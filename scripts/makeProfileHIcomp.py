@@ -42,10 +42,24 @@ def profileHI(hID, withSIDM=False):
     sCDM['pos'] -= cen_pot
 
     # gas dispersion
-    vdisp = hCDM.g['v_disp']
+    s_r = sCDM.g['r']
+    s_vd = sCDM.g['v_disp']
+
+    s_r_int = np.array(s_r, dtype=int)
+    sigmaOfR = np.zeros(max(s_r_int))
+    numPerR = np.zeros(max(s_r_int))
+
+    for idx,r in enumerate(s_r_int):
+        sigmaOfR[r-1] += s_vd[r-1]
+        numPerR[r-1] += 1
+
+    sigmaOfR = sigmaOfR/numPerR
+
+    rxaxisFiltered = sigmaOfR[sigmaOfR>0]
+    vDispMean = sigmaFiltered = sigmaOfR[sigmaOfR>0]
+    np.mean(sigmaFiltered[0:15000])
 
     pynbody.analysis.angmom.faceon(hCDM)
-
     # profile range; based on El-Bhadry 2018 fig A1
     pmin = '0.01 kpc'
     pmax = '15 kpc'
@@ -69,7 +83,7 @@ def profileHI(hID, withSIDM=False):
     axs[1].set_ylabel(r'$\Sigma$ (r) [$M_\odot$ kpc$^{-2}$]')
     axs[1].set_xlim([0,15])
 
-    axs[2].plot([0,15], [np.median(vdisp),np.median(vdisp)], c=cdmC, linewidth=lw)
+    axs[2].plot([0,15], [vDispMean,vDispMean], c=cdmC, linewidth=lw)
     axs[2].set_title('median gas dispersion')
     axs[2].set_xlabel('radius [kpc]')
     axs[2].set_ylabel('velocity [km/s]')
