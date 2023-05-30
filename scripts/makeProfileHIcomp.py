@@ -86,7 +86,7 @@ def profileHI(hID, withSIDM=False):
 
     def M(v):
 
-        i2 =
+        i2 =1
 
     # plot first three panels
     axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=cdmC, linewidth=lw)
