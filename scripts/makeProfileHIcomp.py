@@ -86,7 +86,8 @@ def profileHI(hID, withSIDM=False):
 
             return (a*b)/c
 
-        i2 = integrate.dblquad(integrand, -1000,1000, 0,15)
+        vcrit = max(pCDM['v_circ'])
+        i2 = integrate.dblquad(integrand, -vcrit, vcrit, 0,15)
 
         return np.sqrt(2/np.pi)*i2
 
