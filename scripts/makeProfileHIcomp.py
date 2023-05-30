@@ -93,9 +93,6 @@ def profileHI(hID, withSIDM=False):
 
         return np.sqrt(2/np.pi)*i2
 
-    print(M(1))
-    exit()
-
     # plot first three panels
     axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=cdmC, linewidth=lw)
     axs[0].set_title('rotation curve')
