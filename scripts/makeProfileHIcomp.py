@@ -126,7 +126,14 @@ def profileHI(hID, withSIDM=False):
     cdmy = pd.read_csv(fcdm[1], sep='\s+', header=None)[1]
     cdmy = getFluxDensity(cdmy, dv,D)
 
+    Mpred = []
+    for x in cdmx:
+        Mpred.append(M(x))
+
+    sPred = getFluxDensity(Mpred, dv,D)
+
     axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
+    axs[3].plot(cdmx, sPred, c='k', linestyle='-')
     axs[3].set_title('HI profile')
     axs[3].set_xlabel('velocity [km/s]')
     axs[3].set_ylabel('flux density [Jy]')
