@@ -207,3 +207,4 @@ for g in cdmHalos:
         profileHI(g, withSIDM=True)
     profileHI(g, withSIDM=False)
     print('halo '+str(g)+'... done')
+    break
