@@ -78,6 +78,8 @@ def profileHI(hID, withSIDM=False):
     def vphi(r):
         return pCDM['v_circ'][int((r/15)*100)]
 
+    def negVphi(r): return -1*vphi(r)
+
     def M(v):
         def integrand(vbar, r):
             a = np.exp(- ((v-vbar)**2)/(2*vDispMed**2))
@@ -87,7 +89,7 @@ def profileHI(hID, withSIDM=False):
             return (a*b)/c
 
         vcrit = max(pCDM['v_circ'])
-        i2 = integrate.dblquad(integrand, -0,15, -1*vphi,vphi)
+        i2 = integrate.dblquad(integrand, -0,15, negVphi,vphi)
 
         return np.sqrt(2/np.pi)*i2
 
