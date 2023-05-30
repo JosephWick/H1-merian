@@ -128,6 +128,7 @@ def profileHI(hID, withSIDM=False):
         Mpred.append(M(x))
 
     sPred = getFluxDensity(Mpred, dv,D)
+    print(sPred)
 
     axs[3].plot(cdmx, cdmy, c=cdmC, linewidth=lw)
     axs[3].plot(cdmx, sPred, c='k', linestyle='-')
