@@ -133,6 +133,7 @@ def profileHI(hID, withSIDM=False):
     # get linewidths of sPred
     Ws = [50,20]
     wids = [-1,-1]
+    vmax = max(sPred)
     for j,p in enumerate(Ws):
         val = (p/100)*vmax
 
