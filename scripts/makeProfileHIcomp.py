@@ -71,8 +71,6 @@ def profileHI(hID, withSIDM=False):
 
     # gas surface density
     sigma = pCDM['mass']/(12.57*pCDM['rbins']*pCDM['rbins'])
-    print(len(sigmaOfR))
-    aladlsk()
 
     def sigmaGasofR(r):
         return sigma[int((r/15)*100)]
@@ -93,6 +91,7 @@ def profileHI(hID, withSIDM=False):
         return np.sqrt(2/np.pi)*i2
 
     print(M(1))
+    exit()
 
     # plot first three panels
     axs[0].plot(pCDM['rbins'], pCDM['v_circ'], c=cdmC, linewidth=lw)
