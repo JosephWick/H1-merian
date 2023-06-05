@@ -7,6 +7,27 @@ import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
+
+# input: a simulation
+# output: half mass radius of that simulation
+def halfMassRadius(sim, startR, incBy, acc):
+    pRadii = np.array(sim.s['r'])
+    pMass = np.array(sim.s['mass'])
+    mTot = sum(pMass)
+
+    # start at 5 kpc and increment
+    r = startR-incBy
+    hm = mTot
+    while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
+        r += incBy
+        hm = sum(pMass[pRadii < r])
+
+        if (r>max(pRadii)):
+            return -1
+
+    return r
+
+# 
 def makeGalQtyCSV(gal):
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
     galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
