@@ -40,7 +40,7 @@ def makeGalQtyCSV(gal, startTS=0):
     if startTS == 0:
         fout = open(outfile,'w')
         fout.write('galaxyID,timestep,t,z,')
-        fout.write('M_star,R_vir,R_halflight,R_halfmass,')
+        fout.write('M_star,R_halflight,R_halfmass,')
         fout.write('sigma_gas,sigma_star,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
         fout.close()
