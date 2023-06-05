@@ -4,7 +4,7 @@ import glob
 import numpy as np
 
 import sys
-sys.path.insert(0, '../util/')
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
 def makeGalQtyCSV(gal):
