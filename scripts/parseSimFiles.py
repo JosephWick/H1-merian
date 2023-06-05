@@ -27,24 +27,27 @@ def halfMassRadius(sim, startR, incBy, acc):
 
     return r
 
-# 
-def makeGalQtyCSV(gal):
+#
+def makeGalQtyCSV(gal, startTS=0):
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
     galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
 
     timesteps = glob.glob(galDir+'/r*.romulus25.3072g1HsbBH.0*')
-    timesteps.sort()
+    timesteps.sort(reverse=True)
 
     # setup file for exporting values
     outfile = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
-    fout = open(outfile,'w')
-    fout.write('galaxyID,timestep,t,z,')
-    fout.write('M_star,R_vir,R_halflight,R_halfmass,')
-    fout.write('sigma_gas,sigma_star,')
-    fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
+    if startTS == 0:
+        fout = open(outfile,'w')
+        fout.write('galaxyID,timestep,t,z,')
+        fout.write('M_star,R_vir,R_halflight,R_halfmass,')
+        fout.write('sigma_gas,sigma_star,')
+        fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
+        fout.close()
 
     # iterate through each timestep
-    for timestep in timesteps:
+    for timestep in timesteps[startTS:]:
+        fout = open(outfile, 'a')
         tstepnumber = timestep[-6:]
 
         # I'm assuming that if there's another subfolder, the sim is inside it
@@ -121,17 +124,18 @@ def makeGalQtyCSV(gal):
         fout.write(str(sigma_gas)+','+str(sigma_star)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
 
+        fout.close()
         print('r'+str(gal)+' '+str(tstepnumber)+' done')
-
-    fout.close()
 ##
 
-if len(sys.argv) != 2:
-    print('Usage: python3 parseSimFiles.py [galaxy idx]')
+if len(sys.argv) != 3:
+    print('Usage: python3 parseSimFiles.py [galaxy idx] [ts idx]')
     sys.exit()
 
 idx = int(sys.argv[1])
 currentGals = util.getGalaxies()[0]
 gal = currentGals[idx]
 
-makeGalQtyCSV(gal)
+ts_idx = int(sys.argv[2])
+
+makeGalQtyCSV(gal, ts_idx)
