@@ -109,7 +109,7 @@ if len(sys.argv) != 2:
     print('Usage: python3 parseSimFiles.py [galaxy idx]')
     sys.exit()
 
-idx = sys.argv[1]
+idx = int(sys.argv[1])
 currentGals = util.getGalaxies()[0]
 gal = currentGals[idx]
 
