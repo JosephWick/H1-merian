@@ -1,0 +1,1 @@
+galaxyID,timestep,t,z,M_star,R_halflight,R_halfmass,sigma_gas,sigma_star,SFR_10,SFR_100,sSFR_10,sSFR_100
