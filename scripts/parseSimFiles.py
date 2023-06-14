@@ -118,8 +118,8 @@ def makeGalQtyCSV(gal, startTS=0):
         sCDM.properties['boxsize'] = 3.0e4
 
         # sigma HII
-        hiimask = sCDM.g['HII']>max(sCDM.g['HII'])*0.95
-        sigma_gas = np.median(sCDM.g['v_disp'][hiimask])
+        #hiimask = sCDM.g['HII']>max(sCDM.g['HII'])*0.95
+        #sigma_gas = np.median(sCDM.g['v_disp'][hiimask])
 
         sigma_star= np.median(sCDM.s['v_disp'])
         sigma_youngstar = np.median(sCDM.s['v_disp'][sCDM.s['age'].in_units('Myr') < 10])
