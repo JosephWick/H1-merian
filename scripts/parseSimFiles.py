@@ -121,6 +121,7 @@ def makeGalQtyCSV(gal, startTS=0):
         print(sCDM.all_keys())
         # sigma HII
         HIIpos = sCDM.g['pos'].in_units('pc')
+        selectedHIIdisps = []
         # want regions within 100 pc of young (10 MYR) stars
         youngStarPos = sCDM.s['pos'].in_units('pc')[sCDM.s['age'].in_units('Myr')<10]
         for i,hii in enumerate(HIIpos[:]):
