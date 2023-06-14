@@ -124,8 +124,8 @@ def makeGalQtyCSV(gal, startTS=0):
         sigma_star= np.median(sCDM.s['v_disp'])
         sigma_youngstar = np.median(sCDM.s['v_disp'][sCDM.s['age'].in_units('Myr') < 10])
         # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
-        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(M_star) + 0.0126*np.log10(M_star)*sSFR_10
-        log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(M_star) + 0.0126*np.log10(M_star)*sSFR_100
+        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_10
+        log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_100
 
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
