@@ -40,8 +40,9 @@ def makeGalQtyCSV(gal, startTS=0):
     if startTS == 0:
         fout = open(outfile,'w')
         fout.write('galaxyID,timestep,t,z,')
-        fout.write('M_star,R_halflight,R_halfmass,')
-        fout.write('sigma_gas,sigma_star,')
+        fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
+        fout.write('sigma_gas,sigma_star,sigma_youngstar,')
+        fout.write('log_sigma_pred_10,log_sigma_pred_100,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
         fout.close()
 
@@ -102,26 +103,36 @@ def makeGalQtyCSV(gal, startTS=0):
         mStar = sum(sCDM.s['mass'])
 
         # Sizes
-        #rVir = pynbody.analysis.halo.virial_radius(sCDM)
-        rHL = pynbody.analysis.luminosity.half_light_r(sCDM)
+        rVir = pynbody.analysis.halo.virial_radius(sCDM)
+        rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
+        rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM, cylindrical=True).in_units('kpc')
 
         rHM = halfMassRadius(sCDM, 0, 1, 0.1)
         rHM = halfMassRadius(sCDM,rHM*0.85, 0.05, 0.01)
 
+        # sSFR
+        sSFR_10 = np.log10(SFR_10/(mStar*1e7))
+        sSFR_100 = np.log10(SFR_100/(mStar*1e8))
+
         # velocity dispersion
         sCDM.properties['boxsize'] = 3.0e4
-        sigma_gas = np.median(sCDM.g['v_disp'])
-        sigma_star= np.median(sCDM.s['v_disp'])
 
-        # sSFR
-        sSFR_10 = SFR_10/mStar
-        sSFR_100 = SFR_100/mStar
+        # sigma HII
+        hiimask = sCDM.g['HII']>max(sCDM.g['HII'])*0.95
+        sigma_gas = np.median(sCDM.g['v_disp'][hiimask])
+
+        sigma_star= np.median(sCDM.s['v_disp'])
+        sigma_youngstar = np.median(sCDM.s['v_disp'][sCDM.s['age'].in_units('Myr') < 10])
+        # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
+        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(M_star) + 0.0126*np.log10(M_star)*sSFR_10
+        log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(M_star) + 0.0126*np.log10(M_star)*sSFR_100
 
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         #fout.write(str(mStar)+','+str(rVir)+','+str(rHL)+','+str(rHM)+',')
-        fout.write(str(mStar)+','+str(rHL)+','+str(rHM)+',')
-        fout.write(str(sigma_gas)+','+str(sigma_star)+',')
+        fout.write(str(mStar)+','str(rVir)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
+        fout.write(str(sigma_gas)+','+str(sigma_star)+','+str(sigma_youngstar)+',')
+        fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
 
         fout.close()
