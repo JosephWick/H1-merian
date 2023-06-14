@@ -115,8 +115,8 @@ def makeGalQtyCSV(gal, startTS=0):
         sSFR_100 = np.log10(SFR_100/(mStar*1e8))
 
         # velocity dispersion
-        sCDM.properties['boxsize'] = 3.0e4
-
+        #sCDM.properties['boxsize'] = 3.0e4
+        print(sCDM.all_keys())
         # sigma HII
         #hiimask = sCDM.g['HII']>max(sCDM.g['HII'])*0.95
         #sigma_gas = np.median(sCDM.g['v_disp'][hiimask])
