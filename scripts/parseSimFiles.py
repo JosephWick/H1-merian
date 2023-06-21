@@ -41,7 +41,7 @@ def makeGalQtyCSV(gal, startTS=0):
         fout = open(outfile,'w')
         fout.write('galaxyID,timestep,t,z,')
         fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
-        fout.write('sigma_gas,sigma_star,sigma_youngstar,')
+        fout.write('sigma_star,sigma_youngstar,')
         fout.write('log_sigma_pred_10,log_sigma_pred_100,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
         fout.close()
@@ -118,22 +118,6 @@ def makeGalQtyCSV(gal, startTS=0):
 
         # velocity dispersion
         #sCDM.properties['boxsize'] = 3.0e4
-        print(sCDM.all_keys())
-        # sigma HII
-        HIIpos = sCDM.g['pos'].in_units('pc')
-        selectedHIIdisps = []
-        # want regions within 100 pc of young (10 MYR) stars
-        youngStarPos = sCDM.s['pos'].in_units('pc')[sCDM.s['age'].in_units('Myr')<10]
-        for i,hii in enumerate(HIIpos[:]):
-            distances = abs(youngStarPos - hii)
-            distances = np.linalg.norm(distances, axis=1)
-
-            # if close to a young star, calculate v disp for that particle
-            if min(distances)<100:
-                selectedHIIdisps.append(vdispg[i])
-            if i%500000==0: print(i)
-
-        sigma_gas = np.medan(np.abs(selectedHIIdisps))
         sigma_star= np.median(sCDM.s['v_disp'])
         sigma_youngstar = np.median(sCDM.s['v_disp'][sCDM.s['age'].in_units('Myr') < 10])
         # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
@@ -144,7 +128,7 @@ def makeGalQtyCSV(gal, startTS=0):
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         #fout.write(str(mStar)+','+str(rVir)+','+str(rHL)+','+str(rHM)+',')
         fout.write(str(mStar)+','+str(rVir)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
-        fout.write(str(sigma_gas)+','+str(sigma_star)+','+str(sigma_youngstar)+',')
+        fout.write(str(sigma_star)+','+str(sigma_youngstar)+',')
         fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
 
