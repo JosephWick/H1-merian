@@ -71,6 +71,8 @@ def makeGalQtyCSV(gal, startTS=0):
             continue
 
         # check for addtional folder
+        print(simFile)
+        print(glob.glob(simFile+"/*"))
         if len(glob.glob(simFile+"/*"))>0:
             simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
 
