@@ -1,2 +1,1 @@
-galaxyID,timestep,t,z,M_star,R_halflight_s,R_halflight_c,R_halfmass,sigma_gas,sigma_star,sigma_youngstar,log_sigma_pred_10,log_sigma_pred_100,SFR_10,SFR_100,sSFR_10,sSFR_100
-431,004096,13.800820457603765,-2.1550990513269365e-12,1486476358.302916,153.54422684356194,4.186630302675925,4.130957494785573,2.8499999999999988,
+galaxyID,timestep,t,z,M_star,R_halflight_s,R_halflight_c,R_halfmass,sigma_star,sigma_youngstar,log_sigma_pred_10,log_sigma_pred_100,SFR_10,SFR_100,sSFR_10,sSFR_100
