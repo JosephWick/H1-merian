@@ -110,6 +110,7 @@ def makeGalQtyCSV(gal, startTS=0):
         mStar = sum(sCDM.s['mass'])
 
         # Sizes
+        rVir = -1
         #rVir = pynbody.analysis.halo.virial_radius(sCDM)
         rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
         rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM, cylindrical=True).in_units('kpc')
