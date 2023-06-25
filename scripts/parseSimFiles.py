@@ -3,6 +3,7 @@ import glob
 
 import numpy as np
 
+import os
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
@@ -68,6 +69,10 @@ def makeGalQtyCSV(gal, startTS=0):
         if len(glob.glob(simFile)) == 0:
             print('FNF for halo ' + str(gal) + ', timestep '+tstepnumber)
             continue
+
+        # check for addtional folder
+        if os.path.isdir(simFile):
+            simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
 
         # open simfile
         sCDM = pynbody.load(simFile)
