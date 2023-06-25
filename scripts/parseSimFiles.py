@@ -81,7 +81,7 @@ def makeGalQtyCSV(gal, startTS=0):
 
         vdispg = sCDM.g['v_disp']
 
-        # SFR and sSFR (do first otherwise we sometimes get an error)
+        # SFR (do first otherwise we sometimes get an error)
         SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
         SFR_100 = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<100])
 
@@ -110,7 +110,7 @@ def makeGalQtyCSV(gal, startTS=0):
         mStar = sum(sCDM.s['mass'])
 
         # Sizes
-        rVir = pynbody.analysis.halo.virial_radius(sCDM)
+        #rVir = pynbody.analysis.halo.virial_radius(sCDM)
         rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
         rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM, cylindrical=True).in_units('kpc')
 
