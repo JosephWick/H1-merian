@@ -70,12 +70,9 @@ def makeGalQtyCSV(gal, startTS=0):
             print('FNF for halo ' + str(gal) + ', timestep '+tstepnumber)
             continue
 
-        print(simFile)
-        print(os.path.isdir(simFile))
         # check for addtional folder
-        if os.path.isdir(simFile):
+        if len(glob.glob(simFile+"/*"))>0:
             simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-        print(simFile)
 
         # open simfile
         sCDM = pynbody.load(simFile)
