@@ -16,7 +16,7 @@ def halfMassRadius(sim, startR, incBy, acc):
     pMass = np.array(sim.s['mass'])
     mTot = sum(pMass)
 
-    # start at 5 kpc and increment
+    # start at starR kpc and increment
     r = startR-incBy
     hm = mTot
     while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
@@ -74,7 +74,7 @@ def makeGalQtyCSV(gal, startTS=0):
         if os.path.isdir(simFile):
             simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
         # check if simFile exists
-        if len(glob.glob(simFile))==0: continue 
+        if len(glob.glob(simFile))==0: continue
 
 
         # open simfile
