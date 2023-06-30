@@ -136,7 +136,7 @@ def makeGalQtyCSV(gal, startTS=0):
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         #fout.write(str(mStar)+','+str(rVir)+','+str(rHL)+','+str(rHM)+',')
-        fout.write(str(mStar)+','+str(rVir)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
+        fout.write(str(mStar)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
         fout.write(str(sigma_star)+','+str(sigma_youngstar)+',')
         fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
