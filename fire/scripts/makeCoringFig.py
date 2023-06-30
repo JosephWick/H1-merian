@@ -35,7 +35,7 @@ rcParams['savefig.transparent'] = False
 
 ##
 # command line args
-if len(sys.argv) != 3:
+if len(sys.argv) != 2:
     print('Usage: python3 makeCoringFig.py [galaxy idx]')
     sys.exit()
 
