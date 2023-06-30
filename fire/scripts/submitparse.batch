@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#SBATCH --job-name=parseFIRE
+#SBATCH --partition=leauthaud
+#SBATCH --account=leauthaud
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=jmwick@ucsc.edu
+#SBATCH --ntasks=6
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=6
+#SBATCH --time=1-23:00:00
+#SBATCH --output=parseFIRE.out
+
+python3 parseFire.py 0 & 
+python3 parseFire.py 1 & 
+python3 parseFire.py 2 & 
+python3 parseFire.py 3 & 
+python3 parseFire.py 4 & 
+python3 parseFire.py 5 &
+
+wait 
