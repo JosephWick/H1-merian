@@ -31,7 +31,6 @@ def halfMassRadius(sim, startR, incBy, acc):
 def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     innerLim = 0.0
     outerLim = outerR
-    guessR = 0.0
 
     pRadii = np.array(sim.s['r'].in_units('kpc'))
     pMass = np.array(sim.s['mass'])
@@ -40,11 +39,13 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     r = outerR/2
     hm = mTot
     n=0
-    while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
+    while(hm < (0.5-acc)*mTot or hm > (0.5+acc)*mTot):
         if hm > 0.5*mTot: # too big, decrease r
+            print('a')
             outerLim = r
             r = innerLim + (outerLim-innerLim)/2
         elif hm < 0.5*mTot:
+            print('b')
             innerLim = r
             r = innerLim + (outerLim-innerLim)/2
         hm = sum(pMass[pRadii < r])
