@@ -54,7 +54,7 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
             return -1
             break
 
-        print r
+        print(r)
     return r
 
 # Yifei's code for mass weighted 3D velocity distribution
