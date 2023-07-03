@@ -33,7 +33,7 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     outerLim = outerR
     guessR = 0.0
 
-    pRadii = np.array(sim.s['r']).in_units('kpc')
+    pRadii = np.array(sim.s['r'].in_units('kpc'))
     pMass = np.array(sim.s['mass'])
     mTot = sum(pMass)
 
