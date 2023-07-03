@@ -12,7 +12,7 @@ from util import util
 # input: a simulation
 # output: half mass radius of that simulation
 def halfMassRadius(sim, startR, incBy, acc):
-    pRadii = np.array(sim.s['r'])
+    pRadii = np.array(sim.s['r']).in_units('kpc')
     pMass = np.array(sim.s['mass'])
     mTot = sum(pMass)
 
@@ -28,25 +28,31 @@ def halfMassRadius(sim, startR, incBy, acc):
 
     return r
 
-def halfMassRadius_bisect(sim, outerR, acc):
+def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     innerLim = 0.0
     outerLim = outerR
     guessR = 0.0
 
-    pRadii = np.array(sim.s['r'])
+    pRadii = np.array(sim.s['r']).in_units('kpc')
     pMass = np.array(sim.s['mass'])
     mTot = sum(pMass)
 
     r = outerR
     hm = mTot
+    n=0
     while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
-        if hm > 0.5*mTot:
+        if hm > 0.5*mTot: # too big,
             outerLim = r
             r = innerLim + (outerLim-innerLim)/2
-        if hm < 0.5*mTot:
+        elif hm < 0.5*mTot:
             innerLim = r
             r = innerLim + (outerLim-innerLim)/2
         hm = sum(pMass[pRadii < r])
+
+        n += 1
+        if n>maxiter:
+            return -1
+            break
 
     return r
 
@@ -149,8 +155,7 @@ def makeGalQtyCSV(gal, startTS=0):
         rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
         rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM, cylindrical=True).in_units('kpc')
 
-        rHM = halfMassRadius(sCDM, 0, 1, 0.1)
-        rHM = halfMassRadius(sCDM,rHM*0.85, 0.05, 0.01)
+        rHM = halfMassRadius_bisect(sCDM, 100, 0.1)
 
         # sSFR
         sSFR_10 = np.log10(SFR_10/(mStar*1e7))
@@ -168,7 +173,7 @@ def makeGalQtyCSV(gal, startTS=0):
         starMass = sCDM.s['mass']
         agemask = [sCDM.s['age'].in_units('Myr') < 10]
         sigma_star_m = compute_vdisp(starVelocity, starMass)
-        sigma_youngstar_m =compute_vdisp(starVelocity[agemask], starMass[agemask])
+        sigma_youngstar_m = compute_vdisp(starVelocity[agemask], starMass[agemask])
 
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
