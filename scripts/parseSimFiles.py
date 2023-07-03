@@ -169,7 +169,7 @@ def makeGalQtyCSV(gal, startTS=0):
         log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_10
         log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_100
         # manual v disp
-        starVelocity = sCDM.s['velocity']
+        starVelocity = sCDM.s['vel']
         starMass = sCDM.s['mass']
         agemask = [sCDM.s['age'].in_units('Myr') < 10]
         sigma_star_m = compute_vdisp(starVelocity, starMass)
