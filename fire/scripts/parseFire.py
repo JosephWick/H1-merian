@@ -24,12 +24,8 @@ def compute_vdisp(velocities, masses):
     return mass_weighted_dispersion
 
 #
-# positions are 3D
+# positions are 3D; must already be centered
 def compute_Rhalfmass(positions, masses, startR, incBy, acc):
-    center_of_mass = np.sum(positions * masses[:, None], axis=0) / np.sum(masses)
-
-    correctedpos = positions-center_of_mass
-
     radii = np.linalg.norm(correctedpos, ord=2, axis=1)
     mTot = np.sum(masses)
 
@@ -46,23 +42,21 @@ def compute_Rhalfmass(positions, masses, startR, incBy, acc):
 
     return r
 
-def compute_Rhalfmass_bisect(positions, masses, maxiter=100000):
+def compute_Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
     innerLim = 0.0
     outerLim = outerR
-    guessR = 0.0
 
-    pRadii = np.array(sim.s['r'].in_units('kpc'))
-    pMass = np.array(sim.s['mass'])
+    pRadii = np.linalg.norm(correctedpos, ord=2, axis=1)
     mTot = sum(pMass)
 
-    r = outerR
-    hm = mTot
+    r = outerR/2
+    hm = sum(masses[pRadii < r])
     n=0
     while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
-        if hm > 0.5*mTot: # too big,
+        if hm > 0.5*mTot: # too big, decrease r
             outerLim = r
             r = innerLim + (outerLim-innerLim)/2
-        elif hm < 0.5*mTot:
+        elif hm < 0.5*mTot: # too small, increase r
             innerLim = r
             r = innerLim + (outerLim-innerLim)/2
         hm = sum(pMass[pRadii < r])
@@ -122,7 +116,12 @@ def makeFireCSV(gal):
     # quantities for csv
     Mstar = np.sum(starmasses)
 
-    rHM = compute_Rhalfmass_bisect(starpos,starmasses, 100, 0.01)
+    # center of mass
+    posDM = particles['dark'].prop('position')
+    massDM= particles['dark'].prop('mass')
+    com = np.sum(posDM * massDM[:, None], axis=0) / np.sum(massDM)
+
+    rHM = compute_Rhalfmass_bisect(starpos-com,starmasses, 20000, 0.01)
 
     sigma_star = compute_vdisp(velocities_3d, starmasses)
     # young stars are <10 Myr (ie 0.1 Gyr)
