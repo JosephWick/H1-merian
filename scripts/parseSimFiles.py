@@ -41,13 +41,10 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     n=0
     while(hm < (0.5-acc)*mTot or hm > (0.5+acc)*mTot):
         if hm > 0.5*mTot: # too big, decrease r
-            print('a')
             outerLim = r
             r = innerLim + (outerLim-innerLim)/2
         elif hm < 0.5*mTot: # too small increase r
-            print('b')
             innerLim = r
-            print(innerLim, outerLim, r)
             r = innerLim + (outerLim-innerLim)/2
         hm = sum(pMass[pRadii < r])
 
@@ -56,7 +53,6 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
             return -1
             break
 
-        print(r)
     return r
 
 # Yifei's code for mass weighted 3D velocity distribution
