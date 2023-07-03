@@ -158,7 +158,7 @@ def makeGalQtyCSV(gal, startTS=0):
         rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
         rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM, cylindrical=True).in_units('kpc')
 
-        rHM = halfMassRadius_bisect(sCDM, 1000, 0.1)
+        rHM = halfMassRadius_bisect(sCDM, 20000, 0.1)
 
         # sSFR
         sSFR_10 = np.log10(SFR_10/(mStar*1e7))
