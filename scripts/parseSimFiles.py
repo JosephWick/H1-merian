@@ -37,7 +37,7 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     mTot = sum(pMass)
 
     r = outerR/2
-    hm = mTot
+    hm = sum(pMass[pRadii < r])
     n=0
     while(hm < (0.5-acc)*mTot or hm > (0.5+acc)*mTot):
         if hm > 0.5*mTot: # too big, decrease r
