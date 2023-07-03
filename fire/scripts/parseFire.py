@@ -6,9 +6,9 @@ import gizmo_analysis as gizmo
 import utilities as ut
 
 import pandas as pd
-import numpy as np 
+import numpy as np
 
-import glob 
+import glob
 import sys
 
 ##
@@ -24,25 +24,54 @@ def compute_vdisp(velocities, masses):
     return mass_weighted_dispersion
 
 #
-# positions are 3D 
+# positions are 3D
 def compute_Rhalfmass(positions, masses, startR, incBy, acc):
     center_of_mass = np.sum(positions * masses[:, None], axis=0) / np.sum(masses)
+
     correctedpos = positions-center_of_mass
-    
+
     radii = np.linalg.norm(correctedpos, ord=2, axis=1)
     mTot = np.sum(masses)
-    
-    # start at startR and increment 
+
+    # start at startR and increment
     r = startR - incBy
     hm = mTot
     while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
         r+=incBy
         hm = np.sum(masses[radii < r])
-        
-        # check bounds 
+
+        # check bounds
         if (r>max(radii)):
             return -1
-    
+
+    return r
+
+def compute_Rhalfmass_bisect(positions, masses, maxiter=100000):
+    innerLim = 0.0
+    outerLim = outerR
+    guessR = 0.0
+
+    pRadii = np.array(sim.s['r'].in_units('kpc'))
+    pMass = np.array(sim.s['mass'])
+    mTot = sum(pMass)
+
+    r = outerR
+    hm = mTot
+    n=0
+    while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
+        if hm > 0.5*mTot: # too big,
+            outerLim = r
+            r = innerLim + (outerLim-innerLim)/2
+        elif hm < 0.5*mTot:
+            innerLim = r
+            r = innerLim + (outerLim-innerLim)/2
+        hm = sum(pMass[pRadii < r])
+
+        n += 1
+        if n>maxiter:
+            return -1
+            break
+
     return r
 
 #
@@ -60,19 +89,19 @@ def makeFireCSV(gal):
   # get redshifts
   zfile = gal+'/snapshot_times.txt'
   simtimes = pd.read_csv(zfile, sep='\s+', skiprows=6, header=None)
-  
+
   # keys for snapshot_times
   st_tskey = 0
   st_zkey = 2
   st_tkey = 3
-  st_lbkey = 4  
+  st_lbkey = 4
 
   timesteps = np.flip(simtimes[st_tskey].to_numpy())
   redshifts = np.flip(simtimes[st_zkey].to_numpy())
   snaptimes = np.flip(simtimes[st_tkey].to_numpy())
   lookbacks = np.flip(simtimes[st_lbkey].to_numpy())
 
-  # write header 
+  # write header
   fout = open(outfile, 'w')
   fout.write('galaxyID,tstep,t,tlookback,z,')
   fout.write('M_star,R_halfmass,')
@@ -89,20 +118,18 @@ def makeFireCSV(gal):
     starages = particles['star'].prop('age')
     starpos = particles['star'].prop('position')
     velocities_3d = particles['star'].prop('host.velocity')
-    
-    # quantities for csv 
+
+    # quantities for csv
     Mstar = np.sum(starmasses)
 
-    rHM = compute_Rhalfmass(starpos, starmasses, startR=0, incBy=1, acc=0.1)
-    rHM = compute_Rhalfmass(starpos,starmasses, startR=rHM*0.85, incBy=0.01, acc=0.01)   
+    rHM = compute_Rhalfmass_bisect(starpos,starmasses, 100, 0.01)
 
     sigma_star = compute_vdisp(velocities_3d, starmasses)
     # young stars are <10 Myr (ie 0.1 Gyr)
-    sigma_youngstar = compute_vdisp(velocities_3d[starages<0.01], starmasses[starages<0.01]) 
-    
+    sigma_youngstar = compute_vdisp(velocities_3d[starages<0.01], starmasses[starages<0.01])
+
     sfr10 = np.sum(starmasses[starages<0.01])
     sfr100= np.sum(starmasses[starages<0.10])
-
 
     ssfr10 = 0
     if sfr10>0: ssfr10 = np.log10(sfr10/(Mstar*1e7))
@@ -130,13 +157,10 @@ if len(sys.argv) != 2:
     sys.exit()
 idx = int(sys.argv[1])
 
-# get sim files 
+# get sim files
 dpath = '/data/groups/leauthaud/yluo42/FIRE/'
 simfiles = glob.glob(dpath+'/m*')
 gal = simfiles[idx]
 
 # do the needful
-makeFireCSV(gal) 
-
-
-
+makeFireCSV(gal)
