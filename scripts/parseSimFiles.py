@@ -171,7 +171,7 @@ def makeGalQtyCSV(gal, startTS=0):
         # manual v disp
         starVelocity = sCDM.s['vel']
         starMass = sCDM.s['mass']
-        agemask = [sCDM.s['age'].in_units('Myr') < 10]
+        agemask = sCDM.s['age'].in_units('Myr') < 10
         sigma_star_m = compute_vdisp(starVelocity, starMass)
         sigma_youngstar_m = compute_vdisp(starVelocity[agemask], starMass[agemask])
 
