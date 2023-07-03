@@ -37,11 +37,11 @@ def halfMassRadius_bisect(sim, outerR, acc, maxiter=100000):
     pMass = np.array(sim.s['mass'])
     mTot = sum(pMass)
 
-    r = outerR
+    r = outerR/2
     hm = mTot
     n=0
     while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
-        if hm > 0.5*mTot: # too big,
+        if hm > 0.5*mTot: # too big, decrease r
             outerLim = r
             r = innerLim + (outerLim-innerLim)/2
         elif hm < 0.5*mTot:
