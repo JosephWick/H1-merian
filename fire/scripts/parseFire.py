@@ -47,7 +47,7 @@ def compute_Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
     outerLim = outerR
 
     pRadii = np.linalg.norm(positions, ord=2, axis=1)
-    mTot = sum(pMass)
+    mTot = sum(masses)
 
     r = outerR/2
     hm = sum(masses[pRadii < r])
@@ -59,7 +59,7 @@ def compute_Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
         elif hm < 0.5*mTot: # too small, increase r
             innerLim = r
             r = innerLim + (outerLim-innerLim)/2
-        hm = sum(pMass[pRadii < r])
+        hm = sum(masses[pRadii < r])
 
         n += 1
         if n>maxiter:
