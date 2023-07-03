@@ -12,7 +12,7 @@ from util import util
 # input: a simulation
 # output: half mass radius of that simulation
 def halfMassRadius(sim, startR, incBy, acc):
-    pRadii = np.array(sim.s['r']).in_units('kpc')
+    pRadii = np.array(sim.s['r'].in_units('kpc'))
     pMass = np.array(sim.s['mass'])
     mTot = sum(pMass)
 
