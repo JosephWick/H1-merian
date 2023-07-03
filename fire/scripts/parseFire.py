@@ -46,7 +46,7 @@ def compute_Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
     innerLim = 0.0
     outerLim = outerR
 
-    pRadii = np.linalg.norm(correctedpos, ord=2, axis=1)
+    pRadii = np.linalg.norm(positions, ord=2, axis=1)
     mTot = sum(pMass)
 
     r = outerR/2
