@@ -210,11 +210,12 @@ f.close()
 
 # make figs
 for g in cdmHalos:
+    if g == 515: continue # permission denied error
     print(' halo '+str(g)+'...', end='')
     if g in sidmHalos:
         eightPanelProfiles(g, withSIDM=True)
     if g in adiabaticHalos:
-        if g == 442: continue
+        if g == 442: continue # adiabatic sim has slightly different name
         eightPanelProfiles(g, withAdiabat=True)
     eightPanelProfiles(g)
     print('done')
