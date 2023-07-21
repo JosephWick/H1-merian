@@ -214,6 +214,7 @@ for g in cdmHalos:
     if g in sidmHalos:
         eightPanelProfiles(g, withSIDM=True)
     if g in adiabaticHalos:
+        if g == 442: continue
         eightPanelProfiles(g, withAdiabat=True)
     eightPanelProfiles(g)
     print('done')
