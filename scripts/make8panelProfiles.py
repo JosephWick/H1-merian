@@ -30,7 +30,15 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
 
     cdmPath, sidmPath, adiabaticPath = util.getfilepath(hID)
 
-    cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
+    # try to find sim file in current folder
+    simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+    # check if there's another folder
+    a=glob.glob(timestep+'/*')
+    if len(a)>0:
+        # find sim in folder
+        cdmFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        #simFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+        #print(glob.glob(simFile))
 
     fig, axs = plt.subplots(2,4, figsize=(16,8), facecolor='white')
 
