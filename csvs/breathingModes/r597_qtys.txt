@@ -1,1 +1,1 @@
-galaxyID,timestep,t,z,M_star,R_halflight_s,R_halflight_c,R_halfmass,sigma_star,sigma_youngstar,log_sigma_pred_10,log_sigma_pred_100,SFR_10,SFR_100,sSFR_10,sSFR_100
+galaxyID,timestep,t,z,M_star,R_halflight_s,R_halflight_c,R_halfmass,sigma_star,sigma_youngstar,log_sigma_pred_10,log_sigma_pred_100,sigma_star_m,sigma_youngstar_m,SFR_10,SFR_100,sSFR_10,sSFR_100
