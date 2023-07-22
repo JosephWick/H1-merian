@@ -32,7 +32,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
 
     cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
     # check if there's another folder
-    a=glob.glob(timestep+'/*')
+    a=glob.glob(cdmFile+'/*')
     if len(a)>0:
         # find sim in folder
         cdmFile = cdmFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
