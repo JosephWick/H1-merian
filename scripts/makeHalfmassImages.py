@@ -77,5 +77,3 @@ for gal in galIDs:
 
     for i,ts in enumerate(timesteps):
         makeHalfmassImg(gal, ts, radii[i])
-        break
-    break
