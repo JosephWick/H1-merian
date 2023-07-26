@@ -56,7 +56,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
     ax.add_patch(circle)
     plt.tight_layout()
 
-    plt.savefig('/home/jw1624/H1-merian/figures/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
+    plt.savefig('/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
 
 ##
 
