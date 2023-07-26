@@ -43,6 +43,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
         pynbody.analysis.angmom.faceon(hCDM)
 
     # do image
+    fig, ax = plt.subplots(1,1, figsize=(8,8), facecolor='w')
     im = pynbody.plot.stars.render(s, width=str(width)+' kpc', plot=False, ret_im=True)
 
     pxlwid = len(im[0])
