@@ -48,7 +48,7 @@ def makeHalfmassImg(gal, ts, r, width=20):
     pxlwid = len(im[0])
     pxlKpcRatio = pxlwid/width
 
-    plt.title('r'+str(hID), fontsize=20, fontfamily='serif')
+    plt.title('r'+str(gal), fontsize=20, fontfamily='serif')
     # find radius and plot as circle
     hmr = halfMassRadius_bisect(s, width, 0.01)
 
