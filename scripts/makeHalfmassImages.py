@@ -5,7 +5,7 @@
 
 import pandas as pd
 import glob
-import pyplot as plt
+import matplotlib.pyplot as plt
 
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
