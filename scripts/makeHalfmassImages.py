@@ -28,17 +28,17 @@ def makeHalfmassImg(gal, ts, r, width=20):
     # center
     hCDM = -1
     try:
-        hCDM = sCDM.halos(write_fpos=False)[1]
+        hCDM = s.halos(write_fpos=False)[1]
     except:
         # center manually if missing halo; taken from pynbody source code
         #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
-        i = sCDM['phi'].argmin()
-        cen_pot = sCDM['pos'][i].copy()
-        sCDM['pos'] -= cen_pot
+        i = s['phi'].argmin()
+        cen_pot = s['pos'][i].copy()
+        s['pos'] -= cen_pot
     else:
-        hCDM = sCDM.halos(write_fpos=False)[1]
+        hCDM = s.halos(write_fpos=False)[1]
         cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
-        sCDM['pos'] -= cen_pot
+        s['pos'] -= cen_pot
 
         pynbody.analysis.angmom.faceon(hCDM)
 
