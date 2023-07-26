@@ -7,6 +7,8 @@ import pandas as pd
 import glob
 import matplotlib.pyplot as plt
 
+import pynbody
+
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
