@@ -58,7 +58,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 
     plt.savefig('/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
 
-# end func 
+# end func
 ##
 
 ##
@@ -77,4 +77,5 @@ for gal in galIDs:
     radii = df['R_halfmass']
 
     for i,ts in enumerate(timesteps):
-        makeHalfmassImg(gal, ts, radii[i])
+        if i<20:
+            makeHalfmassImg(gal, ts, radii[i])
