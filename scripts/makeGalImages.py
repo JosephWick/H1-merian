@@ -86,6 +86,7 @@ f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'w')
 f.write('galaxy,v_disp\n')
 f.close()
 for cdmg in cdmHalos:
+    if cdmg == 597: continue
     makeStarImage(cdmg)
 #for sidmg in sidmHalos: # only want CDM currently
 #    makeStarImage(sidmg, sidm=1)
