@@ -77,5 +77,4 @@ for gal in galIDs:
     radii = df['R_halfmass']
 
     for i,ts in enumerate(timesteps):
-        if i<20:
-            makeHalfmassImg(gal, ts, radii[i])
+        makeHalfmassImg(gal, ts, radii[i])
