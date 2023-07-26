@@ -80,7 +80,7 @@ def makeGalQtyCSV(gal, startTS=0):
         fout.write('sigma_star,sigma_youngstar,')
         fout.write('log_sigma_pred_10,log_sigma_pred_100,')
         fout.write('sigma_star_m,sigma_youngstar_m,')
-        fout.write('sigma_coldgas,')
+        fout.write('sigma_coldgas_m,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
         fout.close()
 
@@ -178,7 +178,7 @@ def makeGalQtyCSV(gal, startTS=0):
         cgmask = sCDM.g['temp']<1000
         coldgasVel = sCDM.g['vel'][mask]
         coldgasMass= sCDM.g['mass'][mask]
-        sigma_coldgas = compute_vdisp(coldgasVel, coldgasMass)
+        sigma_coldgas_m = compute_vdisp(coldgasVel, coldgasMass)
 
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
@@ -187,7 +187,7 @@ def makeGalQtyCSV(gal, startTS=0):
         fout.write(str(sigma_star)+','+str(sigma_youngstar)+',')
         fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
         fout.write(str(sigma_star_m)+','+str(sigma_youngstar_m)+',')
-        fout.write(str(sigma_coldgas)+',')
+        fout.write(str(sigma_coldgas_m)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
 
         fout.close()
