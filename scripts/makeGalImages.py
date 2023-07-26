@@ -76,6 +76,7 @@ def makeStarImage(hID, width=20, sidm=0):
         f.close()
 
     print('Finished halo '+str(hID) + ' in '+tag)
+    plt.close()
 # end make StarImage
 
 # now actually make the image
