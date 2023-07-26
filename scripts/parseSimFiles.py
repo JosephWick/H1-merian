@@ -176,8 +176,8 @@ def makeGalQtyCSV(gal, startTS=0):
         sigma_youngstar_m = compute_vdisp(starVelocity[agemask], starMass[agemask])
         # cold gas vdisp
         cgmask = sCDM.g['temp']<1000
-        coldgasVel = sCDM.g['vel'][mask]
-        coldgasMass= sCDM.g['mass'][mask]
+        coldgasVel = sCDM.g['vel'][cgmask]
+        coldgasMass= sCDM.g['mass'][cgmask]
         sigma_coldgas_m = compute_vdisp(coldgasVel, coldgasMass)
 
         # write to file
