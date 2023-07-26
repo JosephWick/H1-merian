@@ -14,7 +14,7 @@ from util import util
 def makeHalfmassImg(gal, ts, r, width=20):
     # get sim file
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
-    galDir = baseDir+ '/r' + str(hID)+'.romulus25.3072g1HsbBH'
+    galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
 
     f = glob.glob(galDir+'/r*.romulus25.3072g1HsbBH.00'+str(ts)+'/r*.00'+str(ts))
     print(f)
