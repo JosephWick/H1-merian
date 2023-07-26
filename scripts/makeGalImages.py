@@ -87,5 +87,5 @@ f.write('galaxy,v_disp\n')
 f.close()
 for cdmg in cdmHalos:
     makeStarImage(cdmg)
-for sidmg in sidmHalos:
-    makeStarImage(sidmg, sidm=1)
+#for sidmg in sidmHalos: # only want CDM currently
+#    makeStarImage(sidmg, sidm=1)
