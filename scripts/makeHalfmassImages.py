@@ -58,6 +58,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 
     plt.savefig('/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
 
+# end func 
 ##
 
 ##
