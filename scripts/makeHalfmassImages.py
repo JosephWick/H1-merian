@@ -23,8 +23,6 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
     s = pynbody.load(f)
     s.physical_units()
 
-    h = s.halos()
-
     # center
     hCDM = -1
     try:
