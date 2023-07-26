@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
-def makeHalfmassImg(gal, ts, r, width=20):
+def makeHalfmassImg(gal, ts, hmr, width=20):
     # get sim file
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
     galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
@@ -49,8 +49,6 @@ def makeHalfmassImg(gal, ts, r, width=20):
     pxlKpcRatio = pxlwid/width
 
     plt.title('r'+str(gal), fontsize=20, fontfamily='serif')
-    # find radius and plot as circle
-    hmr = halfMassRadius_bisect(s, width, 0.01)
 
     circle = plt.Circle((pxlwid/2,pxlwid/2), hmr*pxlKpcRatio, edgecolor='g', linewidth=3, fill=False)
     ax.imshow(im)
