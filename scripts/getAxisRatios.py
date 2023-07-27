@@ -48,7 +48,7 @@ else:
 
 rbin, ba, ca, angle, es = pynbody.analysis.halo.halo_shape(sCDM, rout=1.1*R, N=1, rin = 1*R)
 
-print(gal)
-print(rbin)
-print(ba)
-print(ca)
+print('r'+str(gal))
+print('radius: ' + str(rbin)[0])
+print('ba: ' + str(ba))
+print('ca: ' + str(ca))
