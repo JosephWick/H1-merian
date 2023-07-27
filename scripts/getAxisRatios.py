@@ -17,8 +17,8 @@ if len(sys.argv) != 4:
     sys.exit()
 
 gal = util.getGalaxies()[0][int(sys.argv[1])]
-tsidx = sys.argv[2]
-R = sys.argc[3]
+tsidx = int(sys.argv[2])
+R = float(sys.argv[3])
 
 baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
 galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
