@@ -16,7 +16,7 @@ if len(sys.argv) != 4:
     print('Usage: python3 getAxisRatios [galaxy idx] [ts idx] [galaxy radius]')
     sys.exit()
 
-gal = util.getGalaxies()[0][sys.argv[1]]
+gal = util.getGalaxies()[0][int(sys.argv[1])]
 tsidx = sys.argv[2]
 R = sys.argc[3]
 
