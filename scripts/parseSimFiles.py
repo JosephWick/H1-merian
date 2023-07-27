@@ -157,6 +157,11 @@ def makeGalQtyCSV(gal, startTS=0):
 
         rHM = halfMassRadius_bisect(sCDM, 20000, 0.01)
 
+        # sometimes the conversion to kpc doesn't work; let's do it manually if needed
+        if rHL > 1000: rHL = rHL/1000
+        if rHL_c > 1000: rHL_c = rHL_c/1000
+        if rHM > 1000: rHM = rHM/1000
+
         # sSFR
         sSFR_10 = np.log10(SFR_10/(mStar*1e7))
         sSFR_100 = np.log10(SFR_100/(mStar*1e8))
