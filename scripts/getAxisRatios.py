@@ -32,9 +32,19 @@ tsfile = glob.glob(timesteps[tsidx]+'/r*.00'+tsnum)[0]
 sCDM = pynbody.load(tsfile)
 sCDM.physical_units()
 
-hCDM = sCDM.halos(write_fpos=False)[1]
-cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
-sCDM['pos'] -= cen_pot
+hCDM = -1
+try:
+    hCDM = sCDM.halos(write_fpos=False)[1]
+except:
+    # center manually if missing halo; taken from pynbody source code
+    #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
+    i = sCDM['phi'].argmin()
+    cen_pot = sCDM['pos'][i].copy()
+    sCDM['pos'] -= cen_pot
+else:
+    hCDM = sCDM.halos(write_fpos=False)[1]
+    cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
+    sCDM['pos'] -= cen_pot
 
 rbin, ba, ca, angle, es = pynbody.analysis.halo.halo_shape(sCDM, rout=1.1*R, N=1, rin = 1*R)
 
