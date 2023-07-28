@@ -1,7 +1,7 @@
 # makeHalfmassImages.py
 # Joseph Wick
 #
-# Sanity check for half mass radii
+# Sanity check for half mass radii  of a single galaxy
 
 import pandas as pd
 import glob
@@ -63,17 +63,23 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 # main
 ##
 
+# handle command line argument
+if len(sys.argv != 2):
+    print('Usage: python3 makeHalfmassImages.py [galaxy idx]')
+    sys.exit
+idx = int(sys.argv[1])
+
 # get galaxies and iterate
 galIDs = util.getGalaxies()[0]
+gal = galIDs[idx]
 
-for gal in galIDs:
-    # load in list of timesteps and radii
-    csvf = '/home/jw1624/H1-merian/csvs/breathingModes_clean/r'+str(gal)+'_qtys.txt'
-    df = pd.read_csv(csvf)
+# load in list of timesteps and radii
+csvf = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
+df = pd.read_csv(csvf)
 
-    timesteps = df['timestep']
-    radii = df['R_halfmass']
+timesteps = df['timestep']
+radii = df['R_halfmass']
 
-    for i,ts in enumerate(timesteps):
-        if i<20:
-            makeHalfmassImg(gal, ts, radii[i])
+for i,ts in enumerate(timesteps):
+    if i<20:
+        makeHalfmassImg(gal, ts, radii[i])
