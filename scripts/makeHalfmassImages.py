@@ -64,7 +64,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 ##
 
 # handle command line argument
-if len(sys.argv != 2):
+if len(sys.argv) != 2:
     print('Usage: python3 makeHalfmassImages.py [galaxy idx]')
     sys.exit
 idx = int(sys.argv[1])
