@@ -171,7 +171,7 @@ def makeGalQtyCSV(gal, startTS=0):
 
         agemask = sCDM.s['age'].in_units('Myr')<10
         vel_youngstars = vel_allstars[agemask]
-        mass_youngstars = mass_youngstars[agemask]
+        mass_youngstars = mass_allstars[agemask]
 
         vdisp_youngstar_uwtd = util.compute_vdisp_std(vel_allstars, mass_allstars, vel_youngstars)
         vdisp_youngstar_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, vel_youngstars, mass_youngstars)
