@@ -77,10 +77,9 @@ def makeGalQtyCSV(gal, startTS=0):
         fout = open(outfile,'w')
         fout.write('galaxyID,timestep,t,z,')
         fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
-        fout.write('sigma_star,sigma_youngstar,')
+        fout.write('sigma_youngstar,sigma_younstar_wtd,')
+        fout.write('sigma_coldgas,sigma_coldgas_wtd,')
         fout.write('log_sigma_pred_10,log_sigma_pred_100,')
-        fout.write('sigma_star_m,sigma_youngstar_m,')
-        fout.write('sigma_coldgas_m,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
         fout.close()
 
@@ -167,32 +166,33 @@ def makeGalQtyCSV(gal, startTS=0):
         sSFR_100 = np.log10(SFR_100/(mStar*1e8))
 
         # velocity dispersion
-        #sCDM.properties['boxsize'] = 3.0e4
-        sigma_star = np.median(sCDM.s['v_disp'])
-        sigma_youngstar = np.median(sCDM.s['v_disp'][sCDM.s['age'].in_units('Myr') < 10])
-        # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
-        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_10
-        log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_100
-        # manual v disp
-        starVelocity = sCDM.s['vel']
-        starMass = sCDM.s['mass']
-        agemask = sCDM.s['age'].in_units('Myr') < 10
-        sigma_star_m = compute_vdisp(starVelocity, starMass)
-        sigma_youngstar_m = compute_vdisp(starVelocity[agemask], starMass[agemask])
+        vel_allstars = sCDM.s['vel']
+        mass_allstars = sCDM.s['mass']
+
+        agemask = sCDM.s['age'].in_units('Myr')<10
+        vel_youngstars = vel_allstars[agemask]
+        mass_youngstars = mass_youngstars[agemask]
+
+        vdisp_youngstar_uwtd = util.compute_vdisp_std(vel_allstars, mass_allstars, vel_youngstars)
+        vdisp_youngstar_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, vel_youngstars, mass_youngstars)
+
         # cold gas vdisp
         cgmask = sCDM.g['temp']<1000
         coldgasVel = sCDM.g['vel'][cgmask]
         coldgasMass= sCDM.g['mass'][cgmask]
-        sigma_coldgas_m = compute_vdisp(coldgasVel, coldgasMass)
+        vdisp_coldgas_uwtd = compute_vdisp_std(vel_allstars, mass_allstars, coldgasVel)
+        vdisp_coldgas_wtd = compute_vdisp_wtd(vel_allstars, mass_allstars, coldgasVel, coldgasMass)
+
+        # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
+        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_10
+        log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_100
 
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
-        #fout.write(str(mStar)+','+str(rVir)+','+str(rHL)+','+str(rHM)+',')
         fout.write(str(mStar)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
-        fout.write(str(sigma_star)+','+str(sigma_youngstar)+',')
+        fout.write(str(vdisp_youngstar_uwtd)+','+str(vdisp_youngstar_wtd)+',')
+        fout.write(str(vdisp_coldgas_uwtd)+','+str(vdisp_coldgas_wtd)+',')
         fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
-        fout.write(str(sigma_star_m)+','+str(sigma_youngstar_m)+',')
-        fout.write(str(sigma_coldgas_m)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
 
         fout.close()
