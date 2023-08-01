@@ -177,11 +177,15 @@ def makeGalQtyCSV(gal, startTS=0):
         vdisp_youngstar_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, vel_youngstars, mass_youngstars)
 
         # cold gas vdisp
+        vel_allgas = sCDM.g['vel']
+        mass_allgas = sCDM.g['mass']
+
         cgmask = sCDM.g['temp']<1000
-        coldgasVel = sCDM.g['vel'][cgmask]
-        coldgasMass= sCDM.g['mass'][cgmask]
-        vdisp_coldgas_uwtd = util.compute_vdisp_std(vel_allstars, mass_allstars, coldgasVel)
-        vdisp_coldgas_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, coldgasVel, coldgasMass)
+        vel_coldgas = vel_allgas[cgmask]
+        mass_coldgas= mass_allgas[cgmask]
+
+        vdisp_coldgas_uwtd = util.compute_vdisp_std(vel_allgas, mass_allgas, vel_coldgas)
+        vdisp_coldgas_wtd = util.compute_vdisp_wtd(vel_allgas, mass_allgas, vel_coldgas, mass_coldgas)
 
         # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
         log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_10
