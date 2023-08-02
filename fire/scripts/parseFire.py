@@ -10,18 +10,12 @@ import numpy as np
 
 import glob
 import sys
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
+from util import util
 
 ##
 # METHODS
 ##
-
-# Yifei's code for mass weighted 3D velocity distribution
-def compute_vdisp(velocities, masses):
-    center_of_mass_velocity = np.sum(velocities * masses[:, None], axis=0) / np.sum(masses)
-    velocity_differences = velocities - center_of_mass_velocity
-    velocity_differences_squared = np.sum(velocity_differences**2, axis=1)
-    mass_weighted_dispersion = np.sqrt(np.sum(velocity_differences_squared * masses) / np.sum(masses))
-    return mass_weighted_dispersion
 
 #
 # positions are 3D; must already be centered
@@ -99,7 +93,10 @@ def makeFireCSV(gal):
   fout = open(outfile, 'w')
   fout.write('galaxyID,tstep,t,tlookback,z,')
   fout.write('M_star,R_halfmass,')
-  fout.write('sigma_star,sigma_youngstar,')
+  fout.write('sigma_allstars,sigma_allstars_wtd,')
+  fout.write('sigma_youngstar,sigma_youngstar_wtd,')
+  fout.write('sigma_allgas,sigma_allgas_wtd,')
+  fout.write('sigma_coldgas,sigma_coldgas_wtd,')
   fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
   fout.close()
 
@@ -111,7 +108,9 @@ def makeFireCSV(gal):
     starmasses = particles['star'].prop('mass')
     starages = particles['star'].prop('age')
     starpos = particles['star'].prop('position')
-    velocities_3d = particles['star'].prop('host.velocity')
+    starvel = particles['star'].prop('host.velocity')
+
+    agemask = starages<0.01
 
     # quantities for csv
     Mstar = np.sum(starmasses)
@@ -121,11 +120,28 @@ def makeFireCSV(gal):
     massDM= particles['dark'].prop('mass')
     com = np.sum(posDM * massDM[:, None], axis=0) / np.sum(massDM)
 
+    posDM -= com
+    starpos -= com
+
     rHM = compute_Rhalfmass_bisect(starpos-com,starmasses, 20000, 0.01)
 
-    sigma_star = compute_vdisp(velocities_3d, starmasses)
-    # young stars are <10 Myr (ie 0.1 Gyr)
-    sigma_youngstar = compute_vdisp(velocities_3d[starages<0.01], starmasses[starages<0.01])
+    # velocity dispersions
+    vel_younstars = starvel[agemask]
+    mass_youngstars = starmasses[agemask]
+
+    sigma_star = util.compute_vdisp_std(starvel, starmasses, starvel)
+    sigma_star_wtd = util.compute_vdisp_wtd(starvel, starmasses, starvel, starmasses)
+
+    sigma_youngstar = util.compute_vdisp_std(starvel, starmasses, vel_youngstars)
+    sigma_youngstar_wtd = util.compute_vdisp_wtd(starvel, starmasses, vel_youngstars, mass_youngstars)
+
+    pos_allgas = particles['gas'].prop('position')
+    pos_allgas -= com
+    vel_allgas = particles['gas'].prop('host.velocity')
+    mass_allgas = particles['gas'].prop('mass')
+
+    sigma_allgas = util.compute_vdisp_std(vel_allgas, mass_allgas, vel_allgas)
+    sigma_allgas = util.compute_vdisp_wtd(vel_allgas, mass_allgas, vel_allgas, mass_allgas)
 
     sfr10 = np.sum(starmasses[starages<0.01])
     sfr100= np.sum(starmasses[starages<0.10])
