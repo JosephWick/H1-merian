@@ -77,7 +77,9 @@ def makeGalQtyCSV(gal, startTS=0):
         fout = open(outfile,'w')
         fout.write('galaxyID,timestep,t,z,')
         fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
-        fout.write('sigma_youngstar,sigma_younstar_wtd,')
+        fout.write('sigma_allstars,sigma_allstars_wtd,')
+        fout.write('sigma_youngstar,sigma_youngstar_wtd,')
+        fout.write('sigma_allgas,sigma_allgas_wtd,')
         fout.write('sigma_coldgas,sigma_coldgas_wtd,')
         fout.write('log_sigma_pred_10,log_sigma_pred_100,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
@@ -173,6 +175,9 @@ def makeGalQtyCSV(gal, startTS=0):
         vel_youngstars = vel_allstars[agemask]
         mass_youngstars = mass_allstars[agemask]
 
+        vdisp_allstars_uwtd = util.compute_vdisp_std(vel_allstars, mass_allstars, vel_allstars)
+        vdisp_allstars_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, vel_allstars, mass_allstars)
+
         vdisp_youngstar_uwtd = util.compute_vdisp_std(vel_allstars, mass_allstars, vel_youngstars)
         vdisp_youngstar_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, vel_youngstars, mass_youngstars)
 
@@ -184,6 +189,9 @@ def makeGalQtyCSV(gal, startTS=0):
         vel_coldgas = vel_allgas[cgmask]
         mass_coldgas= mass_allgas[cgmask]
 
+        vdisp_allgas_uwtd = util.compute_vdisp_std(vel_allgas, mass_allgas, vel_allgas)
+        vdisp_allgas_wtd = util.compute_vdisp_wtd(vel_allgas, mass_allgas, vel_allgas, mass_allgas)
+
         vdisp_coldgas_uwtd = util.compute_vdisp_std(vel_allgas, mass_allgas, vel_coldgas)
         vdisp_coldgas_wtd = util.compute_vdisp_wtd(vel_allgas, mass_allgas, vel_coldgas, mass_coldgas)
 
@@ -194,7 +202,9 @@ def makeGalQtyCSV(gal, startTS=0):
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         fout.write(str(mStar)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
+        fout.write(str(vdisp_allstars_uwtd)+','+str(vdisp_allstars_wtd)+',')
         fout.write(str(vdisp_youngstar_uwtd)+','+str(vdisp_youngstar_wtd)+',')
+        fout.write(str(vdisp_allgas_uwtd)+','+str(vdisp_allstars_wtd)+',')
         fout.write(str(vdisp_coldgas_uwtd)+','+str(vdisp_coldgas_wtd)+',')
         fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
