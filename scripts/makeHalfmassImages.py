@@ -46,9 +46,6 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
     # do image
     fig, axs = plt.subplots(1,3, figsize=(18,6), facecolor='w')
 
-    pxlwid = len(im[0])
-    pxlKpcRatio = pxlwid/width
-
     c1 = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
     c2 = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
     c3 = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
