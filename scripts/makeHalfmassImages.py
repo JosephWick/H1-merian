@@ -66,7 +66,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 ##
 
 # handle command line argument
-if len(sys.argv) != 2:
+if len(sys.argv) != 2 and len(sys.argv) != 3:
     print('Usage: python3 makeHalfmassImages.py [galaxy idx]')
     sys.exit
 idx = int(sys.argv[1])
@@ -82,6 +82,10 @@ df = pd.read_csv(csvf)
 timesteps = df['timestep']
 radii = df['R_halfmass']
 
-for i,ts in enumerate(timesteps):
-    if i<20:
-        makeHalfmassImg(gal, ts, radii[i])
+if len(sys.argv == 2):
+    for i,ts in enumerate(timesteps):
+        if i<20:
+            makeHalfmassImg(gal, ts, radii[i])
+else:
+    tsidx = int(sys.argv[2])
+    makeHalfmassImg(gal, tsidx, radii[tsidx])
