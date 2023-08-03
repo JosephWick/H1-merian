@@ -61,7 +61,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
     axs[1].set_title('r'+str(gal)+': '+str(ts), fontsize=20, fontfamily='serif')
     axs[2].set_title('hmr')
 
-    lim = 25
+    lim = 35
     for ax in axs:
         ax.set_xlim([-lim,lim])
         ax.set_ylim([-lim,lim])
