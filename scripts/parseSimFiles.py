@@ -126,22 +126,12 @@ def makeGalQtyCSV(gal, startTS=0):
         SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
         SFR_100 = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<100])
 
-        hCDM = -1
-        try:
-            hCDM = sCDM.halos(write_fpos=False)[1]
-        except:
-            # center manually if missing halo; taken from pynbody source code
-            #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
-            mtot = sCDM.s['mass'].sum()
-            cen = np.sum(sCDM.s['mass'] * sCDM.s['pos'].transpose(), axis=1) / mtot
-            cen.units = sCDM.s['pos'].units
-            sCDM['pos'] -= cen
-        else:
-            hCDM = sCDM.halos(write_fpos=False)[1]
-            cen_pot = pynbody.analysis.halo.center(hCDM, mode='mass', retcen=True)
-            sCDM['pos'] -= cen_pot
-
-            pynbody.analysis.angmom.faceon(hCDM)
+        # center manually if missing halo; taken from pynbody source code
+        #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
+        mtot = sCDM.s['mass'].sum()
+        cen = np.sum(sCDM.s['mass'] * sCDM.s['pos'].transpose(), axis=1) / mtot
+        cen.units = sCDM.s['pos'].units
+        sCDM['pos'] -= cen
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
