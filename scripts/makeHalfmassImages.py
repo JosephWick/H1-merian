@@ -3,6 +3,7 @@
 #
 # Sanity check for half mass radii  of a single galaxy
 
+import numpy as np
 import pandas as pd
 import glob
 import matplotlib.pyplot as plt
