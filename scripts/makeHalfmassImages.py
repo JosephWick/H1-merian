@@ -44,18 +44,30 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
         pynbody.analysis.angmom.faceon(hCDM)
 
     # do image
-    fig, ax = plt.subplots(1,1, figsize=(8,8), facecolor='w')
+    fig, axs = plt.subplots(1,3, figsize=(18,6), facecolor='w')
 
     pxlwid = len(im[0])
     pxlKpcRatio = pxlwid/width
 
-    plt.title('r'+str(gal), fontsize=20, fontfamily='serif')
+    c1 = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
+    c2 = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
+    c3 = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
 
-    circle = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
+    axs[0].scatter(s.s['pos'][:,0], s.s['pos'][:,1], s=1)
+    axs[1].scatter(s.s['pos'][:,0], s.s['pos'][:,2], s=1)
+    axs[2].scatter(s.s['pos'][:,1], s.s['pos'][:,2], s=1)
 
-    ax.scatter(s.s['pos'][:,0], s.s['pos'][:,1], s=1)
+    axs[0].add_patch(c1)
+    axs[1].add_patch(c2)
+    axw[2].add_patch(c3)
 
-    ax.add_patch(circle)
+    axs[1].set_title('r'+str(gal)+': '+str(ts), fontsize=20, fontfamily='serif')
+    axs[2].set_title('hmr')
+
+    lim = 25
+    for ax in axs:
+        ax.set_xlim([-lim,lim])
+        ax.set_ylim([-lim,lim])
 
     plt.tight_layout()
 
