@@ -14,6 +14,8 @@ sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
 def makeHalfmassImg(gal, ts, hmr, width=20):
+    print('Timestep: '+str(ts)+'...', end='')
+
     # get sim file
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
     galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
@@ -55,7 +57,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
     plt.tight_layout()
 
     plt.savefig('/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
-
+    print('done')
 # end func
 ##
 
