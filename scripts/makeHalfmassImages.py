@@ -31,10 +31,10 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
         hCDM = s.halos(write_fpos=False)[1]
     except:
         # center manually if missing halo; taken from pynbody source code
-        #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
-        i = s['phi'].argmin()
-        cen_pot = s['pos'][i].copy()
-        s['pos'] -= cen_pot
+        mtot = s.s['mass'].sum()
+        cen = np.sum(s.s['mass'] * s.s['pos'].transpose(), axis=1) / mtot
+        cen.units = s.s['pos'].units
+        s['pos'] -= cen
     else:
         hCDM = s.halos(write_fpos=False)[1]
         cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
@@ -51,9 +51,12 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 
     plt.title('r'+str(gal), fontsize=20, fontfamily='serif')
 
-    circle = plt.Circle((pxlwid/2,pxlwid/2), hmr*pxlKpcRatio, edgecolor='g', linewidth=3, fill=False)
-    ax.imshow(im)
+    circle = plt.Circle((0,0), hmr, edgecolor='g', linewidth=3, fill=False)
+
+    ax.scatter(s.s['pos'][:,0], s.s['pos'][:,1], s=1)
+
     ax.add_patch(circle)
+
     plt.tight_layout()
 
     plt.savefig('/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
