@@ -99,7 +99,7 @@ radii = df['R_halfmass']
 
 if len(sys.argv) == 2:
     for i,ts in enumerate(timesteps):
-        if i<20:
+        if i<25:
             makeHalfmassImg(gal, ts, radii[i])
 else:
     tsidx = int(sys.argv[2])
