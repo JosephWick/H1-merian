@@ -56,7 +56,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 
     axs[0].add_patch(c1)
     axs[1].add_patch(c2)
-    axw[2].add_patch(c3)
+    axs[2].add_patch(c3)
 
     axs[1].set_title('r'+str(gal)+': '+str(ts), fontsize=20, fontfamily='serif')
     axs[2].set_title('hmr')
