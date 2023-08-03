@@ -82,7 +82,7 @@ df = pd.read_csv(csvf)
 timesteps = df['timestep']
 radii = df['R_halfmass']
 
-if len(sys.argv == 2):
+if len(sys.argv) == 2:
     for i,ts in enumerate(timesteps):
         if i<20:
             makeHalfmassImg(gal, ts, radii[i])
