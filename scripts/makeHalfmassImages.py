@@ -88,4 +88,4 @@ if len(sys.argv) == 2:
             makeHalfmassImg(gal, ts, radii[i])
 else:
     tsidx = int(sys.argv[2])
-    makeHalfmassImg(gal, tsidx, radii[tsidx])
+    makeHalfmassImg(gal, timesteps[tsidx], radii[tsidx])
