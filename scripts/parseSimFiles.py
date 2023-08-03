@@ -132,12 +132,13 @@ def makeGalQtyCSV(gal, startTS=0):
         except:
             # center manually if missing halo; taken from pynbody source code
             #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
-            i = sCDM['phi'].argmin()
-            cen_pot = sCDM['pos'][i].copy()
-            sCDM['pos'] -= cen_pot
+            mtot = sCDM.s['mass'].sum()
+            cen = np.sum(sCDM.s['mass'] * sCDM.s['pos'].transpose(), axis=1) / mtot
+            cen.units = sCDM.s['pos'].units
+            sCDM['pos'] -= cen
         else:
             hCDM = sCDM.halos(write_fpos=False)[1]
-            cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
+            cen_pot = pynbody.analysis.halo.center(hCDM, mode='mass', retcen=True)
             sCDM['pos'] -= cen_pot
 
             pynbody.analysis.angmom.faceon(hCDM)
