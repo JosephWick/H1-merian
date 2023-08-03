@@ -79,7 +79,7 @@ galIDs = util.getGalaxies()[0]
 gal = galIDs[idx]
 
 # load in list of timesteps and radii
-csvf = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
+csvf = '/home/jw1624/H1-merian/csvs/breathingModes_clean/r'+str(gal)+'_qtys.txt'
 df = pd.read_csv(csvf)
 
 timesteps = df['timestep']
