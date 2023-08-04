@@ -93,14 +93,14 @@ def makeGalQtyCSV(gal):
     fout.close()
 
     # set up bridge from ts 0
-    simfile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+    simfile0 = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
     a=glob.glob(timesteps[0]+'/*')
     if len(a)>0:
         # find sim in folder
-        simFile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        simFile0 = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
     # open simfile
-    sZero = pynbody.load(simFile)
+    sZero = pynbody.load(simFile0)
     sZero.physical_units()
 
     hZero = sZero.halos()[1]
@@ -147,10 +147,13 @@ def makeGalQtyCSV(gal):
 
         vdispg = sCDM.g['v_disp']
 
-        # do bridge (manually)
-        haloDM = hZero.d['iord']
-        haloDMts = sCDM.d[sCDM['iord'] == haloDM['iord']]
-        stop
+        # do bridge
+        sZero = pynbody.load(simFile0)
+        sZero.physical_units()
+        hZero = sZero.halos()[1]
+
+        bb = sCDM.bridge(sZero)
+        print('BRIDGE')
 
         mtot = haloDM['mass'].sum()
         cen = np.sum(haloDM['mass'] * haloDM['pos'].transpose(), axis=1) / mtot
