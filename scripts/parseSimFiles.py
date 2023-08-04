@@ -93,11 +93,11 @@ def makeGalQtyCSV(gal):
     fout.close()
 
     # set up bridge from ts 0
-    simfile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+    simfile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
     a=glob.glob(timestep+'/*')
     if len(a)>0:
         # find sim in folder
-        simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+        simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
         # open simfile
         sZero = pynbody.load(simFile)
@@ -153,7 +153,7 @@ def makeGalQtyCSV(gal):
         print(hZero['iord'])
         print(haloDM['iord'])
 
-        stop 
+        stop
 
         # SFR (do first otherwise we sometimes get an error)
         SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
