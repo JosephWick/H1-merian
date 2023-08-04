@@ -99,17 +99,17 @@ def makeGalQtyCSV(gal):
         # find sim in folder
         simFile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
-        # open simfile
-        sZero = pynbody.load(simFile)
-        sZero.physical_units()
+    # open simfile
+    sZero = pynbody.load(simFile)
+    sZero.physical_units()
 
-        hZero = sZero.halos()[1]
+    hZero = sZero.halos()[1]
 
-        # center based on potential
-        cen_pot = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
-        sZero['pos'] -= cen_pot
+    # center based on potential
+    cen_pot = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
+    sZero['pos'] -= cen_pot
 
-        hZeroHMR = halfMassRadius_bisect(hZero, 1000, 0.01)
+    hZeroHMR = halfMassRadius_bisect(hZero, 1000, 0.01)
 
     # iterate through each timestep
     for timestep in timesteps:
