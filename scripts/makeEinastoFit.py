@@ -109,7 +109,7 @@ for gal in galIDs:
 
     # fit to einasto profile
     einastoP, alpha = getEinastoProfile(rbins[:sidx], dmdensity[:sidx])
-    powerlaw, alpha = fitPowerlaw(rbins[:sidx], dmdensity[:sidx])
+    powerlaw, alphap= fitPowerlaw(rbins[:sidx], dmdensity[:sidx])
 
     # do figure
     setPltParams()
@@ -117,7 +117,7 @@ for gal in galIDs:
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     plt.plot(rbins, dmdensity, linewidth=3, c='tab:blue')
-    plt.plot(rbins[:sidx], einastoP[:sidx], linewidth=2, linestyle='--', c='tab:green')
+    plt.plot(rbins[:sidx], powerlaw[:sidx], linewidth=2, linestyle='--', c='tab:green')
 
     plt.xscale('log')
     plt.yscale('log')
@@ -126,7 +126,7 @@ for gal in galIDs:
     plt.ylabel('DM Density', fontfamily='serif', fontsize=20)
     plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=24)
 
-    plt.text(s = r'$\alpha=$'+str(alpha)[0:4],
+    plt.text(s = r'$\alpha=$'+str(alphap)[0:4],
              x = 30, y = max(dmdensity))
 
     plt.savefig('/home/jw1624/H1-merian/figures/slopeFit/r'+str(gal)+'.png')
