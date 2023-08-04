@@ -148,9 +148,8 @@ def makeGalQtyCSV(gal):
         vdispg = sCDM.g['v_disp']
 
         # do bridge
-        hZero = sZero.halos()[1]
         bridge = sCDM.bridge(sZero)
-        haloDM = bridge(hZero.d)
+        haloDM = bridge(sZero.halos()[1])
 
         mtot = haloDM['mass'].sum()
         cen = np.sum(haloDM['mass'] * haloDM['pos'].transpose(), axis=1) / mtot
