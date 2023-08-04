@@ -27,6 +27,10 @@ def einasto(r, A, alpha, c, d):
     return c*np.exp(-A*(r**alpha)) + d
 #
 
+# power law
+def powerlaw(r, alpha, c):
+    return c*(r**alpha)
+
 # Returns: radial bins, DM density per bin
 def getDMProfile(sCDM):
     pynbody.analysis.angmom.faceon(hCDM)
@@ -51,8 +55,13 @@ def getEinastoProfile(rbins, dmdensity):
                                 maxfev=1000000,
                                 p0=[1, 0.5, max(dmdensity), min(dmdensity)])[0]
 
-    return einasto(rbins, A, alpha, c, d), alpha
+    return einasto(rbins, A, alpha, c), alpha
 #
+
+def fitPowerlaw(rbins, dmdensity):
+    alpha, c = opt.curve_fit(powerlaw, rbins, dmdensity, maxfev=10000)[0]
+
+    return powerlaw(rbins, alpha, c), alpha
 
 # sets rc params
 def setPltParams():
@@ -99,7 +108,8 @@ for gal in galIDs:
     sidx = 10
 
     # fit to einasto profile
-    einastoP, alpha = getEinastoProfile(rbins[0:sidx], dmdensity[0:sidx])
+    einastoP, alpha = getEinastoProfile(rbins[:sidx], dmdensity[:sidx])
+    powerlaw, alpha = fitPowerlaw(rbins[:sidx], dmdensity[:sidx])
 
     # do figure
     setPltParams()
