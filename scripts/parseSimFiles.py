@@ -161,8 +161,8 @@ def makeGalQtyCSV(gal):
         gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<5*hZeroHMR
 
         # SFR
-        SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'].in_units('Myr')<10])
-        SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age'].in_units('Myr')<100])
+        SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<10])
+        SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<100])
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
@@ -193,7 +193,7 @@ def makeGalQtyCSV(gal):
         vel_allstars = sCDM.s['vel'][starmask]
         mass_allstars = sCDM.s['mass'][starmask]
 
-        agemask = sCDM.s['age'].in_units('Myr')<10
+        agemask = sCDM.s['age'][starmask].in_units('Myr')<10
         vel_youngstars = vel_allstars[agemask]
         mass_youngstars = mass_allstars[agemask]
 
@@ -207,7 +207,7 @@ def makeGalQtyCSV(gal):
         vel_allgas = sCDM.g['vel'][gasmask]
         mass_allgas = sCDM.g['mass'][gasmask]
 
-        cgmask = sCDM.g['temp']<1000
+        cgmask = sCDM.g['temp'][gasmask]<1000
         vel_coldgas = vel_allgas[cgmask]
         mass_coldgas= mass_allgas[cgmask]
 
