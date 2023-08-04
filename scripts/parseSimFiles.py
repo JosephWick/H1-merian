@@ -150,7 +150,7 @@ def makeGalQtyCSV(gal):
         bridge = sCDM.bridge(hZero)
         haloDM = bridge(hZero.d)
 
-        all(hZero.d['iord'] == haloDM['iord'])
+        print(all(hZero.d['iord'] == haloDM['iord']))
 
         stop
 
