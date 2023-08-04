@@ -28,8 +28,8 @@ def einasto(r, A, alpha, c, d):
 #
 
 # power law
-def powerlaw(r, alpha, c):
-    return c*(r**alpha)
+def powerlaw(r, alpha, c, d):
+    return c*(r**alpha) + d
 
 # Returns: radial bins, DM density per bin
 def getDMProfile(sCDM):
@@ -59,9 +59,9 @@ def getEinastoProfile(rbins, dmdensity):
 #
 
 def fitPowerlaw(rbins, dmdensity):
-    alpha, c = opt.curve_fit(powerlaw, rbins, dmdensity, maxfev=10000)[0]
+    alpha, c, d = opt.curve_fit(powerlaw, rbins, dmdensity, maxfev=10000)[0]
 
-    return powerlaw(rbins, alpha, c), alpha
+    return powerlaw(rbins, alpha, c, d), alpha
 
 # sets rc params
 def setPltParams():
