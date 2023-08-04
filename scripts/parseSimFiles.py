@@ -148,6 +148,7 @@ def makeGalQtyCSV(gal):
         vdispg = sCDM.g['v_disp']
 
         # do bridge
+        hZero = sZero.halos()[1]
         bridge = sCDM.bridge(hZero)
         haloDM = bridge(hZero.d)
 
