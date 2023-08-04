@@ -97,7 +97,6 @@ for gal in galIDs:
 
     # get slope of dmdensity
     sidx = 10
-    slope = (dmdensity[0]-dmdensity[sidx])/(rbins[0]-rbins[10])
 
     # fit to einasto profile
     einastoP, alpha = getEinastoProfile(rbins[0:sidx], dmdensity[0:sidx])
@@ -119,8 +118,6 @@ for gal in galIDs:
 
     plt.text(s = r'$\alpha=$'+str(alpha)[0:4],
              x = 30, y = max(dmdensity))
-    plt.text(s = r's='+str(slope)[0:4],
-             x = 30, y = max(dmdensity)*0.9)
 
     plt.savefig('/home/jw1624/H1-merian/figures/slopeFit/r'+str(gal)+'.png')
 
