@@ -106,7 +106,7 @@ def makeGalQtyCSV(gal):
         hZero = sZero.halos()[1]
 
         # center based on potential
-        cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
+        cen_pot = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
         sCDM['pos'] -= cen_pot
 
 
