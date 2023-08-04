@@ -99,7 +99,7 @@ for gal in galIDs:
 
     # get slope of dmdensity
     sidx = 10
-    #slope = (dmdensity[0]-dmdensity[sidx])/(rbins[]
+    slope = (dmdensity[0]-dmdensity[sidx])/(rbins[0]-rbins[10])
 
     # do figure
     setPltParams()
@@ -118,5 +118,9 @@ for gal in galIDs:
 
     plt.text(s = r'$\alpha=$'+str(alpha)[0:4],
              x = 30, y = max(dmdensity))
+    plt.text(s = r's='+str(slope)[0:4],
+             x = 30, y = max(dmdensity)*0.9)
 
     plt.savefig('/home/jw1624/H1-merian/figures/slopeFit/r'+str(gal)+'.png')
+
+    print(str(gal)+': done')
