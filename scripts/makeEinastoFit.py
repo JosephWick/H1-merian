@@ -103,7 +103,7 @@ for gal in galIDs:
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     plt.plot(rbins, dmdensity, linewidth=3, c='tab:blue')
-    plt.plot(rbins, einastoP, linewidth=2, linestyle='--', c='tab:green')
+    #plt.plot(rbins, einastoP, linewidth=2, linestyle='--', c='tab:green')
 
     plt.xscale('log')
     plt.yscale('log')
@@ -113,6 +113,6 @@ for gal in galIDs:
     plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=24)
 
     plt.text(s = r'$\alpha=$'+str(alpha)[0:4],
-             x = 40, y = max(dmdensity))
+             x = 30, y = max(dmdensity))
 
-    plt.savefig('/home/jw1624/H1-merian/figures/einastoFit/r'+str(gal)+'.png')
+    plt.savefig('/home/jw1624/H1-merian/figures/slopeFit/r'+str(gal)+'.png')
