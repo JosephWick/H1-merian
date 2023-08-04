@@ -111,6 +111,9 @@ for gal in galIDs:
     plt.ylabel('DM Density', fontfamily='serif', fontsize=20)
     plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=24)
 
-    plt.savefig('~/H1-merian/figures/einastoFit/r'+str(gal)+'.png')
+    plt.text(s = r'$\alpha='+str(alpha)[0:4],
+             x = 45, y = max(dmdensity))
+
+    plt.savefig('/home/jw1624/H1-merian/figures/einastoFit/r'+str(gal)+'.png')
 
     break
