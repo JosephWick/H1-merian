@@ -153,6 +153,8 @@ def makeGalQtyCSV(gal):
         print(hZero['iord'])
         print(haloDM['iord'])
 
+        stop 
+
         # SFR (do first otherwise we sometimes get an error)
         SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
         SFR_100 = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<100])
