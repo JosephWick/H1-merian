@@ -142,17 +142,16 @@ def makeGalQtyCSV(gal):
 
         # open simfile
         sCDM = pynbody.load(simFile)
-
         sCDM.physical_units()
 
-        vdispg = sCDM.g['v_disp']
+        #vdispg = sCDM.g['v_disp']
 
         # do bridge
         sZero = pynbody.load(simFile0)
         sZero.physical_units()
-        hZero = sZero.halos()[1]
+        hZero = sZero.halos()
 
-        bb = sCDM.bridge(sZero)
+        bb = sZero.bridge(sCDM)
         print('BRIDGE')
 
         mtot = haloDM['mass'].sum()
