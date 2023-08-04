@@ -119,7 +119,7 @@ for gal in galIDs:
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     plt.plot(rbins, dmdensity, linewidth=5, c='tab:blue')
-    plt.plot(rbins[:sidx], pl[:sidx], linewidth=3, linestyle='--', c='tab:green')
+    #plt.plot(rbins[:sidx], pl[:sidx], linewidth=3, linestyle='--', c='tab:green')
 
     plt.xscale('log')
     plt.yscale('log')
