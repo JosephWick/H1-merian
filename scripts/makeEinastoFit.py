@@ -78,7 +78,6 @@ def setPltParams():
 galIDs = util.getGalaxies()[0]
 
 for gal in galIDs:
-    gal = 442
     cdmPath = util.getfilepath(gal)[0]
     cdmFile = cdmPath + '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
@@ -111,9 +110,7 @@ for gal in galIDs:
     plt.ylabel('DM Density', fontfamily='serif', fontsize=20)
     plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=24)
 
-    plt.text(s = r'$\alpha='+str(alpha)[0:4],
-             x = 45, y = max(dmdensity))
+    plt.text(s = r'$\alpha=$'+str(alpha)[0:4],
+             x = 40, y = max(dmdensity))
 
     plt.savefig('/home/jw1624/H1-merian/figures/einastoFit/r'+str(gal)+'.png')
-
-    break
