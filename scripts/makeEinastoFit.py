@@ -78,6 +78,8 @@ def setPltParams():
 galIDs = util.getGalaxies()[0]
 
 for gal in galIDs:
+    if gal == 597: continue
+
     cdmPath = util.getfilepath(gal)[0]
     cdmFile = cdmPath + '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
