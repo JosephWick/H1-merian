@@ -109,7 +109,7 @@ for gal in galIDs:
 
     # fit to einasto profile
     einastoP, alpha = getEinastoProfile(rbins[:sidx], dmdensity[:sidx])
-    powerlaw, alphap= fitPowerlaw(rbins[:sidx], dmdensity[:sidx])
+    pl, alphap= fitPowerlaw(rbins[:sidx], dmdensity[:sidx])
 
     # do figure
     setPltParams()
@@ -117,7 +117,7 @@ for gal in galIDs:
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     plt.plot(rbins, dmdensity, linewidth=3, c='tab:blue')
-    plt.plot(rbins[:sidx], powerlaw[:sidx], linewidth=2, linestyle='--', c='tab:green')
+    plt.plot(rbins[:sidx], pl[:sidx], linewidth=2, linestyle='--', c='tab:green')
 
     plt.xscale('log')
     plt.yscale('log')
