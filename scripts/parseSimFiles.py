@@ -150,8 +150,8 @@ def makeGalQtyCSV(gal):
         bridge = sCDM.bridge(hZero)
         haloDM = bridge(hZero.d)
 
-        print(hZero['iord'])
-        print(haloDM['iord'])
+        print(hZero['iord'].sort())
+        print(haloDM['iord'].sort())
 
         stop
 
