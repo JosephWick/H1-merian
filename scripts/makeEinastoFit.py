@@ -78,8 +78,6 @@ for gal in galIDs:
     cdmPath = util.getfilepath(gal)[0]
     cdmFile = cdmPath + '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
-    sCDM = pynbody.open(cdmFile)
-
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
