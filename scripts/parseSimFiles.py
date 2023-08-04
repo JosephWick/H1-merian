@@ -109,6 +109,7 @@ def makeGalQtyCSV(gal):
         cen_pot = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
         sZero['pos'] -= cen_pot
 
+        hZeroHMR = halfMassRadius_bisect(hZero, 1000, 0.01)
 
     # iterate through each timestep
     for timestep in timesteps:
@@ -150,20 +151,19 @@ def makeGalQtyCSV(gal):
         bridge = sCDM.bridge(hZero)
         haloDM = bridge(hZero.d)
 
-        print(all(hZero.d['iord'] == haloDM['iord']))
+        mtot = haloDM['mass'].sum()
+        cen = np.sum(haloDM['mass'] * haloDM['pos'].transpose(), axis=1) / mtot
+        cen.units = haloDM['pos'].units
+        sCDM['pos'] -= cen
 
+        # let's make a star mask
+        starmask = np.linalg.norm(sCDM.s['pos'], axis=1)<5*hZeroHMR
+        print(starmask)
         stop
 
-        # SFR (do first otherwise we sometimes get an error)
+        # SFR
         SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
         SFR_100 = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<100])
-
-        # center manually if missing halo; taken from pynbody source code
-        #print('HNF for halo ' + str(gal) + ', timestep '+str(tstepnumber))
-        mtot = sCDM.s['mass'].sum()
-        cen = np.sum(sCDM.s['mass'] * sCDM.s['pos'].transpose(), axis=1) / mtot
-        cen.units = sCDM.s['pos'].units
-        sCDM['pos'] -= cen
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
