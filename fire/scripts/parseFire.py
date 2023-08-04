@@ -126,7 +126,7 @@ def makeFireCSV(gal):
     rHM = compute_Rhalfmass_bisect(starpos-com,starmasses, 20000, 0.01)
 
     # velocity dispersions
-    vel_younstars = starvel[agemask]
+    vel_youngstars = starvel[agemask]
     mass_youngstars = starmasses[agemask]
 
     sigma_star = util.compute_vdisp_std(starvel, starmasses, starvel)
