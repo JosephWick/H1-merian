@@ -150,8 +150,7 @@ def makeGalQtyCSV(gal):
         bridge = sCDM.bridge(hZero)
         haloDM = bridge(hZero.d)
 
-        print(hZero['iord'].sort())
-        print(haloDM['iord'].sort())
+        all(h2[9]['iord'] == progenitor_particles['iord']))
 
         stop
 
