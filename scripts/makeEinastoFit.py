@@ -51,7 +51,7 @@ def getEinastoProfile(rbins, dmdensity):
                                 maxfev=1000000,
                                 p0=[1, 0.5, max(dmdensity)])[0]
 
-    return einasto(rbins, A, alpha, c)
+    return einasto(rbins, A, alpha, c), alpha
 #
 
 # sets rc params
@@ -94,7 +94,7 @@ for gal in galIDs:
     # get rbins and DMdensity
     rbins, dmdensity = getDMProfile(sCDM)
     # fit to einasto profile
-    einastoP = getEinastoProfile(rbins, dmdensity)
+    einastoP, alpha = getEinastoProfile(rbins, dmdensity)
 
     # do figure
     setPltParams()
