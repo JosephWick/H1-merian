@@ -10,7 +10,7 @@ import numpy as np
 
 import glob
 import sys
-sys.path.insert(0, '/home/jw1624/H1-merian/util/')
+sys.path.insert(0, '/home/jmwick/H1-merian/util/')
 from util import util
 
 ##
