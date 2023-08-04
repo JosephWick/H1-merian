@@ -71,7 +71,7 @@ def compute_vdisp(velocities, masses):
     return mass_weighted_dispersion
 
 #
-def makeGalQtyCSV(gal, startTS=0):
+def makeGalQtyCSV(gal):
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
     galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
 
@@ -80,21 +80,38 @@ def makeGalQtyCSV(gal, startTS=0):
 
     # setup file for exporting values
     outfile = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
-    if startTS == 0:
-        fout = open(outfile,'w')
-        fout.write('galaxyID,timestep,t,z,')
-        fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
-        fout.write('sigma_allstars,sigma_allstars_wtd,')
-        fout.write('sigma_youngstar,sigma_youngstar_wtd,')
-        fout.write('sigma_allgas,sigma_allgas_wtd,')
-        fout.write('sigma_coldgas,sigma_coldgas_wtd,')
-        fout.write('log_sigma_pred_10,log_sigma_pred_100,')
-        fout.write('alpha,')
-        fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
-        fout.close()
+    fout = open(outfile,'w')
+    fout.write('galaxyID,timestep,t,z,')
+    fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
+    fout.write('sigma_allstars,sigma_allstars_wtd,')
+    fout.write('sigma_youngstar,sigma_youngstar_wtd,')
+    fout.write('sigma_allgas,sigma_allgas_wtd,')
+    fout.write('sigma_coldgas,sigma_coldgas_wtd,')
+    fout.write('log_sigma_pred_10,log_sigma_pred_100,')
+    fout.write('alpha,')
+    fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
+    fout.close()
+
+    # set up bridge from ts 0
+    simfile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+    a=glob.glob(timestep+'/*')
+    if len(a)>0:
+        # find sim in folder
+        simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+
+        # open simfile
+        sZero = pynbody.load(simFile)
+        sZero.physical_units()
+
+        hZero = sZero.halos()[1]
+
+        # center based on potential
+        cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
+        sCDM['pos'] -= cen_pot
+
 
     # iterate through each timestep
-    for timestep in timesteps[startTS:]:
+    for timestep in timesteps:
         fout = open(outfile, 'a')
         tstepnumber = timestep[-6:]
 
@@ -128,6 +145,13 @@ def makeGalQtyCSV(gal, startTS=0):
         sCDM.physical_units()
 
         vdispg = sCDM.g['v_disp']
+
+        # do bridge
+        bridge = sCDM.bridge(hZero)
+        haloDM = bridge(hZero.d)
+
+        print(hZero['iord'])
+        print(haloDM['iord'])
 
         # SFR (do first otherwise we sometimes get an error)
         SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
@@ -228,14 +252,12 @@ def makeGalQtyCSV(gal, startTS=0):
         print('r'+str(gal)+' '+str(tstepnumber)+' done')
 ##
 
-if len(sys.argv) != 3:
-    print('Usage: python3 parseSimFiles.py [galaxy idx] [ts idx]')
+if len(sys.argv) != 2:
+    print('Usage: python3 parseSimFiles.py [galaxy idx]')
     sys.exit()
 
 idx = int(sys.argv[1])
 currentGals = util.getGalaxies()[0]
 gal = currentGals[idx]
 
-ts_idx = int(sys.argv[2])
-
-makeGalQtyCSV(gal, ts_idx)
+makeGalQtyCSV(gal)
