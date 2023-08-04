@@ -158,12 +158,11 @@ def makeGalQtyCSV(gal):
 
         # let's make a star mask
         starmask = np.linalg.norm(sCDM.s['pos'], axis=1)<5*hZeroHMR
-        print(starmask)
-        stop
+        gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<5*hZeroHMR
 
         # SFR
-        SFR_10  = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<10])
-        SFR_100 = sum(sCDM.s['mass'][sCDM.s['age'].in_units('Myr')<100])
+        SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'].in_units('Myr')<10])
+        SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age'].in_units('Myr')<100])
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
@@ -179,7 +178,7 @@ def makeGalQtyCSV(gal):
         rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
         rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM, cylindrical=True).in_units('kpc')
 
-        rHM = halfMassRadius_bisect(sCDM, 20000, 0.01)
+        rHM = halfMassRadius_bisect(sCDM.s[starmask], 20000, 0.01)
 
         # sometimes the conversion to kpc doesn't work; let's do it manually if needed
         if rHL > 1000: rHL = rHL/1000
@@ -191,8 +190,8 @@ def makeGalQtyCSV(gal):
         sSFR_100 = np.log10(SFR_100/(mStar*1e8))
 
         # velocity dispersion
-        vel_allstars = sCDM.s['vel']
-        mass_allstars = sCDM.s['mass']
+        vel_allstars = sCDM.s['vel'][starmask]
+        mass_allstars = sCDM.s['mass'][starmask]
 
         agemask = sCDM.s['age'].in_units('Myr')<10
         vel_youngstars = vel_allstars[agemask]
@@ -205,8 +204,8 @@ def makeGalQtyCSV(gal):
         vdisp_youngstar_wtd = util.compute_vdisp_wtd(vel_allstars, mass_allstars, vel_youngstars, mass_youngstars)
 
         # cold gas vdisp
-        vel_allgas = sCDM.g['vel']
-        mass_allgas = sCDM.g['mass']
+        vel_allgas = sCDM.g['vel'][gasmask]
+        mass_allgas = sCDM.g['mass'][gasmask]
 
         cgmask = sCDM.g['temp']<1000
         vel_coldgas = vel_allgas[cgmask]
@@ -229,7 +228,7 @@ def makeGalQtyCSV(gal):
         pmax = '50 kpc'
 
         # rotation curve
-        pdCDM = pynbody.analysis.profile.Profile(sCDM.d, rmin=pmin, rmax=pmax, type='lin', nbins=500)
+        pdCDM = pynbody.analysis.profile.Profile(haloDM, rmin=pmin, rmax=pmax, type='lin', nbins=500)
         rbins = pdCDM['rbins']
         dmdensity = pdCDM['density']
 
