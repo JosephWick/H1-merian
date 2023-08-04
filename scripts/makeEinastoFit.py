@@ -75,7 +75,7 @@ galIDs = util.getGalaxies()[0]
 
 for gal in galIDs:
     gal = 442
-    cdmPath, sidmPath = getfilepath(gal)
+    cdmPath = util.getfilepath(gal)[0]
     cdmFile = cdmPath + '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
     sCDM = pynbody.open(cdmFile)
