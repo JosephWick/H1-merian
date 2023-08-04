@@ -208,7 +208,8 @@ def makeGalQtyCSV(gal, startTS=0):
         rbins = pdCDM['rbins']
         dmdensity = pdCDM['density']
 
-        alpha, c = opt.curve_fit(powerlaw, rbins, dmdensity,
+        fitidx = 10
+        alpha, c = opt.curve_fit(powerlaw, rbins[:fitidx], dmdensity[fitidx],
                                     maxfev=10000,
                                     p0 = [1,max(dmdensity)])[0]
 
