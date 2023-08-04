@@ -149,7 +149,7 @@ def makeGalQtyCSV(gal):
 
         # do bridge (manually)
         haloDM = hZero.d['iord']
-        haloDMts = sCDM.d[sCDM.d['iord'] == haloDM]
+        haloDMts = sCDM.d[sCDM['iord'] == haloDM['iord']]
         stop
 
         mtot = haloDM['mass'].sum()
