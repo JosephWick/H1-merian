@@ -23,8 +23,8 @@ from util import util
 # Function Definitions
 
 # Einastro profile function for fitting
-def einasto(r, A, alpha, c):
-    return c*np.exp(-A*(r**alpha))
+def einasto(r, A, alpha, c, d):
+    return c*np.exp(-A*(r**alpha)) + d
 #
 
 # Returns: radial bins, DM density per bin
@@ -47,11 +47,11 @@ def getDMProfile(sCDM):
 
 # fits to einasto profile and returns einasto fit density
 def getEinastoProfile(rbins, dmdensity):
-    A, alpha, c = opt.curve_fit(einasto, rbins, dmdensity,
+    A, alpha, c, d = opt.curve_fit(einasto, rbins, dmdensity,
                                 maxfev=1000000,
-                                p0=[1, 0.5, max(dmdensity)])[0]
+                                p0=[1, 0.5, max(dmdensity)], min(dmdensity))[0]
 
-    return einasto(rbins, A, alpha, c), alpha
+    return einasto(rbins, A, alpha, c, d), alpha
 #
 
 # sets rc params
@@ -97,13 +97,17 @@ for gal in galIDs:
     # fit to einasto profile
     einastoP, alpha = getEinastoProfile(rbins, dmdensity)
 
+    # get slope of dmdensity
+    sidx = 10
+    #slope = (dmdensity[0]-dmdensity[sidx])/(rbins[]
+
     # do figure
     setPltParams()
 
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     plt.plot(rbins, dmdensity, linewidth=3, c='tab:blue')
-    #plt.plot(rbins, einastoP, linewidth=2, linestyle='--', c='tab:green')
+    plt.plot(rbins, einastoP, linewidth=2, linestyle='--', c='tab:green')
 
     plt.xscale('log')
     plt.yscale('log')
