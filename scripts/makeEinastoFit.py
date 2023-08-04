@@ -107,7 +107,7 @@ for gal in galIDs:
     rbins, dmdensity = getDMProfile(sCDM)
 
     # get slope of dmdensity
-    sidx = 8
+    sidx = 10
 
     # fit to einasto profile
     einastoP, alpha = getEinastoProfile(rbins[:sidx], dmdensity[:sidx])
@@ -128,7 +128,7 @@ for gal in galIDs:
     #plt.ylabel('DM Density', fontfamily='serif', fontsize=20)
     plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=36)
 
-    plt.text(s = r'$\alpha=$'+str(alphap)[0:4],
+    plt.text(s = r'$\alpha=$'+str(alphap)[0:5],
              x = min(rbins), y = min(dmdensity),
              fontfamily='monospace', fontsize=24, weight='bold')
 
