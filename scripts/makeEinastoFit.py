@@ -49,7 +49,7 @@ def getDMProfile(sCDM):
 def getEinastoProfile(rbins, dmdensity):
     A, alpha, c, d = opt.curve_fit(einasto, rbins, dmdensity,
                                 maxfev=1000000,
-                                p0=[1, 0.5, max(dmdensity)], min(dmdensity))[0]
+                                p0=[1, 0.5, max(dmdensity), min(dmdensity)])[0]
 
     return einasto(rbins, A, alpha, c, d), alpha
 #
