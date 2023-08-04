@@ -94,12 +94,13 @@ for gal in galIDs:
 
     # get rbins and DMdensity
     rbins, dmdensity = getDMProfile(sCDM)
-    # fit to einasto profile
-    einastoP, alpha = getEinastoProfile(rbins, dmdensity)
 
     # get slope of dmdensity
     sidx = 10
     slope = (dmdensity[0]-dmdensity[sidx])/(rbins[0]-rbins[10])
+
+    # fit to einasto profile
+    einastoP, alpha = getEinastoProfile(rbins[0:sidx], dmdensity[0:sidx])
 
     # do figure
     setPltParams()
@@ -107,7 +108,7 @@ for gal in galIDs:
     fig = plt.figure(figsize=(8,8), facecolor='w')
 
     plt.plot(rbins, dmdensity, linewidth=3, c='tab:blue')
-    plt.plot(rbins, einastoP, linewidth=2, linestyle='--', c='tab:green')
+    plt.plot(rbins[:sidx], einastoP[:sidx], linewidth=2, linestyle='--', c='tab:green')
 
     plt.xscale('log')
     plt.yscale('log')
