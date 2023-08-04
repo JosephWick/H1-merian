@@ -9,6 +9,10 @@ import scipy.optimize as opt
 
 import glob
 
+import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib import rcParams
+
 import sys
 sys.path.insert(0, '../util/')
 from util import util
