@@ -94,10 +94,10 @@ def makeGalQtyCSV(gal):
 
     # set up bridge from ts 0
     simfile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
-    a=glob.glob(timestep+'/*')
+    a=glob.glob(timesteps[0]+'/*')
     if len(a)>0:
         # find sim in folder
-        simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        simFile = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
         # open simfile
         sZero = pynbody.load(simFile)
