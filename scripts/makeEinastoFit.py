@@ -55,7 +55,7 @@ def getEinastoProfile(rbins, dmdensity):
                                 maxfev=1000000,
                                 p0=[1, 0.5, max(dmdensity), min(dmdensity)])[0]
 
-    return einasto(rbins, A, alpha, c), alpha
+    return einasto(rbins, A, alpha, c, d), alpha
 #
 
 def fitPowerlaw(rbins, dmdensity):
