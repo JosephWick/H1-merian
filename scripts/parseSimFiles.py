@@ -3,11 +3,18 @@ import glob
 
 import numpy as np
 
+import scipy.optimize as opt
+
 import os
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util import util
 
+##
+
+# power law
+def powerlaw(r, alpha, c):
+    return c*(r**alpha)
 
 # input: a simulation
 # output: half mass radius of that simulation
@@ -82,6 +89,7 @@ def makeGalQtyCSV(gal, startTS=0):
         fout.write('sigma_allgas,sigma_allgas_wtd,')
         fout.write('sigma_coldgas,sigma_coldgas_wtd,')
         fout.write('log_sigma_pred_10,log_sigma_pred_100,')
+        fout.write('alpha,')
         fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
         fout.close()
 
@@ -113,7 +121,6 @@ def makeGalQtyCSV(gal, startTS=0):
             simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
         # check if simFile exists
         if len(glob.glob(simFile))==0: continue
-
 
         # open simfile
         sCDM = pynbody.load(simFile)
@@ -190,6 +197,21 @@ def makeGalQtyCSV(gal, startTS=0):
         log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_10
         log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(mStar) + 0.0126*np.log10(mStar)*sSFR_100
 
+        # alpha from power fit
+        # profile range
+        pmin = '0.0001 kpc'
+        #pmax = pynbody.analysis.halo.virial_radius(h1) / 4
+        pmax = '50 kpc'
+
+        # rotation curve
+        pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax, type='lin', nbins=500)
+        rbins = pdCDM['rbins']
+        dmdensity = pdCDM['density']
+
+        alpha, c = opt.curve_fit(powerlaw, rbins, dmdensity,
+                                    maxfev=10000,
+                                    p0 = [1,max(dmdensity)])[0]
+
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         fout.write(str(mStar)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
@@ -198,6 +220,7 @@ def makeGalQtyCSV(gal, startTS=0):
         fout.write(str(vdisp_allgas_uwtd)+','+str(vdisp_allstars_wtd)+',')
         fout.write(str(vdisp_coldgas_uwtd)+','+str(vdisp_coldgas_wtd)+',')
         fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
+        fout.write(str(alpha)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+','+str(sSFR_100)+'\n')
 
         fout.close()
