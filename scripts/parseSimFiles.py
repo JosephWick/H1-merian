@@ -5,6 +5,8 @@ import numpy as np
 
 import scipy.optimize as opt
 
+import matplotlib.pyplot as plt
+
 import os
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
