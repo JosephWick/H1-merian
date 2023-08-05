@@ -92,8 +92,6 @@ def makeGalQtyCSV(gal):
 
         # try to find sim file in current folder
         simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-        # check if there's another folder
-        a=glob.glob(timestep+'/*')
         # check for addtional folder
         if os.path.isdir(simFile):
             simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
@@ -121,18 +119,17 @@ def makeGalQtyCSV(gal):
         # larger radius for dm
         darkmask = np.linalg.norm(sCDM.d['pos'] - cen, axis=1)<=dmfac*rfac*hmrPrev
 
+        # Mass
+        mStar = sum(sCDM.s['mass'][starmask])
+
         # SFR
         SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<10])
-
         SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<100])
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
         # get redshift
         stepZ = pynbody.analysis.cosmology.redshift(sCDM, uage)
-
-        # Mass
-        mStar = sum(sCDM.s['mass'][starmask])
 
         # Sizes
         rVir = -1
@@ -142,13 +139,8 @@ def makeGalQtyCSV(gal):
                 cylindrical=True).in_units('kpc')
 
         # this is accurate to our star cut
-        rHM = halfMassRadius_bisect(sCDM.s['pos'][starmask], sCDM.s['mass'][starmask],
+        rHM = halfMassRadius_bisect(sCDM.s['pos'][starmask]-cen, sCDM.s['mass'][starmask],
                                     20000, 0.01)
-
-        # sometimes the conversion to kpc doesn't work?
-        #if rHL > 1000: rHL = rHL/1000
-        #if rHL_c > 1000: rHL_c = rHL_c/1000
-        #if rHM > 1000: rHM = rHM/1000
 
         # sSFR
         sSFR_10 = np.log10(SFR_10/(mStar*1e7))
