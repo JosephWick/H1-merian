@@ -95,6 +95,7 @@ def makeGalQtyCSV(gal):
         # check if there's another folder
         a=glob.glob(timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber)
         if len(a)>0:
+            print('a')
             # find sim in folder
             simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
             #simFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
