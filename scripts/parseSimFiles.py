@@ -79,7 +79,7 @@ def makeGalQtyCSV(gal):
 
     # center based on potential
     cen = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
-    sPrev['pos'] -= cen_pot
+    sPrev['pos'] -= cen
 
     hmrPrev = halfMassRadius_bisect(hZero, 1000, 0.01)
 
