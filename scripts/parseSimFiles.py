@@ -66,10 +66,10 @@ def makeGalQtyCSV(gal):
 
     # get original hmr
     simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
-    #a=glob.glob(timesteps[0]+'/*')
-    #if len(a)>0:
+    a=glob.glob(timesteps[0]+'/*')
+    if len(a)>0:
         # find sim in folder
-    #    simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
     # open simfile
     sPrev = pynbody.load(simfileprev)
@@ -94,9 +94,9 @@ def makeGalQtyCSV(gal):
         simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
         # check if there's another folder
         a=glob.glob(timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber)
-        if len(a)>0:
+        #if len(a)>0:
             # find sim in folder
-            simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+        #    simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
             #simFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
             #print(glob.glob(simFile))
 
