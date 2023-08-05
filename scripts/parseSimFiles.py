@@ -81,7 +81,7 @@ def makeGalQtyCSV(gal):
     cen = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
     sPrev['pos'] -= cen
 
-    hmrPrev = halfMassRadius_bisect(hZero, 1000, 0.01)
+    hmrPrev = halfMassRadius_bisect(hZero.s['pos'], hZero.s['mass'], 1000, 0.01)
 
     # iterate through each timestep
     for timestep in timesteps[2:]:
