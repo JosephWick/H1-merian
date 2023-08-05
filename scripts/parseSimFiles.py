@@ -96,7 +96,7 @@ def makeGalQtyCSV(gal):
         a=glob.glob(timestep+'/*')
         if len(a)>0:
             # find sim in folder
-            simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
+            simFile = simfile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
             #simFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
             #print(glob.glob(simFile))
 
@@ -116,20 +116,20 @@ def makeGalQtyCSV(gal):
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
-        # make cut based on particles within rfac*hmrPrev of prev timestep parsed
-        rfac = 30
-        dmfac = 1.5
-        starmask = np.linalg.norm(sCDM.s['pos'].in_units('kpc') - cen,axis=1)<rfac*hmrPrev
-        gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<=rfac*hmrPrev
-        # larger radius for dm
-        darkmask = np.linalg.norm(sCDM.d['pos'], axis=1)<=dmfac*rfac*hmrPrev
-
         # center by mass
         mtot = sCDM.s['mass'][starmask].sum()
         cen = np.sum(sCDM.s['mass'][starmask] * sCDM.s['pos'][starmask].transpose(),
                      axis=1) / mtot
         cen.units = sCDM.d['pos'].units
         sCDM['pos'] -= cen
+
+        # make cut based on particles within rfac*hmrPrev of current center
+        rfac = 30
+        dmfac = 1.5
+        starmask = np.linalg.norm(sCDM.s['pos'].in_units('kpc'),axis=1)<rfac*hmrPrev
+        gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<=rfac*hmrPrev
+        # larger radius for dm
+        darkmask = np.linalg.norm(sCDM.d['pos'], axis=1)<=dmfac*rfac*hmrPrev
 
         # SFR
         SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<10])
