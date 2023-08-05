@@ -256,7 +256,7 @@ def makeGalQtyCSV(gal, doQA=False):
         if doQA:
             figfout = QAdir+'/'+str(tstepnumber)+'.png'
             hw = 600
-            makeQAfig(sCDM.s['pos'], sCDM.d['pos'], cen, Rhm,
+            makeQAfig(sCDM.s['pos'], sCDM.d['pos'], cen, rHM,
                         hmrPrev*rfac, hmrPrev*rfac*dmfac, hw,
                         figfout)
 
