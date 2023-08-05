@@ -289,7 +289,7 @@ if len(sys.argv) != 2 and len(sys.argv) != 3:
 
 gal = int(sys.argv[1])
 currentGals = util.getGalaxies()[0]
-if gal not in currengGals:
+if gal not in currentGals:
     print('Error: Galaxy ID not known.')
     sys.exit()
 
