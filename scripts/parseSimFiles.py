@@ -41,9 +41,51 @@ def halfMassRadius_bisect(positions, masses, outerR, acc, maxiter=100000):
             break
 
     return r
-
 #
-def makeGalQtyCSV(gal):
+
+# makeQAfig()
+# makes QA figure that depicts starmask, dmmask and new Rhm
+def makeQAfig(pos_allstars, pos_allDM, center, Rhm, Rstar, Rdm, hw, outdir):
+    fig, axs = plt.subplots(1,3, figsize=(18,6))
+
+    # make the figure
+    axes = [0,1,2]
+    idxX = [0,0,1]
+    idxY = [1,2,2]
+    for i,ax in enumerate(axes):
+        # scatter the star and DM particles
+        axs[ax].scatter(pos_allstars[:,idxX[i]], pos_allstars[:,idxY[i]], s=1)
+        axs[ax].scatter(pos_allDM[:,idxX[i]], pos_allDM[:,idxY[i]], s=1, alpha = 0.01)
+
+        # draw a circle around the star and DM particles we've selected
+        c1 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rstar, edgecolor='g',
+                            linewidth=1, fill=False)
+        c2 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rdm, edgecolor='cyan',
+                            linewidth=1, fill=False)
+        c3 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rhm, edgecolor='magenta',
+                            linewidth=1, fill=False)
+        axs[ax].add_patch(c1)
+        axs[ax].add_patch(c2)
+        axs[ax].add_patch(c3)
+
+        # set view
+        axs[ax].set_xlim([center[idxX[i]]-hw,center[idxX[i]]+hw])
+        axs[ax].set_ylim([center[idxY[i]]-hw,center[idxY[i]]+hw])
+
+        # label
+        fs = 16
+        axs[ax].set_xlabel('x', fontsize=fs)
+        axs[ax].set_ylabel('y', fontsize=fs)
+
+    # title and clean up
+    plt.suptitle('r'+str(gal), weight='bold', fontsize=20)
+    plt.tight_layout()
+
+    # save
+    plt.savefig(outdir)
+
+# does the parsing and creation of csvs
+def makeGalQtyCSV(gal, doQA=False):
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
     galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
 
@@ -63,6 +105,10 @@ def makeGalQtyCSV(gal):
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
     fout.close()
+
+    # define QA directory
+    QAdir = '/home/jw1624/H1-merian/QA/parse/r'+str(gal)
+
 
     # get original hmr
     # first, find file
@@ -206,6 +252,15 @@ def makeGalQtyCSV(gal):
                                     maxfev=10000,
                                     p0 = [1,max(dmdensity)])[0]
 
+        # create QA figur if desired
+        if doQA:
+            figfout = QAdir+'/'+str(tstepnumber)+'.png'
+            hw = 600
+            makeQAfig(sCDM.s['pos'], sCDM.d['pos'], cen, Rhm,
+                        hmrPrev*rfac, hmrPrev*rfac*dmfac, hw,
+                        figfout)
+
+
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         fout.write(str(mStar)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
@@ -226,12 +281,20 @@ def makeGalQtyCSV(gal):
         print('r'+str(gal)+' '+str(tstepnumber)+' done')
 ##
 
-if len(sys.argv) != 2:
-    print('Usage: python3 parseSimFiles.py [galaxy idx]')
+if len(sys.argv) != 2 and len(sys.argv) != 3:
+    print('Usage: python3 parseSimFiles.py [galaxy id] [optional QA flag]')
+    print('     [galaxy id] : integer id of zoomed galaxy; e.g. 431')
+    print('     [optional QA flag] : 0 for no QA images, 1 for QA. Defaults to 0.')
     sys.exit()
 
-idx = int(sys.argv[1])
+gal = int(sys.argv[1])
 currentGals = util.getGalaxies()[0]
-gal = currentGals[idx]
+if gal not in currengGals:
+    print('Error: Galaxy ID not known.')
+    sys.exit()
 
-makeGalQtyCSV(gal)
+doQA = False
+if len(sys.argv) == 3 and sys.argv[2] == 1:
+    doQA = True
+
+makeGalQtyCSV(gal, doQA)
