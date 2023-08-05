@@ -84,7 +84,7 @@ def makeGalQtyCSV(gal):
     hmrPrev = halfMassRadius_bisect(hZero.s['pos'], hZero.s['mass'], 1000, 0.01)
 
     # iterate through each timestep
-    for timestep in timesteps[2:]:
+    for timestep in timesteps:
         fout = open(outfile, 'a')
         tstepnumber = timestep[-6:]
 
