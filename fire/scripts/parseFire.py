@@ -130,10 +130,12 @@ def makeFireCSV(gal):
     mass_youngstars = starmasses[agemask]
 
     sigma_star = util.compute_vdisp_std(starvel, starmasses, starvel)
-    sigma_star_wtd = util.compute_vdisp_wtd(starvel, starmasses, starvel, starmasses)
+    sigma_star_wtd = util.compute_vdisp_wtd(starvel, starmasses, starvel,
+                        starmasses)
 
     sigma_youngstar = util.compute_vdisp_std(starvel, starmasses, vel_youngstars)
-    sigma_youngstar_wtd = util.compute_vdisp_wtd(starvel, starmasses, vel_youngstars, mass_youngstars)
+    sigma_youngstar_wtd = util.compute_vdisp_wtd(starvel, starmasses,
+                            vel_youngstars, mass_youngstars)
 
     pos_allgas = particles['gas'].prop('position')
     pos_allgas -= com
@@ -141,7 +143,8 @@ def makeFireCSV(gal):
     mass_allgas = particles['gas'].prop('mass')
 
     sigma_allgas = util.compute_vdisp_std(vel_allgas, mass_allgas, vel_allgas)
-    sigma_allgas = util.compute_vdisp_wtd(vel_allgas, mass_allgas, vel_allgas, mass_allgas)
+    sigma_allgas = util.compute_vdisp_wtd(vel_allgas, mass_allgas, vel_allgas,
+                    mass_allgas)
 
     sfr10 = np.sum(starmasses[starages<0.01])
     sfr100= np.sum(starmasses[starages<0.10])
@@ -154,7 +157,8 @@ def makeFireCSV(gal):
 
     # write to csv
     fout = open(outfile, 'a')
-    fout.write(gal[-10:]+','+str(timesteps[i])+','+str(snaptimes[i])+','+str(lookbacks[i])+',')
+    fout.write(gal[-10:]+','+str(timesteps[i])+','+str(snaptimes[i])+','
+                +str(lookbacks[i])+',')
     fout.write(str(redshifts[i])+',')
     fout.write(str(Mstar)+','+str(rHM)+',')
     fout.write(str(sigma_star)+','+str(sigma_youngstar)+',')
