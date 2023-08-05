@@ -93,24 +93,15 @@ def makeGalQtyCSV(gal):
         # try to find sim file in current folder
         simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
         # check if there's another folder
-        a=glob.glob(timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber)
-        #if len(a)>0:
-            # find sim in folder
-        #    simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-            #simFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-            #print(glob.glob(simFile))
+        a=glob.glob(timestep+'/*'')
+        # check for addtional folder
+        if os.path.isdir(simFile):
+            simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
 
-        #print(glob.glob(simFile))
         # handle sim file not existing
         if len(glob.glob(simFile)) == 0:
             print('FNF for halo ' + str(gal) + ', timestep '+tstepnumber)
             continue
-
-        # check for addtional folder
-        if os.path.isdir(simFile):
-            simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-        # check if simFile exists
-        if len(glob.glob(simFile))==0: continue
 
         # open simfile
         sCDM = pynbody.load(simFile)
@@ -121,7 +112,6 @@ def makeGalQtyCSV(gal):
         cen = np.sum(sCDM.s['mass'] * sCDM.s['pos'].transpose(),
                      axis=1) / mtot
         cen.units = sCDM.s['pos'].units
-        sCDM['pos'] -= cen
 
         # make cut based on particles within rfac*hmrPrev of current center
         rfac = 50
