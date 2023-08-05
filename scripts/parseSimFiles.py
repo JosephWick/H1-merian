@@ -125,7 +125,7 @@ def makeGalQtyCSV(gal):
         darkmask = np.linalg.norm(sCDM.d['pos'], axis=1)<=dmfac*rfac*hmrPrev
 
         # center by mass
-        mtot = sCDM.s['mass'][galmask].sum()
+        mtot = sCDM.s['mass'][starmask].sum()
         cen = np.sum(sCDM.s['mass'][starmask] * sCDM.s['pos'][starmask].transpose(),
                      axis=1) / mtot
         cen.units = sCDM.d['pos'].units
