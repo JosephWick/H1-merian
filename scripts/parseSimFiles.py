@@ -75,11 +75,11 @@ def makeGalQtyCSV(gal):
     sPrev = pynbody.load(simfileprev)
     sPrev.physical_units()
 
-    hZero = sZero.halos()[1]
+    hZero = sPrev.halos()[1]
 
     # center based on potential
     cen = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
-    sZero['pos'] -= cen_pot
+    sPrev['pos'] -= cen_pot
 
     hmrPrev = halfMassRadius_bisect(hZero, 1000, 0.01)
 
@@ -119,10 +119,10 @@ def makeGalQtyCSV(gal):
         # make cut based on particles within rfac*hmrPrev of prev timestep parsed
         rfac = 30
         dmfac = 1.5
-        starmask = np.linalg.norm(sOne.s['pos'].in_units('kpc') - cenhalo,axis=1)<rfac*rhm0
-        gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<=rfac*hmr0
+        starmask = np.linalg.norm(sOne.s['pos'].in_units('kpc') - cen,axis=1)<rfac*hmrPrev
+        gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<=rfac*hmrPrev
         # larger radius for dm
-        darkmask = np.linalg.norm(sCDm.d['pos'], axis=1)<=dmfac*rfac*hmr0
+        darkmask = np.linalg.norm(sCDm.d['pos'], axis=1)<=dmfac*rfac*hmrPrev
 
         # center by mass
         mtot = sCDM.s['mass'][galmask].sum()
@@ -237,6 +237,10 @@ def makeGalQtyCSV(gal):
                     ','+str(sSFR_100)+'\n')
 
         fout.close()
+
+        # update relevant quantities for next ts
+        hmrPrev = rHM
+
         print('r'+str(gal)+' '+str(tstepnumber)+' done')
 ##
 
