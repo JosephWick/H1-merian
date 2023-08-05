@@ -132,11 +132,9 @@ def makeGalQtyCSV(gal):
         sCDM['pos'] -= cen
 
         # SFR
-        SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age']
-        SFR_10  = SFR_10[starmask].in_units('Myr')<10])
+        SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<10])
 
-        SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age']
-        SFR_100 = SFR_100[starmask].in_units('Myr')<100])
+        SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<100])
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
