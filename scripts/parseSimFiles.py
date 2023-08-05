@@ -294,7 +294,7 @@ if gal not in currentGals:
     sys.exit()
 
 doQA = False
-if len(sys.argv) == 3 and sys.argv[2] == 1:
+if len(sys.argv) == 3 and sys.argv[2] == '1':
     doQA = True
 
 makeGalQtyCSV(gal, doQA)
