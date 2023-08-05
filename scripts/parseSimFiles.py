@@ -214,7 +214,7 @@ def makeGalQtyCSV(gal):
         pmax = '50 kpc'
 
         # rotation curve
-        pdCDM = pynbody.analysis.profile.Profile(sCDM.d[dmmask], rmin=pmin, rmax=pmax,
+        pdCDM = pynbody.analysis.profile.Profile(sCDM.d[darkmask], rmin=pmin, rmax=pmax,
             type='lin', nbins=500)
         rbins = pdCDM['rbins']
         dmdensity = pdCDM['density']
