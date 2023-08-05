@@ -65,6 +65,7 @@ def makeGalQtyCSV(gal):
     fout.close()
 
     # get original hmr
+    # first, find file
     simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
     a=glob.glob(timesteps[0]+'/*')
     if len(a)>0:
@@ -79,7 +80,6 @@ def makeGalQtyCSV(gal):
 
     # center based on potential
     cen = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
-    sPrev['pos'] -= cen
 
     hmrPrev = halfMassRadius_bisect(hZero.s['pos']-cen, hZero.s['mass'], 1000, 0.01)
 
