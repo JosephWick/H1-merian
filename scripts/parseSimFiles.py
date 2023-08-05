@@ -119,7 +119,7 @@ def makeGalQtyCSV(gal):
         # make cut based on particles within rfac*hmrPrev of prev timestep parsed
         rfac = 30
         dmfac = 1.5
-        starmask = np.linalg.norm(sOne.s['pos'].in_units('kpc') - cen,axis=1)<rfac*hmrPrev
+        starmask = np.linalg.norm(sCDM.s['pos'].in_units('kpc') - cen,axis=1)<rfac*hmrPrev
         gasmask = np.linalg.norm(sCDM.g['pos'], axis=1)<=rfac*hmrPrev
         # larger radius for dm
         darkmask = np.linalg.norm(sCDm.d['pos'], axis=1)<=dmfac*rfac*hmrPrev
