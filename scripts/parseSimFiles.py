@@ -201,10 +201,11 @@ def makeGalQtyCSV(gal):
                                 vel_coldgas, mass_coldgas)
 
         # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
-        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar) +
-                            0.0126*np.log10(mStar)*sSFR_10
-        log_sigma_pred_100= 0.1006*sSFR_100+ 0.3892*np.log10(mStar) +
-                            0.0126*np.log10(mStar)*sSFR_100
+        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar)
+        log_sigma_pred_10+= 0.0126*np.log10(mStar)*sSFR_10
+
+        log_sigma_pred_100 = 0.1006*sSFR_100+ 0.3892*np.log10(mStar)
+        log_sigma_pred_100+= .0126*np.log10(mStar)*sSFR_100
 
         # alpha from power fit
         # profile range
