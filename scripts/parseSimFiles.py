@@ -16,7 +16,7 @@ from util import util
 def powerlaw(r, alpha, c):
     return c*(r**alpha)
 
-def compute_Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
+def Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
     innerLim = 0.0
     outerLim = outerR
 
