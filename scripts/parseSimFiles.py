@@ -69,7 +69,7 @@ def makeGalQtyCSV(gal):
     a=glob.glob(timesteps[0]+'/*')
     if len(a)>0:
         # find sim in folder
-        simFileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
     # open simfile
     sPrev = pynbody.load(simfileprev)
