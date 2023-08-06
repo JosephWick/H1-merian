@@ -94,7 +94,7 @@ for gal in galIDs:
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
 
-    cen_pot = pynbody.analysis.halo.center(hCDM, mode='mass', retcen=True)
+    cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
     sCDM['pos'] -= cen_pot
 
     pynbody.analysis.angmom.faceon(hCDM)
