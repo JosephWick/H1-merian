@@ -108,7 +108,7 @@ def makeGalQtyCSV(gal, doQA=False):
     # define QA directory
     QAdir = '/home/jw1624/H1-merian/QA/parse/r'+str(gal)
 
-    simfileprev = util_os.getfilepath(gal,0)
+    simfileprev = util_os.getfilepath_cdm(gal,0)
 
     # open simfile
     sPrev = pynbody.load(simfileprev)
@@ -126,7 +126,7 @@ def makeGalQtyCSV(gal, doQA=False):
         fout = open(outfile, 'a')
 
         # open simfile
-        simfile = util_os.getfilepath(gal, timestep)
+        simfile = util_os.getfilepath_cdm(gal, timestep)
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
