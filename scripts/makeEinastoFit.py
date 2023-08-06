@@ -39,7 +39,8 @@ def getDMProfile(sCDM):
     pmax = '50 kpc'
 
     # rotation curve
-    pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax, type='lin', nbins=500)
+    pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax,
+                type='lin', nbins=500)
 
     rbins = pdCDM['rbins']
     dmdensity = pdCDM['density']
