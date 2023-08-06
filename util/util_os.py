@@ -21,9 +21,6 @@ class util_os:
         gets file path for data of halo h in [CDM, SIDM] order
         '''
 
-        print('U: '+str(gal))
-        print('U: '+str(tsidx))
-
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
 
         # cdm
