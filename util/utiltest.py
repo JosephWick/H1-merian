@@ -6,9 +6,10 @@ import pynbody
 
 ##
 
+# test retrieval of z=0
 cdmGals = util_os.getGalaxies()[0]
+print('Testing z=0 retrieval...')
 for gal in cdmGals:
-    print('Retrieving z=0 r'+str(gal)+'...', end='')
     z0 = util_os.getfilepath_cdm(gal, 0)
     sCDM = pynbody.load(z0)
-    print('done')
+print('success')
