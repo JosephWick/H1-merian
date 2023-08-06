@@ -12,16 +12,12 @@ import pynbody
 
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
-from util import util
+from util import util_os
 
 def makeHalfmassImg(gal, ts, hmr, width=20):
     print('Timestep: '+str(ts)+'...', end='')
 
-    # get sim file
-    baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
-    galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
-
-    f = glob.glob(galDir+'/r*.romulus25.3072g1HsbBH.00'+str(ts)+'/r*.00'+str(ts))[0]
+    f = util_os.getfilepath_cdm(gal, ts)
 
     s = pynbody.load(f)
     s.physical_units()
@@ -31,7 +27,7 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
     try:
         hCDM = s.halos(write_fpos=False)[1]
     except:
-        # center manually if missing halo; taken from pynbody source code
+        # center manually if missing halo; center of mass from stars
         mtot = s.s['mass'].sum()
         cen = np.sum(s.s['mass'] * s.s['pos'].transpose(), axis=1) / mtot
         cen.units = s.s['pos'].units
@@ -68,7 +64,9 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 
     plt.tight_layout()
 
-    plt.savefig('/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'+str(gal)+'/'+str(ts)+'.png')
+    figpath = '/home/jw1624/H1-merian/figures/breathingModes/hmrCheck/r'
+    figpath+= str(gal)+'/'+str(ts)+'.png'
+    plt.savefig(figpath)
     print('done')
 # end func
 ##
@@ -77,15 +75,11 @@ def makeHalfmassImg(gal, ts, hmr, width=20):
 # main
 ##
 
-# handle command line argument
+# handle command line arguments
 if len(sys.argv) != 2 and len(sys.argv) != 3:
-    print('Usage: python3 makeHalfmassImages.py [galaxy idx]')
+    print('Usage: python3 makeHalfmassImages.py [galaxy]')
     sys.exit
-idx = int(sys.argv[1])
-
-# get galaxies and iterate
-galIDs = util.getGalaxies()[0]
-gal = galIDs[idx]
+gal = int(sys.argv[1])
 
 # load in list of timesteps and radii
 csvf = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
