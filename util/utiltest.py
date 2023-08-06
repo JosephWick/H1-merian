@@ -8,6 +8,6 @@ import pynbody
 
 cdmGals = util_os.getGalaxies()[0]
 print(cdmGals)
-for gal in currentGals:
+for gal in cdmGals:
     z0 = util_os.getfilepath(gal,0)
     sCDM = pynbody.load(z0)
