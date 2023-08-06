@@ -11,6 +11,7 @@ import os
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util_os import util_os
+from util_galaxies import util_galaxies
 
 ##
 
@@ -181,14 +182,14 @@ def makeGalQtyCSV(gal, doQA=False):
         vel_youngstars = vel_allstars[agemask]
         mass_youngstars = mass_allstars[agemask]
 
-        vdisp_allstars_uwtd = util_os.compute_vdisp_std(vel_allstars,
+        vdisp_allstars_uwtd = util_galaxies.compute_vdisp_std(vel_allstars,
                                 mass_allstars, vel_allstars)
-        vdisp_allstars_wtd = util_os.compute_vdisp_wtd(vel_allstars,
+        vdisp_allstars_wtd = util_galaxies.compute_vdisp_wtd(vel_allstars,
                                 mass_allstars, vel_allstars, mass_allstars)
 
-        vdisp_youngstar_uwtd = util_os.compute_vdisp_std(vel_allstars,
+        vdisp_youngstar_uwtd = util_galaxies.compute_vdisp_std(vel_allstars,
                                 mass_allstars, vel_youngstars)
-        vdisp_youngstar_wtd = util_os.compute_vdisp_wtd(vel_allstars,
+        vdisp_youngstar_wtd = util_galaxies.compute_vdisp_wtd(vel_allstars,
                                 mass_allstars, vel_youngstars, mass_youngstars)
 
         # cold gas vdisp
@@ -199,14 +200,14 @@ def makeGalQtyCSV(gal, doQA=False):
         vel_coldgas = vel_allgas[cgmask]
         mass_coldgas= mass_allgas[cgmask]
 
-        vdisp_allgas_uwtd = util_os.compute_vdisp_std(vel_allgas, mass_allgas,
+        vdisp_allgas_uwtd = util_galaxies.compute_vdisp_std(vel_allgas, mass_allgas,
                             vel_allgas)
-        vdisp_allgas_wtd = util_os.compute_vdisp_wtd(vel_allgas, mass_allgas,
+        vdisp_allgas_wtd = util_galaxies.compute_vdisp_wtd(vel_allgas, mass_allgas,
                             vel_allgas, mass_allgas)
 
-        vdisp_coldgas_uwtd = util_os.compute_vdisp_std(vel_allgas, mass_allgas,
+        vdisp_coldgas_uwtd = util_galaxies.compute_vdisp_std(vel_allgas, mass_allgas,
                                 vel_coldgas)
-        vdisp_coldgas_wtd = util_os.compute_vdisp_wtd(vel_allgas, mass_allgas,
+        vdisp_coldgas_wtd = util_galaxies.compute_vdisp_wtd(vel_allgas, mass_allgas,
                                 vel_coldgas, mass_coldgas)
 
         # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
