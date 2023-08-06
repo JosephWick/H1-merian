@@ -1,6 +1,6 @@
 from util_os import util_os
 
-immport pynbody
+import pynbody
 
 
 
