@@ -3,7 +3,7 @@
 
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
-from util import util
+from util_os import util_os
 
 import pynbody
 import numpy as np
@@ -15,16 +15,14 @@ import matplotlib.pylab as plt
 cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
 
 # image function
-def makeStarImage(hID, width=20, sidm=0):
-    fileadd = '.romulus25.3072g1HsbBH.004096'
+def makeStarImage(gal, width=20, sidm=0):
+    f = util_os.getfilepath_cdm(gal, 0)
     if sidm:
-        fileadd = '.romulus25cvdXsec.3072g1HsbBH.004096'
+        f = util_os.getfilepath_sidm(gal, 0)
 
     v_disp = -1
 
     fig = plt.figure(figsize=(8,8), facecolor='w')
-
-    f = util.getfilepath(hID)[sidm]+'/r'+str(hID)+fileadd
 
     s = pynbody.load(f)
     s.physical_units()
