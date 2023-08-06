@@ -77,7 +77,7 @@ class util_os:
         '''
 
         # check against getGalaxies()
-        if gal not in getGalaxies()[1]:
+        if gal not in util_os.getGalaxies()[1]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
