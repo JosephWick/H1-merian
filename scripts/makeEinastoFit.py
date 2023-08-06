@@ -15,9 +15,7 @@ from matplotlib import rcParams
 
 import sys
 sys.path.insert(0, '../util/')
-from util import util
-
-##
+from util_os import util_os
 
 ##
 # Function Definitions
@@ -89,10 +87,7 @@ def setPltParams():
 galIDs = util.getGalaxies()[0]
 
 for gal in galIDs:
-    if gal == 597: continue
-
-    cdmPath = util.getfilepath(gal)[0]
-    cdmFile = cdmPath + '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+    cdmFile = util_os.getfilepath_cdm(gal, 0)
 
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
