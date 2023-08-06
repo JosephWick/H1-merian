@@ -85,6 +85,7 @@ def makeQAfig(pos_allstars, pos_allDM, center, Rhm, Rstar, Rdm, hw, outdir):
 
     # save
     plt.savefig(outdir)
+    plt.close()
 
 # does the parsing and creation of csvs
 def makeGalQtyCSV(gal, doQA=False):
