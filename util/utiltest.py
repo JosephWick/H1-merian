@@ -7,6 +7,7 @@ import pynbody
 ##
 
 currentGals = util_os.getGalaxies()
+print(currentGals)
 for gal in currentGals:
     z0 = util_os.getfilepath(gal,0)
     sCDM = pynbody.load(z0)
