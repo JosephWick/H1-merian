@@ -126,7 +126,7 @@ def makeGalQtyCSV(gal, doQA=False):
         fout = open(outfile, 'a')
 
         # open simfile
-        simfile = util_os.getfilepath_cdm(gal, timestep)
+        simFile = util_os.getfilepath_cdm(gal, timestep)
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
