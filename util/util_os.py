@@ -1,4 +1,4 @@
-# util.py
+# util_os.py
 # Joseph Wick
 # H1-merian
 #
@@ -29,7 +29,7 @@ class util_os:
 
         tsidx : integer
             Index of desired timestep. Note that tsidx=0 refers to the latest
-            timestep. 
+            timestep.
         '''
 
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
