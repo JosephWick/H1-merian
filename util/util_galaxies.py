@@ -9,6 +9,40 @@ import numpy as np
 
 class util_galaxies:
 
+    # compute_CoM
+    # computes center of mass given arrays of positions and masses
+    @staticmethod
+    def compute_CoM(pos, mass):
+        '''
+        compute_CoM()
+
+        Computes center of mass given positions and masses of particles. Used
+        when there is not a halo catalog for a given sim file, otherwise it is
+        better to use Pynbody centering (momentum)
+
+        Parameters
+        ----------
+        pos : array_like
+            positions of particles
+
+        mass : array_like
+            masses of particles
+
+        Returns
+        -------
+        cen : array_like
+            Center of mass
+
+        '''
+        pos_np = np.array(pos)
+        mass_np = np.array(mass)
+
+        mtot = mass_np.sum()
+        cen = np.sum(mass_np * pos_np.transpose(), axis=1) / mtot
+
+        return cen
+
+
     # compute_vdisp_std()
     # compute velocity dispersion using standard deviation
     @staticmethod
