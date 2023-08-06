@@ -85,7 +85,7 @@ def setPltParams():
 # Main
 
 # get galaxies
-galIDs = util.getGalaxies()[0]
+galIDs = util_os.getGalaxies()[0]
 
 for gal in galIDs:
     cdmFile = util_os.getfilepath_cdm(gal, 0)
