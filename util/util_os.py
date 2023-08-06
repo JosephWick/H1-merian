@@ -18,7 +18,18 @@ class util_os:
     @staticmethod
     def getfilepath_cdm(gal, tsidx):
         '''
-        gets file path for data of halo h in [CDM, SIDM] order
+        getfilepath_cdm
+
+        Gets file path for data of halo h in [CDM, SIDM] order
+
+        Parameters
+        ----------
+        gal : integer
+            Galaxy ID from romulus
+
+        tsidx : integer
+            Index of desired timestep. Note that tsidx=0 refers to the latest
+            timestep. 
         '''
 
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
@@ -39,9 +50,22 @@ class util_os:
 
     # getfilepath_adiabatic()
     # returns z=0 adiabatic snapshot for given galaxy
+    @staticmethod
     def getfilepath_adiabatic(gal):
         '''
-        gets files path for adiabatic z=0 snapshot of galaxy gal
+        getfilepath_adiabatic()
+
+        Returns filepath for adiabatic z=0 sim for specified galaxy.
+
+        Parameters
+        ----------
+        gal : integer
+            galaxy to retrieve adiabatic filepath for
+
+        Returns
+        -------
+        adiaSimFile : string
+            filepath to adiabatic z=0 simulation file
         '''
 
         basedir = '/data/REPOSITORY/e11gals/romulus_dwarf_zooms'
@@ -49,12 +73,52 @@ class util_os:
         adiaSimFile = basedir+'r'+str(gal)+'.romulus25.3072g1HsbBH/adiabatic'
         adiaSimFile+= '/r'+str(gal)+'/romulus25.3072g1HsbBH.004096'
 
+    # getNumTimesteps()
+    # returns number of timesteps for galaxy gal
+    @staticmethod
+    def getNumTimesteps(gal):
+        '''
+        getNumTimesteps()
+
+        Returns number of timesteps for galaxy gal
+
+        Parameters
+        ----------
+        gal : integer
+            galaxy to retrieve timesteps for
+
+        Returns
+        -------
+        num : integer
+            number of timesteps present for galaxy gal
+        '''
+
+        basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
+
+        # cdm
+        galdir = basedir+'/r'+str(gal)+'.romulus25.3072g1HsbBH'
+
+        timesteps = glob.glob(galdir+'/r*.romulus25.3072g1HsbBH.0*')
+        return len(timesteps)
+
     # getGalaxies()
-    # returns halo ids for [CDM, SIDM] galaxies
+    # returns halo ids for [CDM, SIDM, adiabatic] galaxies
     @staticmethod
     def getGalaxies():
         '''
-        returns halo ids foor present [CDM,SIDM,adiabatic] galaxies
+        getGalaxies()
+
+        Returns galaxy ids for present [CDM,SIDM,adiabatic] galaxies
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        [CDM, SIDM, Adiabatic] : array-like
+            Arrays of galaxy IDs for which simulations of a given type are
+            present. Information taken from `currentGals.tsv`
         '''
 
         df = pd.read_csv('/home/jw1624/H1-merian/util/currentGals.tsv', sep='\t')
@@ -70,7 +134,7 @@ class util_os:
     @staticmethod
     def compute_vdisp_std(vel_all, mass_all, vel_t):
         '''
-        compute_vdisp_std
+        compute_vdisp_std()
 
         Computes unweighted velocity dispersion using standard deviation.
 
@@ -122,10 +186,10 @@ class util_os:
 
         Parameters
         -----
-        vel_all : array like
+        vel_all : array_like
             velocities of all stars. Used for center of mass velocity
 
-        mass_all: array like
+        mass_all: array_like
             masses of all stars. Used for center of mass velocity
 
         vel_t : array_like
