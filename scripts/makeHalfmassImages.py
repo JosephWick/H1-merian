@@ -12,7 +12,7 @@ import pynbody
 
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
-from util import util_os
+from util_os import util_os
 
 def makeHalfmassImg(gal, ts, hmr, width=20):
     print('Timestep: '+str(ts)+'...', end='')
