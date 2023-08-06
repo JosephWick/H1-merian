@@ -12,9 +12,11 @@ import glob
 class util_os:
 
     # getfilepath()
-    # returns filepath for zoom sim of gal, at a given timestep
-    # tsidx refers to the index, not actual timestep number. The most
-    # recent time step is indexed as 0
+    # returns filepath for zoom cdm sim of gal, at a given timestep
+    # Will throw an error if gal is not in currentGals
+    #
+    # tsidx refers to the index, not actual timestep number.
+    # The most recent time step is indexed as 0
     @staticmethod
     def getfilepath_cdm(gal, tsidx):
         '''
@@ -32,6 +34,10 @@ class util_os:
             timestep.
         '''
 
+        # check against currentGals
+        if gal not in currentGals()[0]:
+            raise Exception('Specified galaxy is not in list of available galaxies.')
+
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
 
         # cdm
@@ -46,7 +52,48 @@ class util_os:
 
         # return
         return CDMsimFile
-    # end getfilepath()
+
+    # getfilepath_sidm()
+    # Returns filepath for sidm zoom sim of gal, at a given timestep.
+    # Will throw an error if specified gal is not in currentGals.
+    #
+    # tsidx refers to the index, not actual timestep number.
+    # The most recent time step is indexed as 0
+    @staticmethod
+    def getfilepath_sidm(gal, tsidx):
+        '''
+        getfilepath_cdm
+
+        Gets file path for data of halo h in [CDM, SIDM] order
+
+        Parameters
+        ----------
+        gal : integer
+            Galaxy ID from romulus
+
+        tsidx : integer
+            Index of desired timestep. Note that tsidx=0 refers to the latest
+            timestep.
+        '''
+
+        # check against currentGals
+        if gal not in currentGals()[1]:
+            raise Exception('Specified galaxy is not in list of available galaxies.')
+
+        basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
+
+        # cdm
+        galdir = basedir+'/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH'
+
+        timesteps = glob.glob(galdir+'/r*.romulus25cvdXsec.3072g1HsbBH.0*')
+        timesteps.sort(reverse=True)
+        timestep = timesteps[tsidx]
+        tsnum = timestep[-6:]
+
+        CDMsimFile = timestep+'/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH.'+tsnum
+
+        # return
+        return CDMsimFile
 
     # getfilepath_adiabatic()
     # returns z=0 adiabatic snapshot for given galaxy
@@ -67,6 +114,9 @@ class util_os:
         adiaSimFile : string
             filepath to adiabatic z=0 simulation file
         '''
+        # check against currentGals
+        if gal not in currentGals()[1]:
+            raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11gals/romulus_dwarf_zooms'
 
