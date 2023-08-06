@@ -13,7 +13,7 @@ class util_os:
 
     # getfilepath()
     # returns filepath for zoom cdm sim of gal, at a given timestep
-    # Will throw an error if gal is not in currentGals
+    # Will throw an error if gal is not in getGalaxies()
     #
     # tsidx refers to the index, not actual timestep number.
     # The most recent time step is indexed as 0
@@ -34,8 +34,8 @@ class util_os:
             timestep.
         '''
 
-        # check against currentGals
-        if gal not in currentGals()[0]:
+        # check against getGalaxies()
+        if gal not in getGalaxies()[0]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
@@ -55,7 +55,7 @@ class util_os:
 
     # getfilepath_sidm()
     # Returns filepath for sidm zoom sim of gal, at a given timestep.
-    # Will throw an error if specified gal is not in currentGals.
+    # Will throw an error if specified gal is not in getGalaxies().
     #
     # tsidx refers to the index, not actual timestep number.
     # The most recent time step is indexed as 0
@@ -76,8 +76,8 @@ class util_os:
             timestep.
         '''
 
-        # check against currentGals
-        if gal not in currentGals()[1]:
+        # check against getGalaxies()
+        if gal not in getGalaxies()[1]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
@@ -114,8 +114,8 @@ class util_os:
         adiaSimFile : string
             filepath to adiabatic z=0 simulation file
         '''
-        # check against currentGals
-        if gal not in currentGals()[1]:
+        # check against getGalaxies()
+        if gal not in getGalaxies()[1]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11gals/romulus_dwarf_zooms'
