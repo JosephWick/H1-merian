@@ -5,6 +5,8 @@
 # utility functions for galaxy analysis
 #
 
+import numpy as np
+
 class util_galaxies:
 
     # compute_vdisp_std()
