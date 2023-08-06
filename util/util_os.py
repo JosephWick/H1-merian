@@ -16,7 +16,7 @@ class util_os:
     # tsidx refers to the index, not actual timestep number. The most
     # recent time step is indexed as 0
     @staticmethod
-    def getfilepath(gal, tsidx):
+    def getfilepath_cdm(gal, tsidx):
         '''
         gets file path for data of halo h in [CDM, SIDM] order
         '''
@@ -38,18 +38,8 @@ class util_os:
 
         CDMsimFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tsnum
 
-        # sidm
-        galdir = basedir+'/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH'
-
-        timesteps = glob.glob(galdir+'/r*.romulus25cvdXsec.3072g1HsbBH')
-        timesteps.sort(reverse=True)
-        timestep = timesteps[tsidx]
-        tsnum = timestep[-6:]
-
-        SIDMsimFile = timestep+'/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH.'+tsnum
-
         # return
-        return CDMsimFile, SIDMsimFile
+        return CDMsimFile
     # end getfilepath()
 
     # getfilepath_adiabatic()
