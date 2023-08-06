@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
-from util import util
+from util_os import util_os
 
 import tangos
 import pynbody
@@ -23,24 +23,14 @@ from reproject import reproject_interp
 
 import glob
 
-def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
+def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     # get data paths for specified halo
     vmaxGasCDM = -1
     vmaxGasSIDM = -1
 
-    cdmPath, sidmPath, adiabaticPath = util.getfilepath(hID)
-
-    cdmFile = cdmPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
-    # check if there's another folder
-    a=glob.glob(cdmFile+'/*')
-    if len(a)>0:
-        # find sim in folder
-        cdmFile = cdmFile+'/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
-        #simFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-        #print(glob.glob(simFile))
-
     fig, axs = plt.subplots(2,4, figsize=(16,8), facecolor='white')
 
+    cdmFile = util_os.getfilepath_cdm(gal)
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
@@ -126,7 +116,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
             axs[i,j].set_ylabel(r'rotation velocity [km/s]', fontsize=14)
 
     if withSIDM:
-        sidmFile = sidmPath + '/r'+str(hID)+'.romulus25cvdXsec.3072g1HsbBH.004096'
+        sidmFile = utili_os.getfilepath_sidm(gal)
 
         sSIDM = pynbody.load(sidmFile)
         sSIDM.physical_units()
@@ -162,7 +152,7 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
         axs[0,0].legend(['CDM', 'SIDM'])
 
     if withAdiabat:
-        adiabatFile = adiabaticPath + '/r'+str(hID)+'.romulus25.3072g1HsbBH.004096'
+        adiabatFile = util_os.getfilepath_adiabatic(gal)
 
         sAd = pynbody.load(adiabatFile)
         sAd.physical_units()
@@ -195,11 +185,17 @@ def eightPanelProfiles(hID, withSIDM=False, withAdiabat=False):
     fig.tight_layout()
 
     if withSIDM:
-        plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel_2.png')
+        figname = '/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)
+        figname+= '_8panel_2.png'
+        plt.savefig(figname)
     if withAdiabat:
-        plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel_A.png')
+        figname = '/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)
+        figname+= '_8panel_A.png'
+        plt.savefig(figname)
     else:
-        plt.savefig('/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)+'_8panel.png')
+        figname = '/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)
+        figname+= '_8panel.png'
+        plt.savefig(figname)
     # end
 
 # get haloIDs
