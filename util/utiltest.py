@@ -21,3 +21,4 @@ for gal in cdmGals:
     for ts in range(nts):
         f = util_os.getfilepath_cdm(gal, ts)
     print('Success')
+    print(nts)
