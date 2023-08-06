@@ -26,7 +26,7 @@ class util_os:
         # cdm
         galdir = basedir+'/r'+str(gal)+'.romulus25.3072g1HsbBH'
 
-        timesteps = glob.glob(galDir+'/r*.romulus25.3072g1HsbBH')
+        timesteps = glob.glob(galdir+'/r*.romulus25.3072g1HsbBH')
         timesteps.sort(reverse=True)
         timestep = timesteps[tsidx]
         tsnum = timestep[-6:]
@@ -36,7 +36,7 @@ class util_os:
         # sidm
         galdir = basedir+'/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH'
 
-        timesteps = glob.glob(galDir+'/r*.romulus25cvdXsec.3072g1HsbBH')
+        timesteps = glob.glob(galdir+'/r*.romulus25cvdXsec.3072g1HsbBH')
         timesteps.sort(reverse=True)
         timestep = timesteps[tsidx]
         tsnum = timestep[-6:]
