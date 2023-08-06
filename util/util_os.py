@@ -32,6 +32,7 @@ class util_os:
         timesteps = glob.glob(galdir+'/r*.romulus25.3072g1HsbBH.0*')
         print(timesteps)
         timesteps.sort(reverse=True)
+        print(timesteps)
         timestep = timesteps[tsidx]
         tsnum = timestep[-6:]
 
