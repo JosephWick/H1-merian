@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
-from util import util
+from util_os import util_os
 
 ##
 
@@ -89,11 +89,7 @@ def makeQAfig(pos_allstars, pos_allDM, center, Rhm, Rstar, Rdm, hw, outdir):
 
 # does the parsing and creation of csvs
 def makeGalQtyCSV(gal, doQA=False):
-    baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
-    galDir = baseDir+'/r'+str(gal)+'.romulus25.3072g1HsbBH'
-
-    timesteps = glob.glob(galDir+'/r*.romulus25.3072g1HsbBH.0*')
-    timesteps.sort(reverse=True)
+    numTS = util_os.getNumTimesteps(gal)
 
     # setup file for exporting values
     outfile = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
@@ -112,14 +108,7 @@ def makeGalQtyCSV(gal, doQA=False):
     # define QA directory
     QAdir = '/home/jw1624/H1-merian/QA/parse/r'+str(gal)
 
-
-    # get original hmr
-    # first, find file
-    simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
-    a=glob.glob(timesteps[0]+'/*')
-    if len(a)>0:
-        # find sim in folder
-        simfileprev = timesteps[0]+'/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+    simfileprev = util_os.getfilepath(gal,0)
 
     # open simfile
     sPrev = pynbody.load(simfileprev)
@@ -133,24 +122,11 @@ def makeGalQtyCSV(gal, doQA=False):
     hmrPrev = halfMassRadius_bisect(hZero.s['pos']-cen, hZero.s['mass'], 1000, 0.01)
 
     # iterate through each timestep
-    for timestep in timesteps:
+    for timestep in range(numTS):
         fout = open(outfile, 'a')
-        tstepnumber = timestep[-6:]
-
-        # I'm assuming that if there's another subfolder, the sim is inside it
-
-        # try to find sim file in current folder
-        simFile = timestep+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-        # check for addtional folder
-        if os.path.isdir(simFile):
-            simFile = simFile+'/r'+str(gal)+'.romulus25.3072g1HsbBH.'+tstepnumber
-
-        # handle sim file not existing
-        if len(glob.glob(simFile)) == 0:
-            print('FNF for halo ' + str(gal) + ', timestep '+tstepnumber)
-            continue
 
         # open simfile
+        simfile = util_os.getfilepath(gal, timestep)
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
