@@ -90,7 +90,7 @@ def makeQAfig(pos_allstars, pos_allDM, center, Rhm, Rstar, Rdm, hw, outdir):
 # does the parsing and creation of csvs
 def makeGalQtyCSV(gal, doQA=False):
     baseDir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
-    galDir = baseDir+ '/r' + str(gal)+'.romulus25.3072g1HsbBH'
+    galDir = baseDir+'/r'+str(gal)+'.romulus25.3072g1HsbBH'
 
     timesteps = glob.glob(galDir+'/r*.romulus25.3072g1HsbBH.0*')
     timesteps.sort(reverse=True)
