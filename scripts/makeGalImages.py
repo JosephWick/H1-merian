@@ -12,7 +12,7 @@ import matplotlib.pylab as plt
 
 
 # get current halos
-cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
+cdmHalos, sidmHalos, adiabaticHalos = util_os.getGalaxies()
 
 # image function
 def makeStarImage(gal, width=20, sidm=0):
