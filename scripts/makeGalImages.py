@@ -36,15 +36,15 @@ def makeStarImage(gal, width=20, sidm=0):
 
     tag = 'CDM'
     if sidm: tag = 'SIDM'
-    plt.title('r'+str(hID) + ' '+tag, fontsize=20, fontfamily='serif')
+    plt.title('r'+str(gal) + ' '+tag, fontsize=20, fontfamily='serif')
 
     plt.tight_layout()
 
     if sidm:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg_f.png'
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'SIDMStarImg_f.png'
         plt.savefig(fname)
     else:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_f.png'
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'CDMStarImg_f.png'
         plt.savefig(fname)
 
     # side on
@@ -52,28 +52,28 @@ def makeStarImage(gal, width=20, sidm=0):
     pynbody.analysis.angmom.sideon(h[1])
     pynbody.plot.stars.render(s, width=str(width)+' kpc')
 
-    plt.title('r'+str(hID) + ' '+tag, fontsize=20, fontfamily='serif')
+    plt.title('r'+str(gal) + ' '+tag, fontsize=20, fontfamily='serif')
 
     plt.tight_layout()
 
     if sidm:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'SIDMStarImg_s.png'
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'SIDMStarImg_s.png'
         plt.savefig(fname)
     else:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(hID)+'CDMStarImg_s.png'
+        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'CDMStarImg_s.png'
         plt.savefig(fname)
 
     # write v_disp
     if sidm:
         f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'a')
-        f.write(str(hID)+','+str(v_disp)+'\n')
+        f.write(str(gal)+','+str(v_disp)+'\n')
         f.close()
     else:
         f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'a')
-        f.write(str(hID)+','+str(v_disp)+'\n')
+        f.write(str(gal)+','+str(v_disp)+'\n')
         f.close()
 
-    print('Finished halo '+str(hID) + ' in '+tag)
+    print('Finished halo '+str(gal) + ' in '+tag)
     plt.close()
 # end make StarImage
 
