@@ -113,7 +113,7 @@ def makeGalQtyCSV(gal, doQA=False):
     zmask = np.nonzero(np.in1d(sZero.d['pos'][:,2], hZero.d['pos'][:,2]))
 
     DMmask = np.intersect1d(xmask, ymask)
-    DMmask = np.intersect1d(fullmask, zmask)
+    DMmask = np.intersect1d(DMmask, zmask)
 
     # iterate through each timestep
     for timestep in range(numTS):
