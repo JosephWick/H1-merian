@@ -39,24 +39,24 @@ def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
             c='k')
 
         # all stars
-        ax.scatter(pos_allstars[:,idxX[i]], pos_allstars[:,idxY[i]], s=1)
+        ax.scatter(pos_allstars[:,xdims[i]], pos_allstars[:,ydims[i]], s=1)
         # halo stars
-        ax.scatter(pos_allstars[:,idxX[i]][starmask], pos_allDM[:,idxY[i]][starmask],
+        ax.scatter(pos_allstars[:,xdims[i]][starmask], pos_allDM[:,ydims[i]][starmask],
             s=1, c='tab:green')
 
         # draw a circle around the star particles we've selected
-        c1 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rdm, edgecolor='cyan',
+        c1 = plt.Circle((center[xdims[i]],center[ydims[i]]), Rdm, edgecolor='cyan',
                             linewidth=1, fill=False)
         # circle around stellar half mass
-        c2 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rhm, edgecolor='r',
+        c2 = plt.Circle((center[xdims[i]],center[ydims[i]]), Rhm, edgecolor='r',
                             linewidth=1, fill=False)
 
         ax.add_patch(c1)
         ax.add_patch(c2)
 
         # set view
-        ax.set_xlim([center[idxX[i]]-hw,center[idxX[i]]+hw])
-        ax.set_ylim([center[idxY[i]]-hw,center[idxY[i]]+hw])
+        ax.set_xlim([center[xdims[i]]-hw,center[xdims[i]]+hw])
+        ax.set_ylim([center[ydims[i]]-hw,center[ydims[i]]+hw])
 
         # label
         fs = 16
