@@ -148,6 +148,40 @@ class util_galaxies:
     # compute_massRadius()
     # computes radius within percentage of mass lie
     def compute_massRadius(positions, masses, outerR, acc, frac=0.5, maxiter=100000):
+        '''
+        compute_massRadius
+
+        Computes radius that encloses frac*sum(masses) amount of matter.
+        Defaults to half mass radius.
+
+        Parameters
+        ----------
+
+        positions : array_like
+            Particle positions
+
+        masses : array_like
+            Particle masses
+
+        outerR : float
+            Maximum radius to check
+
+        acc : float
+            Percent accuracy expressed as a decimal (ie 0.01 = 1% error tolerance)
+
+        frac : float (optional)
+            Fraction of mass to enclose, expressed as a decimal (0.5 = 50%).
+            Defaults to 0.5
+
+        maxiter : float (optional)
+            Maximum bisections to perform. Defaults to 1000000.
+
+        Returns
+        -------
+        r : float
+            Fractional mass radius. Returns -1 if maxiter reached.
+        '''
+
         innerLim = 0.0
         outerLim = outerR
 
@@ -157,7 +191,7 @@ class util_galaxies:
              axis=1) / mtot
         cenpos = positions - cen
 
-        # take radii 
+        # take radii
         pRadii = np.linalg.norm(cenpos, ord=2, axis=1)
         mTot = sum(masses)
 
