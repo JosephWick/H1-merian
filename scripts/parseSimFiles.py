@@ -212,12 +212,12 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # alpha from power fit
         # profile range
-        pmin = '0.0001 kpc'
+        pmin = '0.01 kpc'
         #pmax = pynbody.analysis.halo.virial_radius(h1) / 4
         pmax = '50 kpc'
 
         # rotation curve
-        pdCDM = pynbody.analysis.profile.Profile(sCDM.d[darkmask], rmin=pmin, rmax=pmax,
+        pdCDM = pynbody.analysis.profile.Profile(sCDM.d[DMmask], rmin=pmin, rmax=pmax,
             type='lin', nbins=500)
         rbins = pdCDM['rbins']
         dmdensity = pdCDM['density']
