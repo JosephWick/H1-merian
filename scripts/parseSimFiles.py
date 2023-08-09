@@ -19,33 +19,6 @@ from util_galaxies import util_galaxies
 def powerlaw(r, alpha, c):
     return c*(r**alpha)
 
-def halfMassRadius_bisect(positions, masses, outerR, acc, maxiter=100000):
-    innerLim = 0.0
-    outerLim = outerR
-
-    pRadii = np.linalg.norm(positions, ord=2, axis=1)
-    mTot = sum(masses)
-
-    r = outerR/2
-    hm = sum(masses[pRadii < r])
-    n=0
-    while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
-        if hm > 0.5*mTot: # too big, decrease r
-            outerLim = r
-            r = innerLim + (outerLim-innerLim)/2
-        elif hm < 0.5*mTot: # too small, increase r
-            innerLim = r
-            r = innerLim + (outerLim-innerLim)/2
-        hm = sum(masses[pRadii < r])
-
-        n += 1
-        if n>maxiter:
-            return -1
-            break
-
-    return r
-#
-
 # makeQAfig()
 # makes QA figure that depicts starmask, dmmask and new Rhm
 def makeQAfig(pos_allstars, pos_allDM, center, Rhm, Rstar, Rdm, hw, outdir):
@@ -120,7 +93,8 @@ def makeGalQtyCSV(gal, doQA=False):
     # center based on potential
     cen = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
 
-    hmrPrev = halfMassRadius_bisect(hZero.s['pos']-cen, hZero.s['mass'], 1000, 0.01)
+    hmrPrev = util_galaxies.compute_massRadius(hZero.s['pos']-cen, hZero.s['mass'],
+        1000, 0.01)
 
     # iterate through each timestep
     for timestep in range(numTS):
@@ -167,8 +141,8 @@ def makeGalQtyCSV(gal, doQA=False):
                 cylindrical=True).in_units('kpc')
 
         # this is accurate to our star cut
-        rHM = halfMassRadius_bisect(sCDM.s['pos'][starmask]-cen, sCDM.s['mass'][starmask],
-                                    20000, 0.01)
+        rHM = util_galaxies.compute_massRadius(sCDM.s['pos'][starmask]-cen,
+            sCDM.s['mass'][starmask], 20000, 0.01)
 
         # sSFR
         sSFR_10 = np.log10(SFR_10/(mStar*1e7))
