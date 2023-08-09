@@ -28,8 +28,8 @@ def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
     starmask = starRads<=Rdm
 
     # make the figure
-    idxX = [0,0,1]
-    idxY = [1,2,2]
+    xdims = [0,0,1]
+    ydims = [1,2,2]
     for i,ax in enumerate(axs):
         # all DM
         ax.scatter(pos_allDM[:,xdims[i]], pos_allDM[:,ydims[i]], s=1,
