@@ -81,7 +81,6 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.write('sigma_youngstar,sigma_youngstar_wtd,')
     fout.write('sigma_allgas,sigma_allgas_wtd,')
     fout.write('sigma_coldgas,sigma_coldgas_wtd,')
-    fout.write('log_sigma_pred_10,log_sigma_pred_100,')
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
     fout.close()
@@ -206,13 +205,6 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_coldgas_wtd = util_galaxies.compute_vdisp_wtd(vel_allgas, mass_allgas,
                                 vel_coldgas, mass_coldgas)
 
-        # line of sight sigma pred from Hirtenstein et al 2019 eqn (1)
-        log_sigma_pred_10 = 0.1006*sSFR_10 + 0.3892*np.log10(mStar)
-        log_sigma_pred_10+= 0.0126*np.log10(mStar)*sSFR_10
-
-        log_sigma_pred_100 = 0.1006*sSFR_100+ 0.3892*np.log10(mStar)
-        log_sigma_pred_100+= .0126*np.log10(mStar)*sSFR_100
-
         # alpha from power fit
         # profile range
         pmin = '0.01 kpc'
@@ -245,7 +237,6 @@ def makeGalQtyCSV(gal, doQA=False):
         fout.write(str(vdisp_youngstar_uwtd)+','+str(vdisp_youngstar_wtd)+',')
         fout.write(str(vdisp_allgas_uwtd)+','+str(vdisp_allstars_wtd)+',')
         fout.write(str(vdisp_coldgas_uwtd)+','+str(vdisp_coldgas_wtd)+',')
-        fout.write(str(log_sigma_pred_10)+','+str(log_sigma_pred_100)+',')
         fout.write(str(alpha)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+
                     ','+str(sSFR_100)+'\n')
