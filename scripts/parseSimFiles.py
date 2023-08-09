@@ -122,6 +122,7 @@ def makeGalQtyCSV(gal, doQA=False):
         # double check simfile exists
         if len(glob.glob(simFile)) == 0:
             print('FNF: r'+str(gal)+' '+tstepnumber)
+            continue
 
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
