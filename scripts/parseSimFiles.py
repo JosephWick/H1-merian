@@ -20,8 +20,8 @@ def powerlaw(r, alpha, c):
     return c*(r**alpha)
 
 # makeQAfig()
-# makes QA figure that depicts starmask, dmmask and new Rhm
-def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rstar, Rdm, hw, outdir):
+# makes QA figure that depicts starmask
+def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
     fig, axs = plt.subplots(1,3, figsize=(18,6))
 
     starRads = np.linalg.norm(pos_allstars-center, axis=1)
@@ -48,7 +48,12 @@ def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rstar, Rdm, hw, ou
         # draw a circle around the star particles we've selected
         c1 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rdm, edgecolor='cyan',
                             linewidth=1, fill=False)
+        # circle around stellar half mass
+        c2 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rhm, edgecolor='r',
+                            linewidth=1, fill=False)
+
         ax.add_patch(c1)
+        ax.add_patch(c2)
 
         # set view
         ax.set_xlim([center[idxX[i]]-hw,center[idxX[i]]+hw])
@@ -91,10 +96,10 @@ def makeGalQtyCSV(gal, doQA=False):
     simfileprev = util_os.getfilepath_cdm(gal,0)
 
     # open simfile
-    sPrev = pynbody.load(simfileprev)
-    sPrev.physical_units()
+    sZero = pynbody.load(simfileprev)
+    sZero.physical_units()
 
-    hZero = sPrev.halos()[1]
+    hZero = sZero.halos()[1]
 
     # center based on potential
     cen = pynbody.analysis.halo.center(hZero, mode='pot', retcen=True)
@@ -103,9 +108,9 @@ def makeGalQtyCSV(gal, doQA=False):
         1000, 0.01)
 
     # make DM mask based on halo from z=0 timestep
-    xmask = np.nonzero(np.in1d(sCDM.d['pos'][:,0], hCDM.d['pos'][:,0]))
-    ymask = np.nonzero(np.in1d(sCDM.d['pos'][:,1], hCDM.d['pos'][:,1]))
-    zmask = np.nonzero(np.in1d(sCDM.d['pos'][:,2], hCDM.d['pos'][:,2]))
+    xmask = np.nonzero(np.in1d(sZero.d['pos'][:,0], hZero.d['pos'][:,0]))
+    ymask = np.nonzero(np.in1d(sZero.d['pos'][:,1], hZero.d['pos'][:,1]))
+    zmask = np.nonzero(np.in1d(sZero.d['pos'][:,2], hZero.d['pos'][:,2]))
 
     DMmask = np.intersect1d(xmask, ymask)
     DMmask = np.intersect1d(fullmask, zmask)
@@ -225,10 +230,9 @@ def makeGalQtyCSV(gal, doQA=False):
         # create QA figure if desired
         if doQA:
             figfout = QAdir+'/'+str(tstepnumber)+'.png'
-            hw = 600
-            makeQAfig(sCDM.s['pos'], sCDM.d['pos'], cen, rHM,
-                        hmrPrev*rfac, hmrPrev*rfac*dmfac, hw,
-                        figfout)
+            hw = 300
+            makeQAfig(sCDM.s['pos'], sCDM.d['pos'], DMmask, cen, rHM,
+                        hmrDM, hw, figfout)
 
 
         # write to file
