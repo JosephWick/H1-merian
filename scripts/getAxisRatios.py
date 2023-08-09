@@ -18,8 +18,7 @@ if len(sys.argv) != 4:
     sys.exit()
 
 gal = int(sys.argv[1])
-tsidx = int(sys.argv[2])
-R = float(sys.argv[3])
+R = float(sys.argv[2])
 
 tsfile = util_os.getfilepath_cdm(gal, 0)
 
