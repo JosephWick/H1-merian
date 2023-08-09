@@ -21,37 +21,43 @@ def powerlaw(r, alpha, c):
 
 # makeQAfig()
 # makes QA figure that depicts starmask, dmmask and new Rhm
-def makeQAfig(pos_allstars, pos_allDM, center, Rhm, Rstar, Rdm, hw, outdir):
+def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rstar, Rdm, hw, outdir):
     fig, axs = plt.subplots(1,3, figsize=(18,6))
+
+    starRads = np.linalg.norm(pos_allstars-center, axis=1)
+    starmask = starRads<=Rdm
 
     # make the figure
     axes = [0,1,2]
     idxX = [0,0,1]
     idxY = [1,2,2]
     for i,ax in enumerate(axes):
-        # scatter the star and DM particles
-        axs[ax].scatter(pos_allstars[:,idxX[i]], pos_allstars[:,idxY[i]], s=1)
-        axs[ax].scatter(pos_allDM[:,idxX[i]], pos_allDM[:,idxY[i]], s=1, alpha = 0.01)
+        # all DM
+        ax.scatter(pos_allDM[:,xdims[i]], pos_allDM[:,ydims[i]], s=1,
+            alpha = 0.01, c='k')
+        # halo DM
+        ax.scatter(pos_allDM[:,xdims[i]][haloMask], pos_allDM[:,ydims[i]][haloMask], s=1,
+            c='k')
 
-        # draw a circle around the star and DM particles we've selected
-        c1 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rstar, edgecolor='g',
+        # all stars
+        ax.scatter(pos_allstars[:,idxX[i]], pos_allstars[:,idxY[i]], s=1)
+        # halo stars
+        ax.scatter(pos_allstars[:,idxX[i]][starmask], pos_allDM[:,idxY[i]][starmask],
+            s=1, c='tab:green')
+
+        # draw a circle around the star particles we've selected
+        c1 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rdm, edgecolor='cyan',
                             linewidth=1, fill=False)
-        c2 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rdm, edgecolor='cyan',
-                            linewidth=1, fill=False)
-        c3 = plt.Circle((center[idxX[i]],center[idxY[i]]), Rhm, edgecolor='magenta',
-                            linewidth=1, fill=False)
-        axs[ax].add_patch(c1)
-        axs[ax].add_patch(c2)
-        axs[ax].add_patch(c3)
+        ax.add_patch(c1)
 
         # set view
-        axs[ax].set_xlim([center[idxX[i]]-hw,center[idxX[i]]+hw])
-        axs[ax].set_ylim([center[idxY[i]]-hw,center[idxY[i]]+hw])
+        ax.set_xlim([center[idxX[i]]-hw,center[idxX[i]]+hw])
+        ax.set_ylim([center[idxY[i]]-hw,center[idxY[i]]+hw])
 
         # label
         fs = 16
-        axs[ax].set_xlabel('x', fontsize=fs)
-        axs[ax].set_ylabel('y', fontsize=fs)
+        ax.set_xlabel('x', fontsize=fs)
+        ax.set_ylabel('y', fontsize=fs)
 
     # title and clean up
     plt.suptitle('r'+str(gal), weight='bold', fontsize=20)
@@ -96,6 +102,14 @@ def makeGalQtyCSV(gal, doQA=False):
     hmrPrev = util_galaxies.compute_massRadius(hZero.s['pos']-cen, hZero.s['mass'],
         1000, 0.01)
 
+    # make DM mask based on halo from z=0 timestep
+    xmask = np.nonzero(np.in1d(sCDM.d['pos'][:,0], hCDM.d['pos'][:,0]))
+    ymask = np.nonzero(np.in1d(sCDM.d['pos'][:,1], hCDM.d['pos'][:,1]))
+    zmask = np.nonzero(np.in1d(sCDM.d['pos'][:,2], hCDM.d['pos'][:,2]))
+
+    DMmask = np.intersect1d(xmask, ymask)
+    DMmask = np.intersect1d(fullmask, zmask)
+
     # iterate through each timestep
     for timestep in range(numTS):
         fout = open(outfile, 'a')
@@ -107,19 +121,19 @@ def makeGalQtyCSV(gal, doQA=False):
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
-        # center by mass
-        mtot = sCDM.s['mass'].sum()
-        cen = np.sum(sCDM.s['mass'] * sCDM.s['pos'].transpose(),
+        # center by mass of DM halo
+        mtot = sCDM.d['mass'][DMmask].sum()
+        cen = np.sum(sCDM.d['mass'][DMmask] * sCDM.s['pos'][DMmask].transpose(),
                      axis=1) / mtot
-        cen.units = sCDM.s['pos'].units
+        cen.units = sCDM.d['pos'].units
 
-        # make cut based on particles within rfac*hmrPrev of current center
-        rfac = 50
-        dmfac = 2.0
-        starmask = np.linalg.norm(sCDM.s['pos'] - cen, axis=1)<rfac*hmrPrev
-        gasmask = np.linalg.norm(sCDM.g['pos'] - cen, axis=1)<=rfac*hmrPrev
-        # larger radius for dm
-        darkmask = np.linalg.norm(sCDM.d['pos'] - cen, axis=1)<=dmfac*rfac*hmrPrev
+        # make cut based on radius of masked DM particles
+        rfac = 3
+        hmrDM = util_galaxies.compute_massRadius(sCDM.d['pos'][DMmask],
+            sCDM.d['mass'][DMmask], 1000, 0.1, frac=0.50, maxiter=1000)
+
+        starmask = np.linalg.norm(sCDM.s['pos'] - cen, axis=1)<rfac*hmrDM
+        gasmask = np.linalg.norm(sCDM.g['pos'] - cen, axis=1)<=rfac*hmrDM
 
         # Mass
         mStar = sum(sCDM.s['mass'][starmask])
@@ -135,7 +149,7 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # Sizes
         rVir = -1
-        # NOTE: these are prolly wrong until we have halo catalog
+        # NOTE: these are questionable until we have halo catalog
         rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
         rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM,
                 cylindrical=True).in_units('kpc')
@@ -208,7 +222,7 @@ def makeGalQtyCSV(gal, doQA=False):
                                     maxfev=10000,
                                     p0 = [1,max(dmdensity)])[0]
 
-        # create QA figur if desired
+        # create QA figure if desired
         if doQA:
             figfout = QAdir+'/'+str(tstepnumber)+'.png'
             hw = 600
