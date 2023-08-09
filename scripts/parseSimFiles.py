@@ -119,6 +119,10 @@ def makeGalQtyCSV(gal, doQA=False):
         simFile = util_os.getfilepath_cdm(gal, timestep)
         tstepnumber = simFile[-6:]
 
+        # double check simfile exists
+        if len(glob.glob(simFile)) == 0:
+            print('FNF: r'+str(gal)+' '+tstepnumber)
+
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
