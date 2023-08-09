@@ -13,7 +13,7 @@ from util_galaxies import util_galaxies
 
 ##
 
-gals = util_os.getGalaxies()
+gals = util_os.getGalaxies()[0]
 
 for gal in gals:
 
