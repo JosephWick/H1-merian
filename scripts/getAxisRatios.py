@@ -26,7 +26,7 @@ sCDM = pynbody.load(tsfile)
 sCDM.physical_units()
 
 hCDM = sCDM.halos(write_fpos=False)[1]
-cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
+cen_pot = pynbody.analysis.halo.center(hCDM.s, mode='pot', retcen=True)
 sCDM['pos'] -= cen_pot
 
 rbin, ba, ca, angle, es = pynbody.analysis.halo.halo_shape(hCDM, rout=1.1*R, N=1, rin = 1*R)
