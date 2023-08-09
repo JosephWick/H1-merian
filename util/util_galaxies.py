@@ -147,7 +147,7 @@ class util_galaxies:
 
     # compute_massRadius()
     # computes radius within percentage of mass lie
-    def compute_massRadius(positions, masses, outerR, acc, frac=0.5, maxiter=100000):
+    def compute_massRadius(positions, masses, outerR, acc, frac=0.5, maxiter=10000):
         '''
         compute_massRadius
 
@@ -193,10 +193,10 @@ class util_galaxies:
 
         # take radii
         pRadii = np.linalg.norm(cenpos, ord=2, axis=1)
-        mTot = sum(masses)
+        mTot = np.sum(masses)
 
         r = outerR/2
-        hm = sum(masses[pRadii < r])
+        hm = np.sum(masses[pRadii < r])
         n=0
         while(hm < (frac-acc)*mTot or hm > (frac+acc)*mTot):
             if hm > 0.5*mTot: # too big, decrease r
