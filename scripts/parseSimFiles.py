@@ -33,7 +33,7 @@ def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
     for i,ax in enumerate(axs):
         # all DM
         ax.scatter(pos_allDM[:,xdims[i]], pos_allDM[:,ydims[i]], s=1,
-            alpha = 0.01, c='k')
+            alpha = 0.01, c='grey')
         # halo DM
         ax.scatter(pos_allDM[:,xdims[i]][haloMask], pos_allDM[:,ydims[i]][haloMask], s=1,
             c='k')
@@ -228,7 +228,7 @@ def makeGalQtyCSV(gal, doQA=False):
             figfout = QAdir+'/'+str(tstepnumber)+'.png'
             hw = 300
             makeQAfig(sCDM.s['pos'], sCDM.d['pos'], DMmask, cen, rHM,
-                        hmrDM, hw, figfout)
+                        rfac*hmrDM, hw, figfout)
 
 
         # write to file
