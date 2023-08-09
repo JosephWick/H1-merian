@@ -161,7 +161,9 @@ def makeGalQtyCSV(gal, doQA=False):
                 cylindrical=True).in_units('kpc')
 
         # this is accurate to our star cut
-        rHM = util_galaxies.compute_massRadius(sCDM.s['pos'][starmask]-cen,
+        starcen = np.sum(sCDM.s['mass'][starmask] * sCDM.s['pos'][starmask].transpose(),
+                         axis=1) / mStar
+        rHM = util_galaxies.compute_massRadius(sCDM.s['pos'][starmask]-starcen,
             sCDM.s['mass'][starmask], 20000, 0.01)
 
         # sSFR
