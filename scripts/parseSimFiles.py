@@ -41,7 +41,7 @@ def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
         # all stars
         ax.scatter(pos_allstars[:,xdims[i]], pos_allstars[:,ydims[i]], s=1)
         # halo stars
-        ax.scatter(pos_allstars[:,xdims[i]][starmask], pos_allDM[:,ydims[i]][starmask],
+        ax.scatter(pos_allstars[:,xdims[i]], pos_allDM[:,ydims[i]],
             s=1, c='tab:green')
 
         # draw a circle around the star particles we've selected
