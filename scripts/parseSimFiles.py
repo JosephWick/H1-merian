@@ -142,7 +142,7 @@ def makeGalQtyCSV(gal, doQA=False):
         gasmask = np.linalg.norm(sCDM.g['pos'] - cen, axis=1)<=rfac*hmrDM
 
         # Mass
-        mStar = sum(sCDM.s['mass'][starmask])
+        mStar = np.sum(sCDM.s['mass'][starmask])
 
         # SFR
         SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<10])
