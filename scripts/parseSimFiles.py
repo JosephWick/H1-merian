@@ -128,7 +128,7 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # center by mass of DM halo
         mtot = sCDM.d['mass'][DMmask].sum()
-        cen = np.sum(sCDM.d['mass'][DMmask] * sCDM.s['pos'][DMmask].transpose(),
+        cen = np.sum(sCDM.d['mass'][DMmask] * sCDM.d['pos'][DMmask].transpose(),
                      axis=1) / mtot
         cen.units = sCDM.d['pos'].units
 
