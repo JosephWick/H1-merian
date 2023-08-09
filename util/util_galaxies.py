@@ -144,3 +144,39 @@ class util_galaxies:
         vdisp = np.sqrt(vdisp)
 
         return float(vdisp)
+
+    # compute_massRadius()
+    # computes radius within percentage of mass lie
+    def compute_massRadius(positions, masses, outerR, acc, frac=0.5, maxiter=100000):
+        innerLim = 0.0
+        outerLim = outerR
+
+        # center by mass
+        mtot = masses.sum()
+        cen = np.sum(masses * positions.transpose(),
+             axis=1) / mtot
+        cenpos = positions - cen
+
+        # take radii 
+        pRadii = np.linalg.norm(cenpos, ord=2, axis=1)
+        mTot = sum(masses)
+
+        r = outerR/2
+        hm = sum(masses[pRadii < r])
+        n=0
+        while(hm < (frac-acc)*mTot or hm > (frac+acc)*mTot):
+            if hm > 0.5*mTot: # too big, decrease r
+                outerLim = r
+                r = innerLim + (outerLim-innerLim)/2
+            elif hm < 0.5*mTot: # too small, increase r
+                innerLim = r
+                r = innerLim + (outerLim-innerLim)/2
+            hm = sum(masses[pRadii < r])
+
+            n += 1
+            if n>maxiter:
+                return -1
+                break
+
+        return r
+    #
