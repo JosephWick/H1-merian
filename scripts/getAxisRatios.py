@@ -13,7 +13,7 @@ from util_galaxies import util_galaxies
 
 ## command line arguments
 # usage: python3 getAxisRatios galIdx tsIdx radius
-if len(sys.argv) != 4:
+if len(sys.argv) != 3:
     print('Usage: python3 getAxisRatios [galaxy] [galaxy radius]')
     sys.exit()
 
