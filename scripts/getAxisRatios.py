@@ -26,19 +26,11 @@ tsfile = util_os.getfilepath_cdm(gal, 0)
 sCDM = pynbody.load(tsfile)
 sCDM.physical_units()
 
-hCDM = -1
-try:
-    hCDM = sCDM.halos(write_fpos=False)[1]
-except:
-    # center manually if missing halo
-    cen = util_galaxies.compute_CoM(sCDM.s['pos'], sCDM.s['mass'])
-    sCDM['pos'] -= cen
-else:
-    hCDM = sCDM.halos(write_fpos=False)[1]
-    cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
-    sCDM['pos'] -= cen_pot
+hCDM = sCDM.halos(write_fpos=False)[1]
+cen_pot = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
+sCDM['pos'] -= cen_pot
 
-rbin, ba, ca, angle, es = pynbody.analysis.halo.halo_shape(sCDM, rout=1.1*R, N=1, rin = 1*R)
+rbin, ba, ca, angle, es = pynbody.analysis.halo.halo_shape(hCDM, rout=1.1*R, N=1, rin = 1*R)
 
 print('r'+str(gal))
 print('radius: ' + str(rbin[0]))
