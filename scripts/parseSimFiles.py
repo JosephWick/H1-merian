@@ -118,6 +118,10 @@ def makeGalQtyCSV(gal, doQA=False):
         simFile = util_os.getfilepath_cdm(gal, timestep)
         tstepnumber = simFile[-6:]
 
+        # check if its a directoy :)
+        if os.path.isdir(simFile):
+            simFile = glob.glob(simFile+'/r'+str(gal)+'*.'+tstepnumber)
+
         # double check simfile exists
         if len(glob.glob(simFile)) == 0:
             print('FNF: r'+str(gal)+' '+tstepnumber)
