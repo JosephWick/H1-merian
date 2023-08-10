@@ -214,7 +214,7 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_allgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                                 pos_allgas, vel_allgas, rHM, mass_allgas)
 
-        vdisp_coldgas_wtd = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
+        vdisp_coldgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                                 vel_coldgas, mass_coldgas)
         vdisp_coldgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                                 pos_coldgas-starcen, vel_coldgas, rHM, mass_coldgas)
