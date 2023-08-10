@@ -196,7 +196,7 @@ def makeGalQtyCSV(gal, doQA=False):
 
         vdisp_youngstar_global = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_youngstars, mass_youngstars)
-        vdisp_youngstar_los = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
+        vdisp_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
                                 pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
         # cold gas vdisp
