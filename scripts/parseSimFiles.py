@@ -240,6 +240,7 @@ def makeGalQtyCSV(gal, doQA=False):
         alpha, c = opt.curve_fit(powerlaw, rbins[:fitidx], dmdensity[:fitidx],
                                     maxfev=1000,
                                     p0 = [-1,max(dmdensity)])[0]
+        print(alpha)
 
         # create QA figure if desired
         if doQA:
