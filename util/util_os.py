@@ -20,7 +20,7 @@ class util_os:
     @staticmethod
     def getfilepath_cdm(gal, tsidx):
         '''
-        getfilepath_cdm
+        getfilepath_cdm()
 
         Gets file path for data of halo h in [CDM, SIDM] order
 
@@ -32,6 +32,11 @@ class util_os:
         tsidx : integer
             Index of desired timestep. Note that tsidx=0 refers to the latest
             timestep.
+
+        Returns
+        -------
+        CDMsimFile : string
+            filepath to the requested sim file ran under CDM
         '''
 
         # check against getGalaxies()
