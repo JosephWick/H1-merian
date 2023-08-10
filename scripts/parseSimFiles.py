@@ -13,6 +13,9 @@ sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util_os import util_os
 from util_galaxies import util_galaxies
 
+# Convention: all coordinates are UNCENTERED in this file
+# may be centered in a method or centered as arguments to a method
+
 ##
 
 # power law
@@ -77,10 +80,10 @@ def makeGalQtyCSV(gal, doQA=False):
     fout = open(outfile,'w')
     fout.write('galaxyID,timestep,t,z,')
     fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
-    fout.write('sigma_allstars,sigma_allstars_wtd,')
-    fout.write('sigma_youngstar,sigma_youngstar_wtd,')
-    fout.write('sigma_allgas,sigma_allgas_wtd,')
-    fout.write('sigma_coldgas,sigma_coldgas_wtd,')
+    fout.write('sigma_allstars_global,sigma_allstars_los,')
+    fout.write('sigma_youngstar_global,sigma_youngstar_los,')
+    fout.write('sigma_allgas_global,sigma_allgas_los,')
+    fout.write('sigma_coldgas_global,sigma_coldgas_los,')
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
     fout.close()
@@ -177,40 +180,44 @@ def makeGalQtyCSV(gal, doQA=False):
         sSFR_100 = np.log10(SFR_100/(mStar*1e8))
 
         # velocity dispersion
+        pos_youngstars = sCDM.s['pos'][starmask]
         vel_allstars = sCDM.s['vel'][starmask]
         mass_allstars = sCDM.s['mass'][starmask]
 
         agemask = sCDM.s['age'][starmask].in_units('Myr')<10
+        pos_youngstars = pos_youngstars[agemask]
         vel_youngstars = vel_allstars[agemask]
         mass_youngstars = mass_allstars[agemask]
 
-        vdisp_allstars_uwtd = util_galaxies.compute_vdisp_global(vel_allstars,
-                                mass_allstars, vel_allstars)
-        vdisp_allstars_wtd = util_galaxies.compute_vdisp_global(vel_allstars,
+        vdisp_allstars_global = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_allstars, mass_allstars)
+        vdisp_allstars_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
+                                pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
-        vdisp_youngstar_uwtd = util_galaxies.compute_vdisp_global(vel_allstars,
-                                mass_allstars, vel_youngstars)
-        vdisp_youngstar_wtd = util_galaxies.compute_vdisp_global(vel_allstars,
+        vdisp_youngstar_global = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_youngstars, mass_youngstars)
+        vdisp_youngstar_los = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
+                                pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
         # cold gas vdisp
+        pos_allgas = sCDM.g['vel'][gasmask]
         vel_allgas = sCDM.g['vel'][gasmask]
         mass_allgas = sCDM.g['mass'][gasmask]
 
         cgmask = sCDM.g['temp'][gasmask]<1000
+        pos_coldgas = pos_allgas[cgmask]
         vel_coldgas = vel_allgas[cgmask]
         mass_coldgas= mass_allgas[cgmask]
 
-        vdisp_allgas_uwtd = util_galaxies.compute_vdisp_std(vel_allgas, mass_allgas,
-                            vel_allgas)
-        vdisp_allgas_wtd = util_galaxies.compute_vdisp_wtd(vel_allgas, mass_allgas,
+        vdisp_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                             vel_allgas, mass_allgas)
+        vdisp_allgas_los = util_galaxies.compute_vdisp_los(vel_all, mass_allgas,
+                                pos_allgas, vel_allgas, rHM, mass_allgas)
 
-        vdisp_coldgas_uwtd = util_galaxies.compute_vdisp_std(vel_allgas, mass_allgas,
-                                vel_coldgas)
-        vdisp_coldgas_wtd = util_galaxies.compute_vdisp_wtd(vel_allgas, mass_allgas,
+        vdisp_coldgas_wtd = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                                 vel_coldgas, mass_coldgas)
+        vdisp_coldgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
+                                pos_coldgas-starcen, vel_coldgas, rHM, mass_coldgas)
 
         # alpha from power fit
         # profile range
@@ -240,10 +247,10 @@ def makeGalQtyCSV(gal, doQA=False):
         # write to file
         fout.write(str(gal)+','+str(tstepnumber)+','+str(uage)+','+str(stepZ)+',')
         fout.write(str(mStar)+','+str(rHL)+','+str(rHL_c)+','+str(rHM)+',')
-        fout.write(str(vdisp_allstars_uwtd)+','+str(vdisp_allstars_wtd)+',')
-        fout.write(str(vdisp_youngstar_uwtd)+','+str(vdisp_youngstar_wtd)+',')
-        fout.write(str(vdisp_allgas_uwtd)+','+str(vdisp_allstars_wtd)+',')
-        fout.write(str(vdisp_coldgas_uwtd)+','+str(vdisp_coldgas_wtd)+',')
+        fout.write(str(vdisp_allstars_global)+','+str(vdisp_allstars_los)+',')
+        fout.write(str(vdisp_youngstar_global)+','+str(vdisp_youngstar_los)+',')
+        fout.write(str(vdisp_allgas_global)+','+str(vdisp_allstars_los)+',')
+        fout.write(str(vdisp_coldgas_global)+','+str(vdisp_coldgas_los)+',')
         fout.write(str(alpha)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+
                     ','+str(sSFR_100)+'\n')
