@@ -1,1 +1,2 @@
 galaxyID,timestep,t,z,M_star,R_halflight_s,R_halflight_c,R_halfmass,sigma_allstars_global,sigma_allstars_los,sigma_youngstar_global,sigma_youngstar_los,sigma_allgas_global,sigma_allgas_los,sigma_coldgas_global,sigma_coldgas_los,alpha,SFR_10,SFR_100,sSFR_10,sSFR_100
+442,004096,13.80082045729774,1.9054579776679125e-11,1501466127.1167982,905.9095827939095,661.3594310276734,2.899169921875,25.78995030943837,15.108719616383326,18.075046202741635,15.540667306532757,24.876737120361053,15.108719616383326,
