@@ -184,14 +184,14 @@ def makeGalQtyCSV(gal, doQA=False):
         vel_youngstars = vel_allstars[agemask]
         mass_youngstars = mass_allstars[agemask]
 
-        vdisp_allstars_uwtd = util_galaxies.compute_vdisp_std(vel_allstars,
+        vdisp_allstars_uwtd = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_allstars)
-        vdisp_allstars_wtd = util_galaxies.compute_vdisp_wtd(vel_allstars,
+        vdisp_allstars_wtd = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_allstars, mass_allstars)
 
-        vdisp_youngstar_uwtd = util_galaxies.compute_vdisp_std(vel_allstars,
+        vdisp_youngstar_uwtd = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_youngstars)
-        vdisp_youngstar_wtd = util_galaxies.compute_vdisp_wtd(vel_allstars,
+        vdisp_youngstar_wtd = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_youngstars, mass_youngstars)
 
         # cold gas vdisp
