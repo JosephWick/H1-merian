@@ -6,6 +6,7 @@
 #
 
 import numpy as np
+import random
 
 class util_galaxies:
 
@@ -98,6 +99,80 @@ class util_galaxies:
         vdisp = np.sqrt(vdisp)
 
         return float(vdisp)
+
+    # compute_vdisp_los()
+    # computes median line of sight velocity dispersion
+    def compute_vdisp_los(vel_all, mass_all, pos_t, vel_t, hmr, weights=[]):
+    '''
+    compute_vdisp_los()
+
+    Computes (weighted) line of sight velocity dispersion. Weights default to one
+    for nonweighted functionality if desired.
+
+    Calculates line of sight velocity dispersion at 100 random observation points
+    and returns the median.
+
+    Parameters
+    ----------
+    vel_all : array_like
+        Velocities for all stars. Used for systematic velocity subtraction.
+
+    mass_all : array_like
+        Masses of all stars. Used for systematic velocity subtraction.
+
+    pos_t : array_like
+        Centered positions of stars that vdisp are calculated for.
+
+    vel_t : array_like
+        velocities of stars that vdisp are calculated for.
+
+    hmr : float
+        Half mass radius of selected galaxiy.
+
+    weights : array_like (optional)
+        Optional weights for vdisp calculation. Defaults to all ones.
+
+    Returns
+    -------
+
+    vdisp_los : float
+        Median (weighted) velocity dispersion from 100 random line of sight
+        calculations.
+    '''
+
+    R = 10*hmr
+
+    if len(weights == 0):
+        weights = np.ones(len(pos_t))
+
+    # subtract systematic/CoM velocity
+    v_CoM = np.sum(vel_all * mass_all[:, None], axis=0) / np.sum(mass_all)
+    vdiffs = np.array(vel_t - v_CoM)
+    #vdiffs_mag = np.linalg.norm(vdiffs, axis=1)
+
+    allvdisps = []
+    for i in range(100):
+        # select viewing location
+        theta = random.uniform(0, np.pi)
+        phi = random.uniform(0, 2*np.pi)
+
+        x = R*np.sin(theta)*np.cos(phi)
+        y = R*np.sin(theta)*np.sin(phi)
+        z = R*np.cos(theta)
+
+        # unit vector from particle position to observation point
+        a = np.array([x,y,z]-pos_t)
+        a = a/np.linalg.norm(a, axis=1)[:,None]
+        # projection of velocity along vector a
+        vel_los = np.linalg.norm(vdiffs*a, axis=1)
+
+        weightedstd = np.sum( ((vel_los-np.mean(vel_los))**2) * weights)
+        weightedstd = weightedstd/np.sum(weights)
+        weightedstd = np.sqrt(weightedstd)
+
+        allvdisps.append(weightedstd)
+
+    return np.median(allvdisps)
 
     # compute_massRadius()
     # computes radius within percentage of mass lie
