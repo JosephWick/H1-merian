@@ -102,6 +102,7 @@ class util_galaxies:
 
     # compute_vdisp_los()
     # computes median line of sight velocity dispersion
+    @staticmethod
     def compute_vdisp_los(vel_all, mass_all, pos_t, vel_t, hmr, weights=[]):
         '''
         compute_vdisp_los()
@@ -176,6 +177,7 @@ class util_galaxies:
 
     # compute_massRadius()
     # computes radius within percentage of mass lie
+    @staticmethod
     def compute_massRadius(positions, masses, outerR, acc, frac=0.5, maxiter=10000):
         '''
         compute_massRadius
