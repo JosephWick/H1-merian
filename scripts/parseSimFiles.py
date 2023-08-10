@@ -121,6 +121,9 @@ def makeGalQtyCSV(gal, doQA=False):
         # check if its a directoy :)
         if os.path.isdir(simFile):
             simFile = glob.glob(simFile+'/r'+str(gal)+'*.'+tstepnumber)
+            if len(simFile) == 0:
+                continue
+            simFile = simFile[0]
 
         # double check simfile exists
         if len(glob.glob(simFile)) == 0:
