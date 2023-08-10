@@ -227,12 +227,12 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # rotation curve
         pdCDM = pynbody.analysis.profile.Profile(sCDM.d[DMmask], rmin=pmin, rmax=pmax,
-            type='lin', nbins=500)
+            type='lin', nbins=100)
         rbins = pdCDM['rbins']
         dmdensity = pdCDM['density']
 
-        fitidx = 10
-        alpha, c = opt.curve_fit(powerlaw, rbins[:fitidx], dmdensity[fitidx],
+        fitidx = 5
+        alpha, c = opt.curve_fit(powerlaw, rbins[:fitidx], dmdensity[:fitidx],
                                     maxfev=10000,
                                     p0 = [1,max(dmdensity)])[0]
 
