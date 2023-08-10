@@ -136,6 +136,8 @@ def makeGalQtyCSV(gal, doQA=False):
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
+        hCDM = sCDM.d[DMmask]
+
         # center by mass of DM halo
         mtot = sCDM.d['mass'][DMmask].sum()
         cen = np.sum(sCDM.d['mass'][DMmask] * sCDM.d['pos'][DMmask].transpose(),
@@ -226,15 +228,18 @@ def makeGalQtyCSV(gal, doQA=False):
         pmax = '50 kpc'
 
         # rotation curve
-        pdCDM = pynbody.analysis.profile.Profile(sCDM.d[DMmask], rmin=pmin, rmax=pmax,
-            type='lin', nbins=100)
+        # now we must center
+        hCDM.s['pos']-=cen
+        pynbody.analysis.angmom.faceon(hCDM)
+        pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax,
+            type='lin', nbins=200)
         rbins = pdCDM['rbins']
         dmdensity = pdCDM['density']
 
-        fitidx = 5
+        fitidx = 6
         alpha, c = opt.curve_fit(powerlaw, rbins[:fitidx], dmdensity[:fitidx],
-                                    maxfev=10000,
-                                    p0 = [1,max(dmdensity)])[0]
+                                    maxfev=1000,
+                                    p0 = [-1,max(dmdensity)])[0]
 
         # create QA figure if desired
         if doQA:
