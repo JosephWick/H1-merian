@@ -200,7 +200,7 @@ def makeGalQtyCSV(gal, doQA=False):
                                 pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
         # cold gas vdisp
-        pos_allgas = sCDM.g['vel'][gasmask]
+        pos_allgas = sCDM.g['pos'][gasmask]
         vel_allgas = sCDM.g['vel'][gasmask]
         mass_allgas = sCDM.g['mass'][gasmask]
 
