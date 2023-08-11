@@ -136,7 +136,6 @@ def makeFireCSV(gal):
     # make that 2000kpc cut again
     posmask = np.linalg.norm(pos_allgas-com)<2000
     mass_allgas = mass_allgas[posmask]
-    age_allgas = age_allgas[posmask]
     pos_allgas = pos_allgas[posmask]
     vel_allgas = vel_allgas[posmask]
 
