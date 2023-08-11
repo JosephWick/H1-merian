@@ -139,10 +139,10 @@ def makeFireCSV(gal):
     pos_allgas = pos_allgas[posmask]
     vel_allgas = vel_allgas[posmask]
 
-    sigma_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
-                            vel_allgas, mass_allgas)
-    sigma_allgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
-                            pos_allgas-com, vel_allgas, rHM, mass_allgas)
+    #sigma_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
+    #                        vel_allgas, mass_allgas)
+    #sigma_allgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
+    #                        pos_allgas-com, vel_allgas, rHM, mass_allgas)
 
     sfr10 = np.sum(mass_allstars[age_allstars<0.01])
     sfr100= np.sum(mass_allstars[age_allstars<0.10])
