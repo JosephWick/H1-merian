@@ -147,7 +147,7 @@ def makeFireCSV(gal):
     fout.write(str(redshifts[i])+',')
     fout.write(str(Mstar)+','+str(rHM)+',')
     fout.write(str(sigma_star_global)+','+str(sigma_star_los)+',')
-    fout.write(str(sigma_youngstar_global)+','+str(sigma_allstars_los)+',')
+    fout.write(str(sigma_youngstar_global)+','+str(sigma_youngstar_los)+',')
     fout.write(str(sigma_allgas_global)+','+str(sigma_allgas_los)+',')
     fout.write(str(sfr10)+','+str(sfr100)+','+str(ssfr10)+','+str(ssfr100)+'\n')
     fout.close()
