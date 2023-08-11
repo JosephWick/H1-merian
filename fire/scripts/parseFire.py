@@ -79,6 +79,13 @@ def makeFireCSV(gal):
     mass_DM= particles['dark'].prop('mass')
     com = np.sum(pos_DM * mass_DM[:, None], axis=0) / np.sum(mass_DM)
 
+    # make a cut for all particles within 2000 kpc of dark matter CoM
+    posmask = np.linalg.norm(pos_allstars-com)<2000
+    mass_allstars = mass_allstars[posmask]
+    age_allstars = age_allstars[posmask]
+    pos_allstars = pos_allstars[posmask]
+    vel_allstars = vel_allstars[posmask]
+
     rHM = util_galaxies.compute_massRadius(pos_allstars-com,mass_allstars, 10000, 0.01)
 
     # velocity dispersions
@@ -99,6 +106,13 @@ def makeFireCSV(gal):
     pos_allgas = particles['gas'].prop('position')
     vel_allgas = particles['gas'].prop('host.velocity')
     mass_allgas = particles['gas'].prop('mass')
+
+    # make that 2000kpc cut again
+    posmask = np.linalg.norm(pos_allgas-com)<2000
+    mass_allgas = mass_allgas[posmask]
+    age_allgas = age_allgas[posmask]
+    pos_allgas = pos_allgas[posmask]
+    vel_allgas = vel_allgas[posmask]
 
     sigma_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                             vel_allgas, mass_allgas)
