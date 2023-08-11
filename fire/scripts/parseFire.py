@@ -107,7 +107,7 @@ def makeFireCSV(gal):
     com = np.sum(pos_DM * mass_DM[:, None], axis=0) / np.sum(mass_DM)
 
     # make a cut for all particles within 2000 kpc of dark matter CoM
-    posmask = np.linalg.norm(pos_allstars-com)<2000
+    posmask = np.linalg.norm(pos_allstars-com, axis=1)<2000
     mass_allstars = mass_allstars[posmask]
     age_allstars = age_allstars[posmask]
     pos_allstars = pos_allstars[posmask]
