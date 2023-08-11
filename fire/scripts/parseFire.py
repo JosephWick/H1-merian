@@ -21,6 +21,33 @@ from util_galaxies import util_galaxies
 ##
 
 #
+def compute_Rhalfmass_bisect(positions, masses, outerR, acc, maxiter=100000):
+    innerLim = 0.0
+    outerLim = outerR
+
+    pRadii = np.linalg.norm(positions, ord=2, axis=1)
+    mTot = sum(masses)
+
+    r = outerR/2
+    hm = sum(masses[pRadii < r])
+    n=0
+    while(hm < (0.50-acc)*mTot or hm > (0.5+acc)*mTot):
+        if hm > 0.5*mTot: # too big, decrease r
+            outerLim = r
+            r = innerLim + (outerLim-innerLim)/2
+        elif hm < 0.5*mTot: # too small, increase r
+            innerLim = r
+            r = innerLim + (outerLim-innerLim)/2
+        hm = sum(masses[pRadii < r])
+
+        n += 1
+        if n>maxiter:
+            return -1
+            break
+
+    return r
+
+#
 def makeFireCSV(gal):
   '''
   makeFireCSV()
@@ -86,7 +113,7 @@ def makeFireCSV(gal):
     pos_allstars = pos_allstars[posmask]
     vel_allstars = vel_allstars[posmask]
 
-    rHM = util_galaxies.compute_massRadius(pos_allstars-com,mass_allstars, 10000, 0.01)
+    rHM = compute_Rhalfmass_bisect(pos_allstars-com,mass_allstars, 10000, 0.01)
 
     # velocity dispersions
     pos_youngstars = pos_allstars[agemask]
