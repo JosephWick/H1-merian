@@ -3,7 +3,7 @@
 # Parses a single Fire sim to make csv
 
 import gizmo_analysis as gizmo
-import allstarsities as ut
+import utilities as ut
 
 import pandas as pd
 import numpy as np
