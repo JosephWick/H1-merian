@@ -71,7 +71,7 @@ def makeQAfig_mask(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outd
     plt.savefig(outdir)
     plt.close()
 
-def makeQAfig_profile(pd, outpath):
+def makeQAfig_profile(pd, outdir):
     plt.plot(pd['rbins'], pd['density'])
 
     plt.savefig(outdir)
@@ -95,7 +95,7 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.close()
 
     # define QA directory
-    QAdir = '/home/jw1624/H1-merian/QA/parse/'
+    QAdir = '/home/jw1624/H1-merian/QA/parse/romulus'
 
     simfileprev = util_os.getfilepath_cdm(gal,0)
 
