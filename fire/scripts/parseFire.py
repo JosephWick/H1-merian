@@ -128,13 +128,13 @@ def makeFireCSV(gal):
     fig, axs = plt.subplots(1,3, figsize=(15,5), facecolor='w')
 
     axs[0].scatter(pos_DM[:,0], pos_DM[:,1], c='grey', alpha=0.01, s=1)
-    axs[0].scatter(pos_allstars[:,0], pos_allstars[:,1], c='magenta', s=1)
+    axs[0].scatter(pos_allstars-com[:,0], pos_allstars-com[:,1], c='magenta', s=1)
 
     axs[1].scatter(pos_DM[:,0], pos_DM[:,2], c='grey', alpha=0.01, s=1)
-    axs[1].scatter(pos_allstars[:,2], pos_allstars[:,1], c='magenta', s=1)
+    axs[1].scatter(pos_allstars-com[:,2], pos_allstars-com[:,1], c='magenta', s=1)
 
     axs[2].scatter(pos_DM[:,1], pos_DM[:,2], c='grey', alpha=0.01, s=1)
-    axs[2].scatter(pos_allstars[:,1], pos_allstars[:,2], c='magenta', s=1)
+    axs[2].scatter(pos_allstars-com[:,1], pos_allstars-com[:,2], c='magenta', s=1)
 
     fpath = '/home/jmwick/H1-merian/QA/parse/fire/m11d/'+str(i)+'.png'
     plt.savefig(fpath)
