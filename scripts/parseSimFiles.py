@@ -22,9 +22,9 @@ from util_galaxies import util_galaxies
 def powerlaw(r, alpha, c):
     return c*(r**alpha)
 
-# makeQAfig()
+# makeQAfig_mask()
 # makes QA figure that depicts starmask
-def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
+def makeQAfig_mask(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
     fig, axs = plt.subplots(1,3, figsize=(18,6))
 
     starRads = np.linalg.norm(pos_allstars-center, axis=1)
@@ -71,6 +71,12 @@ def makeQAfig(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outdir):
     plt.savefig(outdir)
     plt.close()
 
+def makeQAfig_profile(pd, outpath):
+    plt.plot(pd['rbins'], pd['density'])
+
+    plt.savefig(outdir)
+    plt.close()
+
 # does the parsing and creation of csvs
 def makeGalQtyCSV(gal, doQA=False):
     numTS = util_os.getNumTimesteps(gal)
@@ -89,7 +95,7 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.close()
 
     # define QA directory
-    QAdir = '/home/jw1624/H1-merian/QA/parse/r'+str(gal)
+    QAdir = '/home/jw1624/H1-merian/QA/parse/'
 
     simfileprev = util_os.getfilepath_cdm(gal,0)
 
@@ -246,10 +252,12 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # create QA figure if desired
         if doQA:
-            figfout = QAdir+'/'+str(tstepnumber)+'.png'
+            figfout_mask = QAdir+'/mask/r'+str(gal)+'/'+str(tstepnumber)+'.png'
             hw = 300
-            makeQAfig(sCDM.s['pos'], sCDM.d['pos'], DMmask, cen, rHM,
-                        rfac*hmrDM, hw, figfout)
+            #makeQAfig_mask(sCDM.s['pos'], sCDM.d['pos'], DMmask, cen, rHM,
+            #            rfac*hmrDM, hw, figfout_mask)
+            figfout_prof = QAdir+'/prof/r'+str(gal)+'/'+str(tstepnumber)+'.png'
+            makeQAfig_profile(pdCDM, figfout_prof)
 
 
         # write to file
