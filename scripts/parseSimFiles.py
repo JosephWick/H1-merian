@@ -116,7 +116,8 @@ def makeGalQtyCSV(gal, doQA=False):
     # iterate through each timestep
     for timestep in range(numTS):
         if gal == 431:
-            if timestep in [1, 2, 3, 7, 11, 16, 18, 20, 21, 25, 31, 33]
+            if timestep in [1, 2, 3, 7, 11, 16, 18, 20, 21, 25, 31, 33]:
+                continue
         fout = open(outfile, 'a')
 
         # open simfile
