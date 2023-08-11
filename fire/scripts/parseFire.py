@@ -3,7 +3,7 @@
 # Parses a single Fire sim to make csv
 
 import gizmo_analysis as gizmo
-import utilities as ut
+import allstarsities as ut
 
 import pandas as pd
 import numpy as np
@@ -86,21 +86,21 @@ def makeFireCSV(gal):
 
     sigma_star_global = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
                             vel_allstars, mass_allstars)
-    sigma_star_los = util.compute_vdisp_los(vel_allstars, mass_allstars,
+    sigma_star_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
                             pos_allstars-com, vel_allstars, rHM, mass_allstars)
 
-    sigma_youngstar_global = util.compute_vdisp_global(vel_allstars, mass_allstars,
+    sigma_youngstar_global = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
                             vel_youngstars, mass_youngstars)
-    sigma_youngstar_los = util.compute_vdisp_los(vel_allstars, mass_allstars,
+    sigma_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
                             pos_youngstars-com, vel_youngstars, rHM, mass_youngstars)
 
     pos_allgas = particles['gas'].prop('position')
     vel_allgas = particles['gas'].prop('host.velocity')
     mass_allgas = particles['gas'].prop('mass')
 
-    sigma_allgas_global = util.compute_vdisp_global(vel_allgas, mass_allgas,
+    sigma_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                             vel_allgas, mass_allgas)
-    sigma_allgas_los = util.compute_vdisp_los(vel_allgas, mass_allgas,
+    sigma_allgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                             pos_allgas-com, vel_allgas, rHM, mass_allgas)
 
     sfr10 = np.sum(mass_allstars[age_allstars<0.01])
