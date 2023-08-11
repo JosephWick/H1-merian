@@ -8,6 +8,8 @@ import utilities as ut
 import pandas as pd
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 import glob
 import sys
 sys.path.insert(0, '/home/jmwick/H1-merian/util/')
