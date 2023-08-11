@@ -96,8 +96,6 @@ def makeFireCSV(gal):
     pos_allstars = particles['star'].prop('position')
     vel_allstars = particles['star'].prop('host.velocity')
 
-    agemask = age_allstars<0.01
-
     # quantities for csv
     Mstar = np.sum(mass_allstars)
 
@@ -116,6 +114,7 @@ def makeFireCSV(gal):
     rHM = compute_Rhalfmass_bisect(pos_allstars-com,mass_allstars, 10000, 0.01)
 
     # velocity dispersions
+    agemask = age_allstars<0.01
     pos_youngstars = pos_allstars[agemask]
     vel_youngstars = vel_allstars[agemask]
     mass_youngstars = mass_allstars[agemask]
