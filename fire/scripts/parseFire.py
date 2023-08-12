@@ -100,7 +100,7 @@ def makeFireCSV(gal):
     pos_allgas = particles['gas'].prop('position')
     mass_allgas = particles['gas'].prop('mass')
     #mass_allgas *=particles['gas'].prop('hydrogen.neutral.fraction')
-    velocity_allgas = particles['gas'].prop('host.velocity')
+    vel_allgas = particles['gas'].prop('host.velocity')
     temp_allgas = particles['gas'].prop('temperature')
 
     # quantities for csv
@@ -126,7 +126,7 @@ def makeFireCSV(gal):
     posmask = np.linalg.norm(pos_allgas, axis=1)<500
     pos_allgas = pos_allgas[posmask]
     mass_allgas = mass_allgas[posmask]
-    velocity_allgas = velocity_allgas[posmask]
+    vel_allgas = vel_allgas[posmask]
     temp_allgas = temp_allgas[posmask]
 
     # calc com stars
@@ -179,10 +179,10 @@ def makeFireCSV(gal):
 
         pos_selgas = np.array(pos_allgas)[indexes]
         mass_selgas = mass_allgas[indexes]
-        velocity_selgas = velocity_allgas[indexes]
+        vel_selgas = vel_allgas[indexes]
 
-        sigma_gasNearYS_los = util_galaxies.compute_vdisp_los(velocity_allgas,
-            particles['gas'].prop('mass'), pos_selgas, velocity_selgas, rHM, mass_selgas)
+        sigma_gasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas,
+            particles['gas'].prop('mass'), pos_selgas, vel_selgas, rHM, mass_selgas)
 
     # ssfr
     sfr10 = np.sum(mass_allstars[age_allstars<0.01])
