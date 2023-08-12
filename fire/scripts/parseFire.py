@@ -101,7 +101,7 @@ def makeFireCSV(gal):
     mass_allgas = particles['gas'].prop('mass')
     #mass_allgas *=particles['gas'].prop('hydrogen.neutral.fraction')
     velocity_allgas = particles['gas'].prop('host.velocity')
-    temp_allgas = particles['gas'].prop
+    temp_allgas = particles['gas'].prop('temperature')
 
     # quantities for csv
     Mstar = np.sum(mass_allstars)
