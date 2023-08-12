@@ -82,7 +82,7 @@ def makeFireCSV(gal):
   fout.write('sigma_youngstar_global,sigma_youngstar_los,')
   #fout.write('sigma_allgas_global,sigma_allgas_los,')
   #fout.write('sigma_coldgas_global,sigma_coldgas_los,')
-  fout.write('alpha,')
+  #fout.write('alpha,')
   fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
   fout.close()
 
@@ -108,7 +108,7 @@ def makeFireCSV(gal):
     pos_allstars -= com
 
     # make a cut for all particles within 500 kpc of dark matter CoM
-    posmask = np.linalg.norm(pos_allstars-com, axis=1)<500
+    posmask = np.linalg.norm(pos_allstars, axis=1)<500
     mass_allstars = mass_allstars[posmask]
     age_allstars = age_allstars[posmask]
     pos_allstars = pos_allstars[posmask]
