@@ -152,8 +152,8 @@ def makeFireCSV(gal):
         mask = np.linalg.norm(pos_allgas-pos,axis=1)<0.1
         print(True in mask)
 
-        for i in np.where(mask==True)[0]:
-            indexes.append(i)
+        for j in np.where(mask==True)[0]:
+            indexes.append(j)
 
     indexes = np.unique(indexes)
 
