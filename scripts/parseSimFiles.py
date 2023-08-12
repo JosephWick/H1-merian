@@ -243,6 +243,7 @@ def makeGalQtyCSV(gal, doQA=False):
 
             for i in np.where(mask==True)[0]:
                 indexes.append(i)
+        indexes = np.unique(indexes)
 
         gaspos_sel = sCDM.g['pos'][indexes]-cen
         gasmass_sel = (sCDM.g['mass']*sCDM.g['hydrogen'])[indexes]
