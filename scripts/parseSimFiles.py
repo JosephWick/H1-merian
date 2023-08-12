@@ -93,6 +93,7 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.write('sigma_youngstar_global,sigma_youngstar_los,')
     fout.write('sigma_allgas_global,sigma_allgas_los,')
     fout.write('sigma_coldgas_global,sigma_coldgas_los,')
+    fout.write('sigma_gasNearYS_los,')
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
     fout.close()
@@ -206,12 +207,12 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_allstars_global = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_allstars, mass_allstars)
         vdisp_allstars_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
-                                pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
+                            pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
         vdisp_youngstar_global = util_galaxies.compute_vdisp_global(vel_allstars,
                                 mass_allstars, vel_youngstars, mass_youngstars)
         vdisp_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
-                                pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
+                            pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
         # cold gas vdisp
         pos_allgas = sCDM.g['pos'][gasmask]
@@ -232,6 +233,23 @@ def makeGalQtyCSV(gal, doQA=False):
                                 vel_coldgas, mass_coldgas)
         vdisp_coldgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                                 pos_coldgas-starcen, vel_coldgas, rHM, mass_coldgas)
+
+        # vdisp of gas near young stars (this is slow)
+        youngstarPos = sCDM.s['pos'][sCDM.s['age'].in_units('Myr')<10]
+
+        indexes = []
+        for x,pos in enumerate(youngstarPos[:]):
+            mask = np.linalg.norm(sCDM.g['pos']-pos,axis=1)<0.1
+
+            for i in np.where(mask==True)[0]:
+                indexes.append(i)
+
+        gaspos_sel = sCDM.g['pos'][indexes]-cen
+        gasmass_sel = (sCDM.g['mass']*sCDM.g['hydrogen'])[indexes]
+        gasvel_sel = sCDM.g['vel'][indexes]
+
+        vdisp_gasNearYS_los = util_galaxies.compute_vdisp_los(sCDM.g['vel'], sCDM.g['mass'],
+                gaspos_sel, gasvel_sel, rHM, gasmass_sel)
 
         # alpha from power fit
         # profile range
@@ -270,6 +288,7 @@ def makeGalQtyCSV(gal, doQA=False):
         fout.write(str(vdisp_youngstar_global)+','+str(vdisp_youngstar_los)+',')
         fout.write(str(vdisp_allgas_global)+','+str(vdisp_allstars_los)+',')
         fout.write(str(vdisp_coldgas_global)+','+str(vdisp_coldgas_los)+',')
+        fout.write(str(vdisp_gasNearYS_los)+',')
         fout.write(str(alpha)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+
                     ','+str(sSFR_100)+'\n')
