@@ -74,6 +74,9 @@ def makeQAfig_mask(pos_allstars, pos_allDM, haloMask, center, Rhm, Rdm, hw, outd
 def makeQAfig_profile(pd, outdir):
     plt.plot(pd['rbins'], pd['density'])
 
+    plt.xscale('log')
+    plt.yscale('log')
+
     plt.savefig(outdir)
     plt.close()
 
