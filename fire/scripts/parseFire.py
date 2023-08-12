@@ -139,7 +139,7 @@ def makeFireCSV(gal):
     sigma_youngstar_global = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
                             vel_youngstars, mass_youngstars)
     sigma_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
-                            pos_youngstars-com_star vel_youngstars, rHM, mass_youngstars)
+                            pos_youngstars-com_star, vel_youngstars, rHM, mass_youngstars)
 
     pos_allgas = particles['gas'].prop('position')
     vel_allgas = particles['gas'].prop('host.velocity')
