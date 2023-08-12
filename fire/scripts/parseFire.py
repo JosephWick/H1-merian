@@ -116,10 +116,10 @@ def makeFireCSV(gal):
     com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
 
     posmask = np.linalg.norm(pos_allstars-com_star) < 100
-    mass_allstars = mass_allgas[posmask]
+    mass_allstars = mass_allstars[posmask]
     age_allstars = age_allstars[posmask]
     pos_allstars = pos_allstars[posmask]
-    vel_allstars = vel_allgas[posmask]
+    vel_allstars = vel_allstars[posmask]
 
     # recalc com stars
     com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
