@@ -99,8 +99,9 @@ def makeFireCSV(gal):
 
     pos_allgas = particles['gas'].prop('position')
     mass_allgas = particles['gas'].prop('mass')
-    mass_allgas *=particles['gas'].prop('hydrogen.neutral.fraction')
+    #mass_allgas *=particles['gas'].prop('hydrogen.neutral.fraction')
     velocity_allgas = particles['gas'].prop('host.velocity')
+    temp_allgas = particles['gas'].prop
 
     # quantities for csv
     Mstar = np.sum(mass_allstars)
@@ -120,6 +121,13 @@ def makeFireCSV(gal):
     age_allstars = age_allstars[posmask]
     pos_allstars = pos_allstars[posmask]
     vel_allstars = vel_allstars[posmask]
+
+    # make same cut for gas particles
+    posmask = np.linalg.norm(pos_allgas, axis=1)<500
+    pos_allgas = pos_allgas[posmask]
+    mass_allgas = mass_allgas[posmask]
+    velocity_allgas = velocity_allgas[posmask]
+    temp_allgas = temp_allgas[posmask]
 
     # calc com stars
     com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
@@ -141,27 +149,40 @@ def makeFireCSV(gal):
     sigma_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
                             pos_youngstars-com_star, vel_youngstars, rHM, mass_youngstars)
 
+    # cold gas
+    # make cut for temp < 1000K
+    tempmask = temp_allgas<1000
+    pos_coldgas = pos_allgas[tempmask]
+    mass_coldgas = mass_allgas[tempmask]
+    vel_coldgas = vel_allgas[tempmask]
+    temp_coldgas = temp_allgas[tempmask]
+
+    sigma_coldgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
+                            pos_coldgas-com_star, vel_coldgas, rHM, mass_coldgas)
+
     # hii near young stars
-    pos_allstars -= com_star
-    pos_allgas -= com_star
+    hiiys = False
+    if hiiys:
+        pos_allstars -= com_star
+        pos_allgas -= com_star
 
-    pos_youngstars = pos_allstars[agemask]
+        pos_youngstars = pos_allstars[agemask]
 
-    indexes = []
-    for pos in pos_youngstars[:]:
-        mask = np.linalg.norm(pos_allgas-pos,axis=1)<0.1
+        indexes = []
+        for pos in pos_youngstars[:]:
+            mask = np.linalg.norm(pos_allgas-pos,axis=1)<0.1
 
-        for j in np.where(mask==True)[0]:
-            indexes.append(j)
+            for j in np.where(mask==True)[0]:
+                indexes.append(j)
 
-    indexes = np.unique(indexes)
+        indexes = np.unique(indexes)
 
-    pos_selgas = np.array(pos_allgas)[indexes]
-    mass_selgas = mass_allgas[indexes]
-    velocity_selgas = velocity_allgas[indexes]
+        pos_selgas = np.array(pos_allgas)[indexes]
+        mass_selgas = mass_allgas[indexes]
+        velocity_selgas = velocity_allgas[indexes]
 
-    sigma_gasNearYS_los = util_galaxies.compute_vdisp_los(velocity_allgas,
-        particles['gas'].prop('mass'), pos_selgas, velocity_selgas, rHM, mass_selgas)
+        sigma_gasNearYS_los = util_galaxies.compute_vdisp_los(velocity_allgas,
+            particles['gas'].prop('mass'), pos_selgas, velocity_selgas, rHM, mass_selgas)
 
     # ssfr
     sfr10 = np.sum(mass_allstars[age_allstars<0.01])
