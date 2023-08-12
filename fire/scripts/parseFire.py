@@ -111,7 +111,19 @@ def makeFireCSV(gal):
     pos_allstars = pos_allstars[posmask]
     vel_allstars = vel_allstars[posmask]
 
-    rHM = compute_Rhalfmass_bisect(pos_allstars-com,mass_allstars, 10000, 0.01)
+    # cut for within 100 kpc of star center of mask
+    # star com
+    com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
+
+    posmask = np.linalg.norm(pos_allstars-com_star) < 100
+    mass_allstars = mass_allgas[posmask]
+    age_allstars = age_allstars[posmask]
+    pos_allstars = pos_allstars[posmask]
+    vel_allstars = vel_allgas[posmask]
+
+    # recalc com stars
+    com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
+    rHM = compute_Rhalfmass_bisect(pos_allstars-com_star,mass_allstars, 10000, 0.01)
 
     # velocity dispersions
     agemask = age_allstars<0.01
@@ -122,22 +134,22 @@ def makeFireCSV(gal):
     sigma_star_global = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
                             vel_allstars, mass_allstars)
     sigma_star_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
-                            pos_allstars-com, vel_allstars, rHM, mass_allstars)
+                            pos_allstars-com_star, vel_allstars, rHM, mass_allstars)
 
     sigma_youngstar_global = util_galaxies.compute_vdisp_global(vel_allstars, mass_allstars,
                             vel_youngstars, mass_youngstars)
     sigma_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
-                            pos_youngstars-com, vel_youngstars, rHM, mass_youngstars)
+                            pos_youngstars-com_star vel_youngstars, rHM, mass_youngstars)
 
     pos_allgas = particles['gas'].prop('position')
     vel_allgas = particles['gas'].prop('host.velocity')
     mass_allgas = particles['gas'].prop('mass')
 
     # make that 2000kpc cut again
-    posmask = np.linalg.norm(pos_allgas-com)<2000
-    mass_allgas = mass_allgas[posmask]
-    pos_allgas = pos_allgas[posmask]
-    vel_allgas = vel_allgas[posmask]
+    #posmask = np.linalg.norm(pos_allgas-com)<2000
+    #mass_allgas = mass_allgas[posmask]
+    #pos_allgas = pos_allgas[posmask]
+    #vel_allgas = vel_allgas[posmask]
 
     #sigma_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
     #                        vel_allgas, mass_allgas)
@@ -154,7 +166,6 @@ def makeFireCSV(gal):
     if sfr100>0: ssfr100 = np.log10(sfr100/(Mstar*1e8))
 
     # can we fit alpha
-
     # first center DM positions
     pos_DM -= com
 
