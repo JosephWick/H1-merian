@@ -57,7 +57,7 @@ def makeFireCSV(gal):
   '''
 
   # set up output file
-  outfile = '/home/jmwick/breathingModes/csvs/'+str(gal[-10:])+'.txt'
+  outfile = '/home/jmwick/H1-merian/fire/csvs/'+str(gal[-10:])+'.txt'
 
   # get redshifts
   zfile = gal+'/snapshot_times.txt'
@@ -104,18 +104,11 @@ def makeFireCSV(gal):
     mass_DM= particles['dark'].prop('mass')
     com = np.sum(pos_DM * mass_DM[:, None], axis=0) / np.sum(mass_DM)
 
-    # make a cut for all particles within 2000 kpc of dark matter CoM
-    posmask = np.linalg.norm(pos_allstars-com, axis=1)<2000
-    mass_allstars = mass_allstars[posmask]
-    age_allstars = age_allstars[posmask]
-    pos_allstars = pos_allstars[posmask]
-    vel_allstars = vel_allstars[posmask]
+    pos_DM -= com
+    pos_allstars -= com
 
-    # cut for within 100 kpc of star center of mask
-    # star com
-    com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
-
-    posmask = np.linalg.norm(pos_allstars-com_star) < 100
+    # make a cut for all particles within 500 kpc of dark matter CoM
+    posmask = np.linalg.norm(pos_allstars-com, axis=1)<500
     mass_allstars = mass_allstars[posmask]
     age_allstars = age_allstars[posmask]
     pos_allstars = pos_allstars[posmask]
