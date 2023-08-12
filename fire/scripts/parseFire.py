@@ -168,7 +168,7 @@ def makeFireCSV(gal):
     # TODO
 
     # QA scatter the dm, stars
-    QA=True
+    QA=False
     if QA:
         fig, axs = plt.subplots(1,3, figsize=(15,5), facecolor='w')
 
