@@ -80,6 +80,7 @@ def makeFireCSV(gal):
   fout.write('M_star,R_halfmass,')
   fout.write('sigma_allstars_global,sigma_allstars_los,')
   fout.write('sigma_youngstar_global,sigma_youngstar_los,')
+  fout.write('sigma_gasNearYS_los,')
   #fout.write('sigma_allgas_global,sigma_allgas_los,')
   #fout.write('sigma_coldgas_global,sigma_coldgas_los,')
   #fout.write('alpha,')
@@ -96,6 +97,11 @@ def makeFireCSV(gal):
     pos_allstars = particles['star'].prop('position')
     vel_allstars = particles['star'].prop('host.velocity')
 
+    pos_allgas = particles['gas'].prop('position')
+    mass_allgas = particles['gas'].prop('mass')
+    mass_allgas *=particles['gas'].prop('hydrogen.neutral.fraction')
+    velocity_allgas = particles['gas'].prop('host.velocity')
+
     # quantities for csv
     Mstar = np.sum(mass_allstars)
 
@@ -106,6 +112,7 @@ def makeFireCSV(gal):
 
     pos_DM -= com
     pos_allstars -= com
+    pos_allgas -= com
 
     # make a cut for all particles within 500 kpc of dark matter CoM
     posmask = np.linalg.norm(pos_allstars, axis=1)<500
@@ -114,7 +121,7 @@ def makeFireCSV(gal):
     pos_allstars = pos_allstars[posmask]
     vel_allstars = vel_allstars[posmask]
 
-    # recalc com stars
+    # calc com stars
     com_star = np.sum(pos_allstars * mass_allstars[:, None], axis=0) / np.sum(mass_allstars)
     rHM = compute_Rhalfmass_bisect(pos_allstars-com_star,mass_allstars, 10000, 0.01)
 
@@ -134,21 +141,30 @@ def makeFireCSV(gal):
     sigma_youngstar_los = util_galaxies.compute_vdisp_los(vel_allstars, mass_allstars,
                             pos_youngstars-com_star, vel_youngstars, rHM, mass_youngstars)
 
-    pos_allgas = particles['gas'].prop('position')
-    vel_allgas = particles['gas'].prop('host.velocity')
-    mass_allgas = particles['gas'].prop('mass')
+    # hii near young stars
+    pos_allstars -= com_star
+    pos_allgas -= com_star
 
-    # make that 2000kpc cut again
-    #posmask = np.linalg.norm(pos_allgas-com)<2000
-    #mass_allgas = mass_allgas[posmask]
-    #pos_allgas = pos_allgas[posmask]
-    #vel_allgas = vel_allgas[posmask]
+    pos_youngstars = pos_allstars[agemask]
 
-    #sigma_allgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
-    #                        vel_allgas, mass_allgas)
-    #sigma_allgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
-    #                        pos_allgas-com, vel_allgas, rHM, mass_allgas)
+    indexes = []
+    for pos in pos_youngstars[:10]:
+        mask = np.linalg.norm(pos_allgas-pos,axis=1)<0.1
+        print(True in mask)
 
+        for i in np.where(mask==True)[0]:
+            indexes.append(i)
+
+    indexes = np.unique(indexes)
+
+    pos_selgas = np.array(pos_allgas)[indexes]
+    mass_selgas = mass_allgas[indexes]
+    velocity_selgas = velocity_allgas[indexes]
+
+    sigma_gasNearYS_los = util_galaxies.compute_vdisp_los(velocity_allgas,
+        particles['gas'].prop('mass'), pos_selgas, velocity_selgas, rHM, mass_selgas)
+
+    # ssfr
     sfr10 = np.sum(mass_allstars[age_allstars<0.01])
     sfr100= np.sum(mass_allstars[age_allstars<0.10])
 
@@ -195,6 +211,7 @@ def makeFireCSV(gal):
     fout.write(str(Mstar)+','+str(rHM)+',')
     fout.write(str(sigma_star_global)+','+str(sigma_star_los)+',')
     fout.write(str(sigma_youngstar_global)+','+str(sigma_youngstar_los)+',')
+    fout.write(str(sigma_gasNearYS_los)+',')
     #fout.write(str(sigma_allgas_global)+','+str(sigma_allgas_los)+',')
     fout.write(str(sfr10)+','+str(sfr100)+','+str(ssfr10)+','+str(ssfr100)+'\n')
     fout.close()
