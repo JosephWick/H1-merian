@@ -148,9 +148,8 @@ def makeFireCSV(gal):
     pos_youngstars = pos_allstars[agemask]
 
     indexes = []
-    for pos in pos_youngstars[:10]:
+    for pos in pos_youngstars[:]:
         mask = np.linalg.norm(pos_allgas-pos,axis=1)<0.1
-        print(True in mask)
 
         for j in np.where(mask==True)[0]:
             indexes.append(j)
