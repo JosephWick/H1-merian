@@ -77,6 +77,9 @@ def makeStarImage(gal, width=20, sidm=0):
     plt.close()
 # end make StarImage
 
+# sizes
+widths = [20, 20, 10, 20, 10, 20, 20, 10, 15, 20, 20, 15, 15, 15, 10, 20]
+
 # now actually make the image
 f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'w')
 f.write('galaxy,v_disp\n')
