@@ -87,7 +87,7 @@ f.close()
 f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'w')
 f.write('galaxy,v_disp\n')
 f.close()
-for cdmg in cdmHalos:
-    makeStarImage(cdmg)
+for i,cdmg in enumerate(cdmHalos):
+    makeStarImage(cdmg, width=widths[i])
 #for sidmg in sidmHalos: # only want CDM currently
 #    makeStarImage(sidmg, sidm=1)
