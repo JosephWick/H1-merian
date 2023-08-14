@@ -120,7 +120,7 @@ class util_os:
             filepath to adiabatic z=0 simulation file
         '''
         # check against getGalaxies()
-        if gal not in getGalaxies()[1]:
+        if gal not in util_os.getGalaxies()[1]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11gals/romulus_dwarf_zooms'
