@@ -123,7 +123,7 @@ class util_os:
         if gal not in util_os.getGalaxies()[1]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
-        basedir = '/data/REPOSITORY/e11gals/romulus_dwarf_zooms'
+        basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
 
         adiaSimFile = basedir+'/r'+str(gal)+'.romulus25.3072g1HsbBH/adiabatic'
         adiaSimFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
