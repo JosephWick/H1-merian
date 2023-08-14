@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(0, '/home/jw1624/H1-merian/util/')
-from util import util
+from util_os import util_os
 
 import pandas as pd
 import numpy as np
@@ -115,7 +115,8 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
         for j,p in enumerate(Ws):
             val = (p/100)*vmax
 
-            idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),val)))).flatten()
+            idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),
+                val)))).flatten()
             if len(idxs_mass) < 2: continue
             x1 = (xaxis[idxs_mass[0]]+xaxis[idxs_mass[0]+1])/2
             x2 = (xaxis[idxs_mass[1]]+xaxis[idxs_mass[1]+1])/2
@@ -124,8 +125,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             wids[j] = width
             #print('CDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
-            axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw, label='_nolegend_')
-            axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cCDMw)
+            axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cCDMw,
+                label='_nolegend_')
+            axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2,
+                marker=markers[j], c=cCDMw)
 
         # do line widths of sidm
         K_sidm = -1
@@ -163,7 +166,8 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
             for j,p in enumerate(Ws):
                 val = (p/100)*vmax
 
-                idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),val)))).flatten()
+                idxs_mass = np.argwhere(np.diff(np.sign(hiprof - np.full(len(hiprof),
+                    val)))).flatten()
                 if len(idxs_mass) < 2: continue
                 x1 = (xaxis[idxs_mass[0]]+xaxis[idxs_mass[0]+1])/2
                 x2 = (xaxis[idxs_mass[1]]+xaxis[idxs_mass[1]+1])/2
@@ -172,8 +176,10 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
                 wids[j+3] = width
                 #print('SIDM W'+str(p)+'_'+orientations[i]+': '+str(width))
 
-                axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw, label='_nolegend_')
-                axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_', zorder=2, marker=markers[j], c=cSIDMw)
+                axs[i].plot([x1,x2],[val,val], linewidth=lwW, zorder=2, c=cSIDMw,
+                    label='_nolegend_')
+                axs[i].scatter([x1,x2],[val,val], s=25, label='_nolegend_',
+                    zorder=2, marker=markers[j], c=cSIDMw)
 
         if doExport:
             f.write(str(hID)+'_'+orientations[i]+',')
