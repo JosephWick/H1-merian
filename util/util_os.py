@@ -126,7 +126,7 @@ class util_os:
         basedir = '/data/REPOSITORY/e11gals/romulus_dwarf_zooms'
 
         adiaSimFile = basedir+'r'+str(gal)+'.romulus25.3072g1HsbBH/adiabatic'
-        adiaSimFile+= '/r'+str(gal)+'/romulus25.3072g1HsbBH.004096'
+        adiaSimFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
 
         return adiaSimFile
 
