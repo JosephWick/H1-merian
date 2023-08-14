@@ -128,6 +128,8 @@ class util_os:
         adiaSimFile = basedir+'r'+str(gal)+'.romulus25.3072g1HsbBH/adiabatic'
         adiaSimFile+= '/r'+str(gal)+'/romulus25.3072g1HsbBH.004096'
 
+        return adiaSimFile
+
     # getNumTimesteps()
     # returns number of timesteps for galaxy gal
     @staticmethod
