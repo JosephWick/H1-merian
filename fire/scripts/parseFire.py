@@ -165,7 +165,7 @@ def makeFireCSV(gal):
     tempmask = temp_allgas>10000
     pos_hotgas = pos_allgas[tempmask]
     mass_hotgas = mass_allgas[tempmask]
-    vel_coldgas = vel_allgas[tempmask]
+    vel_hotgas = vel_allgas[tempmask]
     temp_hotgas = temp_allgas[tempmask]
 
     sigma_hotgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
