@@ -80,7 +80,7 @@ def makeFireCSV(gal):
   fout.write('M_star,R_halfmass,')
   fout.write('sigma_allstars_global,sigma_allstars_los,')
   fout.write('sigma_youngstar_global,sigma_youngstar_los,')
-  fout.write('sigma_coldgas_los,')
+  fout.write('sigma_coldgas_los,sigma_hotgas_los,')
   #fout.write('sigma_gasNearYS_los,')
   #fout.write('sigma_allgas_global,sigma_allgas_los,')
   #fout.write('sigma_coldgas_global,sigma_coldgas_los,')
@@ -161,6 +161,16 @@ def makeFireCSV(gal):
     sigma_coldgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                             pos_coldgas-com_star, vel_coldgas, rHM, mass_coldgas)
 
+    # hot gas
+    tempmask = temp_allgas>10000
+    pos_hotgas = pos_allgas[tempmask]
+    mass_hotgas = mass_allgas[tempmask]
+    vel_coldgas = vel_allgas[tempmask]
+    temp_hotgas = temp_allgas[tempmask]
+
+    sigma_hotgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
+                            pos_hotgas-com_star, vel_hotgas, rHM, mass_hotgas)
+
     # hii near young stars
     hiiys = False
     if hiiys:
@@ -232,7 +242,7 @@ def makeFireCSV(gal):
     fout.write(str(Mstar)+','+str(rHM)+',')
     fout.write(str(sigma_star_global)+','+str(sigma_star_los)+',')
     fout.write(str(sigma_youngstar_global)+','+str(sigma_youngstar_los)+',')
-    fout.write(str(sigma_coldgas_los)+',')
+    fout.write(str(sigma_coldgas_los)+','+str(sigma_hotgas_los)+',')
     #fout.write(str(sigma_gasNearYS_los)+',')
     #fout.write(str(sigma_allgas_global)+','+str(sigma_allgas_los)+',')
     fout.write(str(sfr10)+','+str(sfr100)+','+str(ssfr10)+','+str(ssfr100)+'\n')
