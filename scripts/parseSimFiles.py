@@ -240,7 +240,7 @@ def makeGalQtyCSV(gal, doQA=False):
         hgmask = temp_allgas>10000
         pos_hotgas = pos_allgas[hgmask]
         vel_hotgas = vel_allgas[hgmask]
-        mass_hotgas = mass_hotgas[hgmask]
+        mass_hotgas = mass_allgas[hgmask]
 
         vdisp_hotgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                                 vel_hotgas, mass_hotgas)
