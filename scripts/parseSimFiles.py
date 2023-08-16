@@ -93,7 +93,7 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.write('sigma_youngstar_global,sigma_youngstar_los,')
     fout.write('sigma_allgas_global,sigma_allgas_los,')
     fout.write('sigma_coldgas_global,sigma_coldgas_los,')
-    fout.write('sigma_hotgas_global,sigma_hotgas_los')
+    fout.write('sigma_hotgas_global,sigma_hotgas_los,')
     fout.write('sigma_gasNearYS_los,')
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
@@ -269,6 +269,8 @@ def makeGalQtyCSV(gal, doQA=False):
         gasmass_selhot = gasmass_sel[hgmask]
         gasvel_selhot = gasvel_sel[hgmask]
 
+        vdisp_hotgasNearYS_global = util_galaxies.compute_vdisp_global(vel_allgas,
+                mass_allgas, gasvel_selhot, gasmass_selhot)
         vdisp_hotgasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                 gaspos_selhot-starcen, gasvel_selhot, rHM, gasmass_selhot)
 
