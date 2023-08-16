@@ -94,7 +94,7 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.write('sigma_allgas_global,sigma_allgas_los,')
     fout.write('sigma_coldgas_global,sigma_coldgas_los,')
     fout.write('sigma_hotgas_global,sigma_hotgas_los,')
-    fout.write('sigma_gasNearYS_los,')
+    fout.write('sigma_gasNearYS_global,sigma_gasNearYS_los,')
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
     fout.close()
@@ -312,7 +312,7 @@ def makeGalQtyCSV(gal, doQA=False):
         fout.write(str(vdisp_allgas_global)+','+str(vdisp_allstars_los)+',')
         fout.write(str(vdisp_coldgas_global)+','+str(vdisp_coldgas_los)+',')
         fout.write(str(vdisp_hotgas_global)+','+str(vdisp_hotgas_los)+',')
-        fout.write(str(vdisp_gasNearYS_los)+',')
+        fout.write(str(vdisp_hotgasNearYS_global)+','+str(vdisp_gasNearYS_los)+',')
         fout.write(str(alpha)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+
                     ','+str(sSFR_100)+'\n')
