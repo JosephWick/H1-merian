@@ -175,22 +175,22 @@ def makeFireCSV(gal):
     hiiys = False
     if hiiys:
         pos_allstars -= com_star
-        pos_allgas -= com_star
+        pos_hotgas -= com_star
 
         pos_youngstars = pos_allstars[agemask]
 
         indexes = []
         for pos in pos_youngstars[:]:
-            mask = np.linalg.norm(pos_allgas-pos,axis=1)<0.1
+            mask = np.linalg.norm(pos_hotgas-pos,axis=1)<0.1
 
             for j in np.where(mask==True)[0]:
                 indexes.append(j)
 
         indexes = np.unique(indexes)
 
-        pos_selgas = np.array(pos_allgas)[indexes]
-        mass_selgas = mass_allgas[indexes]
-        vel_selgas = vel_allgas[indexes]
+        pos_selgas = np.array(pos_hotgas)[indexes]
+        mass_selgas = mass_hotgas[indexes]
+        vel_selgas = vel_hotgas[indexes]
 
         sigma_gasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas,
             particles['gas'].prop('mass'), pos_selgas, vel_selgas, rHM, mass_selgas)
