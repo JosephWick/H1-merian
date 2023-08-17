@@ -122,11 +122,11 @@ for gal in galIDs:
 
     #plt.xlabel('Radius', fontfamily='serif', fontsize=20)
     #plt.ylabel('DM Density', fontfamily='serif', fontsize=20)
-    plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=36)
+    plt.title('r'+str(gal), weight='bold', fontfamily='serif', fontsize=42)
 
     plt.text(s = r'$\alpha=$'+str(alphap)[0:5],
              x = min(rbins), y = min(dmdensity),
-             fontfamily='monospace', fontsize=24, weight='bold')
+             fontfamily='monospace', fontsize=30, weight='bold')
 
     plt.savefig('/home/jw1624/H1-merian/figures/slopeFit/r'+str(gal)+'.png')
 
