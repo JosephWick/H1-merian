@@ -100,14 +100,6 @@ def makeHIprofile(gal):
 # get haloIDs
 cdmHalos = util_os.getGalaxies()[0]
 
-print('Making HI Profiles')
-# make figs
-f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'w')
-f.write('galaxy,w50_cdm,w20_cdm,w10_cdm,')
-f.write('w50_sidm,w20_sidm,w10_sidm,')
-f.write('dW_cdm,dW_sidm,')
-f.write('K_cdm,K_sidm\n')
-f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
     makeHIprofile(g)
