@@ -126,7 +126,10 @@ class util_os:
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
 
         adiaSimFile = basedir+'/r'+str(gal)+'.romulus25.3072g1HsbBH/adiabatic'
-        adiaSimFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        adiaSimFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.00*'
+
+        # some of the adiabatic ones have different timestep numbers 
+        adiaSimFile = glob.glob(adiaSimFile)[0]
 
         return adiaSimFile
 
