@@ -98,7 +98,7 @@ def makeHIprofile(gal):
 # end makeHIprofile
 
 # get haloIDs
-cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
+cdmHalos = util_os.getGalaxies()[0]
 
 print('Making HI Profiles')
 # make figs
@@ -110,9 +110,5 @@ f.write('K_cdm,K_sidm\n')
 f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
-    if g in sidmHalos:
-        makeHIprofile(g, withSIDM=True, doExport=True)
-        makeHIprofile(g, withSIDM=False,doExport=False)
-    else:
-        makeHIprofile(g, withSIDM=False,doExport=True)
+    makeHIprofile(g)
     print('done')
