@@ -145,7 +145,7 @@ class util_os:
         Returns
         -------
         [x,y,z] : array_like
-            filepaths to the x, y, and z orientation HI cubes 
+            filepaths to the x, y, and z orientation HI cubes
 
         '''
 
@@ -156,7 +156,7 @@ class util_os:
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
         basedir+= '/r'+str(gal)+'.romulus25.3072g1HsbBH/'
         basedir+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
-        basedir+= '/r'+str(ga)+'.alfalfa_hi.'
+        basedir+= '/r'+str(gal)+'.alfalfa_hi.'
 
         return [basedir+'x.fits', basedir+'y.fits', basedir+'z.fits']
 
