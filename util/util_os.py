@@ -130,6 +130,36 @@ class util_os:
 
         return adiaSimFile
 
+    # getFilePath_HI
+    # returns filepath for HI data cubes in [x,y,z] order
+    @staticmethod
+    def getFilePath_HI(gal):
+        '''
+        getFilePath_HI()
+
+        Parameters
+        ----------
+        gal : integer
+            galaxy to retrieve HI mock observations for
+
+        Returns
+        -------
+        [x,y,z] : array_like
+            filepaths to the x, y, and z orientation HI cubes 
+
+        '''
+
+        # check against getGalaxies()
+        if gal not in util_os.getGalaxies()[2]:
+            raise Exception('Specified galaxy is not in list of available galaxies.')
+
+        basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
+        basedir+= '/r'+str(gal)+'.romulus25.3072g1HsbBH/'
+        basedir+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        basedir+= '/r'+str(ga)+'.alfalfa_hi.'
+
+        return [basedir+'x.fits', basedir+'y.fits', basedir+'z.fits']
+
     # getNumTimesteps()
     # returns number of timesteps for galaxy gal
     @staticmethod
