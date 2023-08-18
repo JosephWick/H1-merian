@@ -42,6 +42,8 @@ def makeHIprofile(gal):
 
     fcdm = fits.open(hifiles[1], do_not_scale_image_data=True)
 
+    fig = plt.figure(figsize=(6,4), facecolor='w')
+
     bscale = fcdm[0].header['BSCALE']
     bzero = fcdm[0].header['BZERO']
     blank = fcdm[0].header['BLANK']
@@ -94,6 +96,7 @@ def makeHIprofile(gal):
     plt.ylabel('Flux Density [Jy]', fontsize=20)
 
     plt.savefig('../figures/HIProfiles/appendix/r'+str(gal)+'.png', dpi=600)
+    plt.close()
 
 # end makeHIprofile
 
