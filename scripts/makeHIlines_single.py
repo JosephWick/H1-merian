@@ -91,9 +91,9 @@ def makeHIprofile(gal):
             marker='o', c=cwid)
 
     # prettify
-    plt.title('r'+str(gal), fontfamily='serif', fontsize=24, weight='bold', loc='left')
-    plt.xlabel('Gas Velocity [km/s]', fontsize=20)
-    plt.ylabel('Flux Density [Jy]', fontsize=20)
+    plt.title('r'+str(gal), fontfamily='serif', fontsize=28, weight='bold', loc='left')
+    plt.xlabel('Gas Velocity [km/s]', fontsize=24, fontfamily='serif')
+    plt.ylabel('Flux Density [Jy]', fontsize=24, fontfamily='serif')
 
     plt.tight_layout()
 
