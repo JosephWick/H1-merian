@@ -95,6 +95,8 @@ def makeHIprofile(gal):
     plt.xlabel('Gas Velocity [km/s]', fontsize=20)
     plt.ylabel('Flux Density [Jy]', fontsize=20)
 
+    plt.tight_layout()
+
     plt.savefig('../figures/HIProfiles/appendix/r'+str(gal)+'.png', dpi=600)
     plt.close()
 
