@@ -50,7 +50,7 @@ def makeStarImage(gal, width=20, sidm=0):
     # side on
     fig = plt.figure(figsize=(8,8), facecolor='w')
     pynbody.analysis.angmom.sideon(h[1])
-    pynbody.plot.stars.render(s, width=str(width)+' kpc')
+    pynbody.plot.stars.render(s, width=str(width)+' kpc',  resolution=1000)
 
     plt.title('r'+str(gal) + ' '+tag, fontsize=20, fontfamily='serif')
 
@@ -58,10 +58,10 @@ def makeStarImage(gal, width=20, sidm=0):
 
     if sidm:
         fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'SIDMStarImg_s.png'
-        plt.savefig(fname)
+        plt.savefig(fname, dpi=600)
     else:
         fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'CDMStarImg_s.png'
-        plt.savefig(fname)
+        plt.savefig(fname, dpi=600)
 
     # write v_disp
     if sidm:
