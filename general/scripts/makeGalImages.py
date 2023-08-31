@@ -41,10 +41,10 @@ def makeStarImage(gal, width=20, sidm=0):
     plt.tight_layout()
 
     if sidm:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'SIDMStarImg_f.png'
+        fname = '/home/jw1624/H1-merian/general/figures/images/r'+str(gal)+'SIDMStarImg_f.png'
         plt.savefig(fname)
     else:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'CDMStarImg_f.png'
+        fname = '/home/jw1624/H1-merian/general/figures/images/r'+str(gal)+'CDMStarImg_f.png'
         plt.savefig(fname)
 
     # side on
@@ -57,21 +57,11 @@ def makeStarImage(gal, width=20, sidm=0):
     plt.tight_layout()
 
     if sidm:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'SIDMStarImg_s.png'
+        fname = '/home/jw1624/H1-merian/general/figures/images/r'+str(gal)+'SIDMStarImg_s.png'
         plt.savefig(fname, dpi=600)
     else:
-        fname = '/home/jw1624/H1-merian/figures/images/r'+str(gal)+'CDMStarImg_s.png'
+        fname = '/home/jw1624/H1-merian/general/figures/images/r'+str(gal)+'CDMStarImg_s.png'
         plt.savefig(fname, dpi=600)
-
-    # write v_disp
-    if sidm:
-        f = open('/home/jw1624/H1-merian/csvs/vDisp_sidm.txt', 'a')
-        f.write(str(gal)+','+str(v_disp)+'\n')
-        f.close()
-    else:
-        f = open('/home/jw1624/H1-merian/csvs/vDisp_cdm.txt', 'a')
-        f.write(str(gal)+','+str(v_disp)+'\n')
-        f.close()
 
     print('Finished halo '+str(gal) + ' in '+tag)
     plt.close()
