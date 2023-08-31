@@ -43,8 +43,8 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     dv= 11.2 #km/s (velocity resolution)
 
     # style params
-    tsize = 28
-    asize = 24
+    tsize = 32
+    asize = 28
 
     lw = 5  # profile linewidth
     lwW = 2 # width linewidth
@@ -64,7 +64,8 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     fig,axs = plt.subplots(1,3, figsize=(14,5), facecolor='white')
 
     # plot
-    plt.suptitle('r'+str(gal), fontsize=tsize, weight='bold', fontfamily='serif')
+    plt.suptitle('r'+str(gal), fontsize=tsize, weight='bold', fontfamily='serif',
+            loc='left')
     K_cdm = -1
     for i in range(len(h1files_cdm)):
         # read data
