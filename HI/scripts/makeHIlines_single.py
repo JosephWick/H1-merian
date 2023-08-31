@@ -21,7 +21,7 @@ def getFluxDensity(hi, dv, D):
 def makeHIprofile(gal):
 
     cdmPath = util_os.getfilepath_cdm(gal, 0)
-    hifiles = util_os.getFilePath_HI(gal)
+    hifiles = util_os.getfilepath_HI_cdm(gal)
 
     # flux density params
     D = 70 #Mpc (distance observed at; note this is kinda arbitrary atm)
