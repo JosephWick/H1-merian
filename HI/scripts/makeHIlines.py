@@ -194,10 +194,10 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     plt.tight_layout()
     if withSIDM:
         axs[0].legend(['CDM','SIDM'], fontsize=18)
-        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(gal)+'_2.png',
+        plt.savefig('/home/jw1624/H1-merian/HI/figures/HIProfiles/HI_'+str(gal)+'_2.png',
             dpi=600)
     else:
-        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(gal)+'.png',
+        plt.savefig('/home/jw1624/H1-merian/HI/figures/HIProfiles/HI_'+str(gal)+'.png',
             dpi=600)
 
 # end makeHIprofile
