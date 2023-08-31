@@ -80,7 +80,7 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     K_cdm = -1
     for i in range(len(h1files_cdm)):
         # read data
-        # no scaling so I can follow Alyson's IDL code precisely
+        # no scaling so I can follow Alyson's IDL code
         fcdm = fits.open(h1files_cdm[i], do_not_scale_image_data=True)
         bscale = fcdm[0].header['BSCALE']
         bzero = fcdm[0].header['BZERO']
@@ -94,6 +94,8 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
         data = data * bscale + bzero
         data = np.power(np.full(data.shape,10), data)
         data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
+
+        print(data)
 
         # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
         S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
@@ -200,12 +202,6 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
                 dW_sidm = (wids[4] - wids[3])/wids[3]
             f.write(str(dW_cdm)+','+str(dW_sidm)+',')
 
-            # kurtosis
-            f.write(str(K_cdm)+','+str(K_sidm)+'\n')
-
-            # mean v_disp
-
-
 
     f.close()
     plt.tight_layout()
@@ -226,7 +222,6 @@ f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'w')
 f.write('galaxy,w50_cdm,w20_cdm,w10_cdm,')
 f.write('w50_sidm,w20_sidm,w10_sidm,')
 f.write('dW_cdm,dW_sidm,')
-f.write('K_cdm,K_sidm\n')
 f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
