@@ -43,8 +43,8 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     dv= 11.2 #km/s (velocity resolution)
 
     # style params
-    tsize = 24
-    asize = 18
+    tsize = 28
+    asize = 24
 
     lw = 5  # profile linewidth
     lwW = 2 # width linewidth
@@ -64,7 +64,7 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     fig,axs = plt.subplots(1,3, figsize=(14,5), facecolor='white')
 
     # plot
-    plt.suptitle('HI Profile for Galaxy '+str(gal), fontsize=tsize)
+    plt.suptitle('r'+str(gal), fontsize=tsize, weight='bold', fontfamily='serif')
     K_cdm = -1
     for i in range(len(h1files_cdm)):
         # read data
@@ -96,9 +96,9 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
 
         axs[i].plot(xaxis, hiprof, linewidth=lw+1, c=cCDM)
 
-        axs[i].set_title(orientations[i]+' Orientation')
-        axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize)
-        axs[i].set_ylabel('Flux Density [Jy]', fontsize=asize)
+        axs[i].set_title(orientations[i]+' Orientation', fontsize=asize, fontfamily='serif')
+        axs[i].set_xlabel(r'Velocity [km/s]', fontsize=asize, fontfamily='serif')
+        axs[i].set_ylabel('Flux Density [Jy]', fontsize=asize, fontfamily='serif')
 
         # do line widths of cmd
         vmax = max(hiprof)
