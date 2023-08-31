@@ -18,7 +18,7 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
 
     fig, axs = plt.subplots(2,4, figsize=(16,8), facecolor='white')
 
-    cdmFile = util_os.getfilepath_cdm(gal)
+    cdmFile = util_os.getfilepath_cdm(gal,0)
     sCDM = pynbody.load(cdmFile)
     sCDM.physical_units()
     hCDM = sCDM.halos()[1]
@@ -98,7 +98,7 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
             axs[i,j].set_ylabel(r'rotation velocity [km/s]', fontsize=14)
 
     if withSIDM:
-        sidmFile = util_os.getfilepath_sidm(gal)
+        sidmFile = util_os.getfilepath_sidm(gal,0)
 
         sSIDM = pynbody.load(sidmFile)
         sSIDM.physical_units()
@@ -129,7 +129,7 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
         axs[0,0].legend(['CDM', 'SIDM'])
 
     if withAdiabat:
-        adiabatFile = util_os.getfilepath_adiabatic(gal)
+        adiabatFile = util_os.getfilepath_adiabatic(gal,0)
 
         sAd = pynbody.load(adiabatFile)
         sAd.physical_units()
