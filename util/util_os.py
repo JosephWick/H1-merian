@@ -18,7 +18,7 @@ class util_os:
     # tsidx refers to the index, not actual timestep number.
     # The most recent time step is indexed as 0
     @staticmethod
-    def getfilepath_cdm(gal, tsidx):
+    def getfilepath_cdm(gal, tsidx=0):
         '''
         getfilepath_cdm()
 
@@ -30,8 +30,8 @@ class util_os:
             Galaxy ID from romulus
 
         tsidx : integer
-            Index of desired timestep. Note that tsidx=0 refers to the latest
-            timestep.
+            Index of desired timestep, defaults to zero. Note that tsidx=0 refers
+            to the latest timestep.
 
         Returns
         -------
@@ -65,7 +65,7 @@ class util_os:
     # tsidx refers to the index, not actual timestep number.
     # The most recent time step is indexed as 0
     @staticmethod
-    def getfilepath_sidm(gal, tsidx):
+    def getfilepath_sidm(gal, tsidx=0):
         '''
         getfilepath_cdm
 
@@ -77,8 +77,8 @@ class util_os:
             Galaxy ID from romulus
 
         tsidx : integer
-            Index of desired timestep. Note that tsidx=0 refers to the latest
-            timestep.
+            Index of desired timestep, defaults to zero. Note that tsidx=0 refers
+            to the latest timestep.
         '''
 
         # check against getGalaxies()
