@@ -39,7 +39,7 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     h1files_sidm = util_os.getFilePath_HI_sidm(gal)
 
     # flux density params
-    D = 70 #Mpc (distance observed at; note this is kinda arbitrary atm)
+    D = 70 #Mpc (distance observed at; note this is kinda arbitrary, it is the dist El Badry 2018 uses)
     dv= 11.2 #km/s (velocity resolution)
 
     # style params
