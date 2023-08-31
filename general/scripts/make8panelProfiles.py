@@ -61,7 +61,7 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     axs[1,1].set_xscale('log')
     axs[1,1].set_yscale('log')
 
-    plt.suptitle('Profiles for Galaxy '+str(hID), fontsize=20)
+    plt.suptitle('Profiles for Galaxy '+str(gal), fontsize=20)
 
     axs[0,0].set_title('Density of Dark Matter', fontsize=16)
     axs[0,1].set_title('Density of Gas', fontsize=16)
@@ -162,15 +162,15 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     fig.tight_layout()
 
     if withSIDM:
-        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(hID)
+        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(gal)
         figname+= '_8panel_2.png'
         plt.savefig(figname)
     if withAdiabat:
-        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(hID)
+        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(gal)
         figname+= '_8panel_A.png'
         plt.savefig(figname)
     else:
-        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(hID)
+        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(gal)
         figname+= '_8panel.png'
         plt.savefig(figname)
     # end
