@@ -97,7 +97,8 @@ def makeHIprofile(gal):
 
     plt.tight_layout()
 
-    plt.savefig('../figures/HIProfiles/appendix/r'+str(gal)+'.png', dpi=600)
+    outpath = '/home/jw1624/H1-merian/HI/figures/HIProfiles_singles/r'+str(gal)+'.png'
+    plt.savefig(outpath, dpi=600)
     plt.close()
 
 # end makeHIprofile
