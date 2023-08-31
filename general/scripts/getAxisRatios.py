@@ -7,7 +7,7 @@ import pynbody
 import glob
 
 import sys
-sys.path.insert(0, '../util/')
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util_os import util_os
 from util_galaxies import util_galaxies
 
