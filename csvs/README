@@ -1,4 +1,0 @@
-Guide to `breathingModes` folders
-
- - breathingModes : raw script output from parsed Romulus sims 
- - breathingModes_clean : removed time steps with problematic t, z, stellar mass, etc 
