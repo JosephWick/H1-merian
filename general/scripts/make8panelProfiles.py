@@ -7,19 +7,7 @@ import pynbody
 
 import numpy as np
 
-import astropy.units as u
-from astropy.io import fits
-from astropy.utils import data
-from astropy.wcs import WCS
-
 import matplotlib.pyplot as plt
-
-from spectral_cube import SpectralCube
-
-from astroquery.esasky import ESASky
-from astroquery.utils import TableList
-from astropy.wcs import WCS
-from reproject import reproject_interp
 
 import glob
 
@@ -53,12 +41,6 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     pCDM  = pynbody.analysis.profile.Profile(hCDM,   rmin=pmin, rmax=pmax, type='lin')
 
     pdCDM2 = pynbody.analysis.profile.v_circ(pdCDM)
-
-    if not withSIDM and not withAdiabat:
-        f = open('/home/jw1624/H1-merian/csvs/vMaxGasCDM.txt', 'a')
-        vMaxGasCDM = np.array(pgCDM['v_circ']).max()
-        f.write(str(hID)+','+str(vMaxGasCDM)+'\n')
-        f.close()
 
     cdmC = 'firebrick'
     sidmC = 'royalblue'
@@ -139,11 +121,6 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
 
         pdSIDM2 = pynbody.analysis.profile.v_circ(pdSIDM)
 
-        f = open('/home/jw1624/H1-merian/csvs/vMaxGasSIDM.txt', 'a')
-        vMaxGasSIDM = np.array(pgSIDM['v_circ']).max()
-        f.write(str(hID)+','+str(vMaxGasSIDM)+'\n')
-        f.close()
-
         axs[0,2].plot(pdSIDM['rbins'], pdSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[0,3].plot(pgSIDM['rbins'], pgSIDM['v_circ'], c=sidmC, linewidth=lw)
         axs[1,2].plot(psSIDM['rbins'], psSIDM['v_circ'], c=sidmC, linewidth=lw)
@@ -185,15 +162,15 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     fig.tight_layout()
 
     if withSIDM:
-        figname = '/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)
+        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(hID)
         figname+= '_8panel_2.png'
         plt.savefig(figname)
     if withAdiabat:
-        figname = '/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)
+        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(hID)
         figname+= '_8panel_A.png'
         plt.savefig(figname)
     else:
-        figname = '/home/jw1624/H1-merian/figures/DenRotProfiles/r'+str(hID)
+        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(hID)
         figname+= '_8panel.png'
         plt.savefig(figname)
     # end
