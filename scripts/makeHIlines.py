@@ -65,7 +65,7 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
 
     # plot
     plt.suptitle('r'+str(gal), fontsize=tsize, weight='bold', fontfamily='serif',
-            loc='left')
+            x=0.1)
     K_cdm = -1
     for i in range(len(h1files_cdm)):
         # read data
