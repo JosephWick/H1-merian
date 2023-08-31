@@ -187,7 +187,7 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
                 dW_cdm = (wids[1] - wids[0])/wids[0]
             if wids[3] != -1 and wids[4] != -1:
                 dW_sidm = (wids[4] - wids[3])/wids[3]
-            f.write(str(dW_cdm)+','+str(dW_sidm)+',')
+            f.write(str(dW_cdm)+','+str(dW_sidm)+'\n')
 
 
     f.close()
@@ -210,7 +210,7 @@ print('Making HI Profiles')
 f=open('/home/jw1624/H1-merian/HI/csvs/HI_widths.txt', 'w')
 f.write('galaxy,w50_cdm,w20_cdm,w10_cdm,')
 f.write('w50_sidm,w20_sidm,w10_sidm,')
-f.write('dW_cdm,dW_sidm,')
+f.write('dW_cdm,dW_sidm\n')
 f.close()
 for g in cdmHalos:
     print(' halo '+str(g)+'...', end='')
