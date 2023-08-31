@@ -36,7 +36,9 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
 
     cdmPath = util_os.getfilepath_cdm(gal, 0)
-    sidmPath = util_os.getfilepath_sidm(gal, 0)
+    sidmPath=''
+    if withSIDM:
+        sidmPath = util_os.getfilepath_sidm(gal, 0)
 
     h1files_cdm = glob.glob(cdmPath+'/*alfalfa*.fits')
     h1files_cdm.sort()
