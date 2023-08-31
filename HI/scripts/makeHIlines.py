@@ -35,8 +35,8 @@ def getKurtosis(v,s):
 def makeHIprofile(gal, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/HI/csvs/HI_widths.txt', 'a')
 
-    h1files_cdm = util_os.getFilePath_HI_cdm(gal)
-    h1files_sidm = util_os.getFilePath_HI_sidm(gal)
+    h1files_cdm = util_os.getfilepath_HI_cdm(gal)
+    h1files_sidm = util_os.getfilepath_HI_sidm(gal)
 
     # flux density params
     D = 70 #Mpc (distance observed at; note this is kinda arbitrary, it is the dist El Badry 2018 uses)
