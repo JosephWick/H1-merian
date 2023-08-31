@@ -96,6 +96,7 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
         data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
 
         print(data)
+        return
 
         # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
         S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
