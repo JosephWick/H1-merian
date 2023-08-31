@@ -136,7 +136,7 @@ class util_os:
     # getFilePath_HI_cdm
     # returns filepath for HI data cubes in [x,y,z] order
     @staticmethod
-    def getFilePath_HI_cdm(gal):
+    def getfilepath_HI_cdm(gal):
         '''
         getFilePath_HI_cdm()
 
