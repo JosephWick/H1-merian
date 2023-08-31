@@ -35,20 +35,8 @@ def getKurtosis(v,s):
 def makeHIprofile(gal, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
 
-    cdmPath = util_os.getfilepath_cdm(gal, 0)
-    sidmPath=''
-    if withSIDM:
-        sidmPath = util_os.getfilepath_sidm(gal, 0)
-
-    h1files_cdm = glob.glob(cdmPath+'/*alfalfa*.fits')
-    h1files_cdm.sort()
-    # one galaxy we had edge on
-    if len(h1files_cdm) == 4: h1files_cdm = h1files_cdm[1:]
-
-    h1files_sidm = glob.glob(sidmPath+'/*alfalfa*.fits')
-    h1files_sidm.sort()
-    # i think not really necessary for sidm
-    if len(h1files_sidm) == 4: h1files = h1files_sidm[1:]
+    h1files_cdm = util_os.getFilePath_HI_cdm(gal)
+    h1files_sidm = util_os.getFilePath_HI_sidm(gal)
 
     # flux density params
     D = 70 #Mpc (distance observed at; note this is kinda arbitrary atm)
@@ -94,9 +82,6 @@ def makeHIprofile(gal, withSIDM=False, doExport=True):
         data = data * bscale + bzero
         data = np.power(np.full(data.shape,10), data)
         data[np.where(abs(data - 10**(blank*bscale + bzero))<10e-5)]=0.0
-
-        print(data)
-        return
 
         # convert from solar mass to Jy (el bhadri et al 2018 for mock obs at 70 MPC)
         S = (1/(2.36e5))*(data)*(1/dv)*(D**-2)
