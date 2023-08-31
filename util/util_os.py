@@ -128,17 +128,17 @@ class util_os:
         adiaSimFile = basedir+'/r'+str(gal)+'.romulus25.3072g1HsbBH/adiabatic'
         adiaSimFile+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.00*'
 
-        # some of the adiabatic ones have different timestep numbers 
+        # some of the adiabatic ones have different timestep numbers
         adiaSimFile = glob.glob(adiaSimFile)[0]
 
         return adiaSimFile
 
-    # getFilePath_HI
+    # getFilePath_HI_cdm
     # returns filepath for HI data cubes in [x,y,z] order
     @staticmethod
-    def getFilePath_HI(gal):
+    def getFilePath_HI_cdm(gal):
         '''
-        getFilePath_HI()
+        getFilePath_HI_cdm()
 
         Parameters
         ----------
@@ -153,12 +153,42 @@ class util_os:
         '''
 
         # check against getGalaxies()
-        if gal not in util_os.getGalaxies()[2]:
+        if gal not in util_os.getGalaxies()[0]:
             raise Exception('Specified galaxy is not in list of available galaxies.')
 
         basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
         basedir+= '/r'+str(gal)+'.romulus25.3072g1HsbBH/'
         basedir+= '/r'+str(gal)+'.romulus25.3072g1HsbBH.004096'
+        basedir+= '/r'+str(gal)+'.alfalfa_hi.'
+
+        return [basedir+'x.fits', basedir+'y.fits', basedir+'z.fits']
+
+    # getFilePath_HI_sidm
+    # returns filepath for HI data cubes in [x,y,z] order
+    @staticmethod
+    def getFilePath_HI_sidm(gal):
+        '''
+        getFilePath_HI_sidm()
+
+        Parameters
+        ----------
+        gal : integer
+            galaxy to retrieve HI mock observations for
+
+        Returns
+        -------
+        [x,y,z] : array_like
+            filepaths to the x, y, and z orientation HI cubes
+
+        '''
+
+        # check against getGalaxies()
+        if gal not in util_os.getGalaxies()[0]:
+            raise Exception('Specified galaxy is not in list of available galaxies.')
+
+        basedir = '/data/REPOSITORY/e11Gals/romulus_dwarf_zooms'
+        basedir+= '/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH/'
+        basedir+= '/r'+str(gal)+'.romulus25cvdXsec.3072g1HsbBH.004096'
         basedir+= '/r'+str(gal)+'.alfalfa_hi.'
 
         return [basedir+'x.fits', basedir+'y.fits', basedir+'z.fits']
