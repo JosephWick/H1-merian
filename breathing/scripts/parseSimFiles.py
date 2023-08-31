@@ -156,7 +156,7 @@ def makeGalQtyCSV(gal, doQA=False):
         mtot = sCDM.d['mass'][DMmask].sum()
         #cen = np.sum(sCDM.d['mass'][DMmask] * sCDM.d['pos'][DMmask].transpose(),
         #             axis=1) / mtot
-        cen = pynbody.anlysis.halo.center(hCDM, mode='pot')
+        cen = pynbody.analysis.halo.center(hCDM, mode='pot')
 
         # make cut based on radius of masked DM particles
         rfac = 3
