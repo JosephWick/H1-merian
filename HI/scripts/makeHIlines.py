@@ -33,7 +33,7 @@ def getKurtosis(v,s):
     return mu_n(v,s,4)/(mu_n(v,s,2)**2) - 3
 
 def makeHIprofile(gal, withSIDM=False, doExport=True):
-    f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
+    f=open('/home/jw1624/H1-merian/HI/csvs/HI_widths.txt', 'a')
 
     h1files_cdm = util_os.getFilePath_HI_cdm(gal)
     h1files_sidm = util_os.getFilePath_HI_sidm(gal)
@@ -207,7 +207,7 @@ cdmHalos, sidmHalos, adiabaticHalos = util_os.getGalaxies()
 
 print('Making HI Profiles')
 # make figs
-f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'w')
+f=open('/home/jw1624/H1-merian/HI/csvs/HI_widths.txt', 'w')
 f.write('galaxy,w50_cdm,w20_cdm,w10_cdm,')
 f.write('w50_sidm,w20_sidm,w10_sidm,')
 f.write('dW_cdm,dW_sidm,')
