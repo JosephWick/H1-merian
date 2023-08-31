@@ -14,7 +14,7 @@ import matplotlib
 from matplotlib import rcParams
 
 import sys
-sys.path.insert(0, '../util/')
+sys.path.insert(0, '/home/jw1624/H1-merian/util/')
 from util_os import util_os
 
 ##
@@ -128,6 +128,6 @@ for gal in galIDs:
              x = min(rbins), y = min(dmdensity),
              fontfamily='monospace', fontsize=30, weight='bold')
 
-    plt.savefig('/home/jw1624/H1-merian/figures/slopeFit/r'+str(gal)+'.png')
+    plt.savefig('/home/jw1624/H1-merian/general/figures/slopeFit/r'+str(gal)+'.png')
 
     print(str(gal)+': done')
