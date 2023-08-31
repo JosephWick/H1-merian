@@ -150,7 +150,7 @@ def makeGalQtyCSV(gal, doQA=False):
         sCDM = pynbody.load(simFile)
         sCDM.physical_units()
 
-        hCDM = sCDM.d[DMmask]
+        hCDM = sCDM.halos()[1]
 
         # center by mass of DM halo
         mtot = sCDM.d['mass'][DMmask].sum()
@@ -163,15 +163,12 @@ def makeGalQtyCSV(gal, doQA=False):
         hmrDM = util_galaxies.compute_massRadius(sCDM.d['pos'][DMmask],
             sCDM.d['mass'][DMmask], 1000, 0.1, frac=0.50, maxiter=1000)
 
-        starmask = np.linalg.norm(sCDM.s['pos'] - cen, axis=1)<=rfac*hmrDM
-        gasmask = np.linalg.norm(sCDM.g['pos'] - cen, axis=1)<=rfac*hmrDM
-
         # Mass
-        mStar = np.sum(sCDM.s['mass'][starmask])
+        mStar = np.sum(hCDM.s['mass'])
 
         # SFR
-        SFR_10  = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<10])
-        SFR_100 = sum(sCDM.s['mass'][starmask][sCDM.s['age'][starmask].in_units('Myr')<100])
+        SFR_10  = sum(hCDM.s['mass'][hCDM.s['age'].in_units('Myr')<10])
+        SFR_100 = sum(hCDM.s['mass'][hCDM.s['age'].in_units('Myr')<100])
 
         # get age of universe
         uage = pynbody.analysis.cosmology.age(sCDM)
@@ -181,26 +178,26 @@ def makeGalQtyCSV(gal, doQA=False):
         # Sizes
         rVir = -1
         # NOTE: these are questionable until we have halo catalog
-        rHL = pynbody.analysis.luminosity.half_light_r(sCDM).in_units('kpc')
-        rHL_c=pynbody.analysis.luminosity.half_light_r(sCDM,
+        rHL = pynbody.analysis.luminosity.half_light_r(hCDM).in_units('kpc')
+        rHL_c=pynbody.analysis.luminosity.half_light_r(hCDM,
                 cylindrical=True).in_units('kpc')
 
         # this is accurate to our star cut
-        starcen = np.sum(sCDM.s['mass'][starmask] * sCDM.s['pos'][starmask].transpose(),
+        starcen = np.sum(hCDM.s['mass'] * hCDM.s['pos'].transpose(),
                          axis=1) / mStar
-        rHM = util_galaxies.compute_massRadius(sCDM.s['pos'][starmask]-starcen,
-            sCDM.s['mass'][starmask], 20000, 0.01)
+        rHM = util_galaxies.compute_massRadius(hCDM.s['pos']-starcen,
+            hCDM.s['mass'], 20000, 0.01)
 
         # sSFR
         sSFR_10 = np.log10(SFR_10/(mStar*1e7))
         sSFR_100 = np.log10(SFR_100/(mStar*1e8))
 
         # velocity dispersion
-        pos_youngstars = sCDM.s['pos'][starmask]
-        vel_allstars = sCDM.s['vel'][starmask]
-        mass_allstars = sCDM.s['mass'][starmask]
+        pos_youngstars = hCDM.s['pos']
+        vel_allstars = hCDM.s['vel']
+        mass_allstars = hCDM.s['mass']
 
-        agemask = sCDM.s['age'][starmask].in_units('Myr')<10
+        agemask = hCDM.s['age'].in_units('Myr')<10
         pos_youngstars = pos_youngstars[agemask]
         vel_youngstars = vel_allstars[agemask]
         mass_youngstars = mass_allstars[agemask]
@@ -216,10 +213,10 @@ def makeGalQtyCSV(gal, doQA=False):
                             pos_youngstars-starcen, vel_youngstars, rHM, mass_youngstars)
 
         # cold gas vdisp
-        pos_allgas = sCDM.g['pos'][gasmask]
-        vel_allgas = sCDM.g['vel'][gasmask]
-        mass_allgas = sCDM.g['mass'][gasmask]
-        temp_allgas = sCDM.g['temp'][gasmask]
+        pos_allgas = hCDM.g['pos']
+        vel_allgas = hCDM.g['vel']
+        mass_allgas = hCDM.g['mass']
+        temp_allgas = hCDM.g['temp']
 
         cgmask = temp_allgas<1000
         pos_coldgas = pos_allgas[cgmask]
@@ -257,7 +254,7 @@ def makeGalQtyCSV(gal, doQA=False):
         indexes = np.unique(indexes)
 
         gaspos_sel = pos_allgas[indexes]
-        gasmass_sel = (mass_allgas*sCDM.g['hydrogen'][gasmask])[indexes]
+        gasmass_sel = (mass_allgas*hCDM.g['hydrogen'])[indexes]
         gasvel_sel = vel_allgas[indexes]
         gastemp_sel = temp_allgas[indexes]
 
