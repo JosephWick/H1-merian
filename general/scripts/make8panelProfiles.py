@@ -180,14 +180,6 @@ cdmHalos, sidmHalos, adiabaticHalos = util_os.getGalaxies()
 
 print('Making 8 Panel Profiles')
 
-# set up csv
-f = open('/home/jw1624/H1-merian/csvs/vMaxGasCDM.txt', 'w')
-f.write('galaxy,VmaxGas\n')
-f.close()
-f = open('/home/jw1624/H1-merian/csvs/vMaxGasSIDM.txt', 'w')
-f.write('galaxy,VmaxGas\n')
-f.close()
-
 # make figs
 for g in cdmHalos:
     if g == 515: continue # permission denied error
