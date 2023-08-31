@@ -32,10 +32,11 @@ def mu_n(v,s, n):
 def getKurtosis(v,s):
     return mu_n(v,s,4)/(mu_n(v,s,2)**2) - 3
 
-def makeHIprofile(hID, withSIDM=False, doExport=True):
+def makeHIprofile(gal, withSIDM=False, doExport=True):
     f=open('/home/jw1624/H1-merian/csvs/HI_widths.txt', 'a')
 
-    cdmPath, sidmPath, _ = util.getfilepath(hID)
+    cdmPath = util_os.getfilepath_cdm(gal)
+    sidmPath = util_os.getfilepath_sidm(gal)
 
     h1files_cdm = glob.glob(cdmPath+'/*alfalfa*.fits')
     h1files_cdm.sort()
@@ -73,7 +74,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     fig,axs = plt.subplots(1,3, figsize=(14,5), facecolor='white')
 
     # plot
-    plt.suptitle('HI Profile for Galaxy '+str(hID), fontsize=tsize)
+    plt.suptitle('HI Profile for Galaxy '+str(gal), fontsize=tsize)
     K_cdm = -1
     for i in range(len(h1files_cdm)):
         # read data
@@ -182,7 +183,7 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
                     zorder=2, marker=markers[j], c=cSIDMw)
 
         if doExport:
-            f.write(str(hID)+'_'+orientations[i]+',')
+            f.write(str(gal)+'_'+orientations[i]+',')
             for w in range(len(wids)-1):
                 f.write(str(wids[w])+',')
             f.write(str(wids[-1])+',')
@@ -208,14 +209,14 @@ def makeHIprofile(hID, withSIDM=False, doExport=True):
     plt.tight_layout()
     if withSIDM:
         axs[0].legend(['CDM','SIDM'])
-        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'_2.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(gal)+'_2.png')
     else:
-        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(hID)+'.png')
+        plt.savefig('/home/jw1624/H1-merian/figures/HIProfiles/HI_'+str(gal)+'.png')
 
 # end makeHIprofile
 
 # get haloIDs
-cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
+cdmHalos, sidmHalos, adiabaticHalos = util_os.getGalaxies()
 
 print('Making HI Profiles')
 # make figs
