@@ -98,7 +98,7 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
             axs[i,j].set_ylabel(r'rotation velocity [km/s]', fontsize=14)
 
     if withSIDM:
-        sidmFile = utili_os.getfilepath_sidm(gal)
+        sidmFile = util_os.getfilepath_sidm(gal)
 
         sSIDM = pynbody.load(sidmFile)
         sSIDM.physical_units()
@@ -176,7 +176,7 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     # end
 
 # get haloIDs
-cdmHalos, sidmHalos, adiabaticHalos = util.getGalaxies()
+cdmHalos, sidmHalos, adiabaticHalos = util_os.getGalaxies()
 
 print('Making 8 Panel Profiles')
 
