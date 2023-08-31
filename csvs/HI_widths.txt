@@ -1,1 +1,1 @@
-galaxy,w50_cdm,w20_cdm,w10_cdm,w50_sidm,w20_sidm,w10_sidm,dW_cdm,dW_sidm,K_cdm,K_sidm
+galaxy,w50_cdm,w20_cdm,w10_cdm,w50_sidm,w20_sidm,w10_sidm,dW_cdm,dW_sidm,
