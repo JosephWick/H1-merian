@@ -85,7 +85,7 @@ def makeGalQtyCSV(gal, doQA=False):
     numTS = util_os.getNumTimesteps(gal)
 
     # setup file for exporting values
-    outfile = '/home/jw1624/H1-merian/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
+    outfile = '/home/jw1624/H1-merian/breathing/csvs/breathingModes/r'+str(gal)+'_qtys.txt'
     fout = open(outfile,'w')
     fout.write('galaxyID,timestep,t,z,')
     fout.write('M_star,R_halflight_s,R_halflight_c,R_halfmass,')
