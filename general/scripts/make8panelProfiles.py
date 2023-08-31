@@ -162,15 +162,15 @@ def eightPanelProfiles(gal, withSIDM=False, withAdiabat=False):
     fig.tight_layout()
 
     if withSIDM:
-        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(gal)
+        figname = '/home/jw1624/H1-merian/general/figures/denRotProfiles/r'+str(gal)
         figname+= '_8panel_2.png'
         plt.savefig(figname)
     if withAdiabat:
-        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(gal)
+        figname = '/home/jw1624/H1-merian/general/figures/denRotProfiles/r'+str(gal)
         figname+= '_8panel_A.png'
         plt.savefig(figname)
     else:
-        figname = '/home/jw1624/H1-merian/general/figures/DenRotProfiles/r'+str(gal)
+        figname = '/home/jw1624/H1-merian/general/figures/denRotProfiles/r'+str(gal)
         figname+= '_8panel.png'
         plt.savefig(figname)
     # end
