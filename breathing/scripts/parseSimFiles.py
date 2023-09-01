@@ -185,7 +185,7 @@ def makeGalQtyCSV(gal, doQA=False):
         # this is accurate to our star cut
         starcen = np.sum(hCDM.s['mass'] * hCDM.s['pos'].transpose(),
                          axis=1) / mStar
-        rHM = util_galaxies.compute_massRadius(hCDM.s['pos']-starcen,
+        rHM = util_galaxies.compute_massRadius(hCDM.s['pos']-cen,
             hCDM.s['mass'], 20000, 0.01)
 
         # sSFR
@@ -279,8 +279,8 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # rotation curve
         # now we must center
-        pynbody.analysis.angmom.faceon(hCDM)
         sCDM['pos'] -= cen
+        pynbody.analysis.angmom.faceon(hCDM)
         pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax,
             type='lin', nbins=200)
         rbins = pdCDM['rbins']
