@@ -280,7 +280,7 @@ def makeGalQtyCSV(gal, doQA=False):
         # rotation curve
         # now we must center
         pynbody.analysis.angmom.faceon(hCDM)
-        hCDM.d['pos']-=cen
+        sCDM['pos'] -= cen
         pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax,
             type='lin', nbins=200)
         rbins = pdCDM['rbins']
