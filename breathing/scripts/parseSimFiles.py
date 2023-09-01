@@ -157,7 +157,6 @@ def makeGalQtyCSV(gal, doQA=False):
         #cen = np.sum(sCDM.d['mass'][DMmask] * sCDM.d['pos'][DMmask].transpose(),
         #             axis=1) / mtot
         cen = pynbody.analysis.halo.center(hCDM, mode='pot', retcen=True)
-        print(cen)
 
         # make cut based on radius of masked DM particles
         rfac = 3
@@ -280,8 +279,8 @@ def makeGalQtyCSV(gal, doQA=False):
 
         # rotation curve
         # now we must center
-        hCDM.d['pos']-=cen
         pynbody.analysis.angmom.faceon(hCDM)
+        hCDM.d['pos']-=cen
         pdCDM = pynbody.analysis.profile.Profile(hCDM.d, rmin=pmin, rmax=pmax,
             type='lin', nbins=200)
         rbins = pdCDM['rbins']
