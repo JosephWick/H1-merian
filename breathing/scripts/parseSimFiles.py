@@ -244,7 +244,7 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_hotgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                                 vel_hotgas, mass_hotgas)
         vdisp_hotgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
-                                pos_hotgas-starcen, vel_hotgas, rHM, mass_HOTgas)
+                                pos_hotgas-starcen, vel_hotgas, rHM, mass_hotgas)
 
         # warm gas vdisp
         wgmask = abs(np.log10(temp_allgas)- 4.05) < 1/6
