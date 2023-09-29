@@ -255,7 +255,7 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_warmgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                                 vel_warmgas, mass_warmgas)
         vdisp_warmgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
-                                pos_warmgas-starcen, vel_warmgas, rHM, mass_warmgas
+                                pos_warmgas-starcen, vel_warmgas, rHM, mass_warmgas)
 
         # vdisp of gas near young stars (this is slow)
         indexes = []
