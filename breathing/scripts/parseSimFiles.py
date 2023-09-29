@@ -94,6 +94,8 @@ def makeGalQtyCSV(gal, doQA=False):
     fout.write('sigma_allgas_global,sigma_allgas_los,')
     fout.write('sigma_coldgas_global,sigma_coldgas_los,')
     fout.write('sigma_hotgas_global,sigma_hotgas_los,')
+    fout.write('sigma_warmgas_global,sigma_warmgas_los,')
+    fout.write('sigma_warmgasNearYS_global,sigma_warmgasNearYS_los,')
     fout.write('sigma_gasNearYS_global,sigma_gasNearYS_los,')
     fout.write('alpha,')
     fout.write('SFR_10,SFR_100,sSFR_10,sSFR_100\n')
@@ -242,7 +244,18 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_hotgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
                                 vel_hotgas, mass_hotgas)
         vdisp_hotgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
-                                pos_coldgas-starcen, vel_coldgas, rHM, mass_coldgas)
+                                pos_hotgas-starcen, vel_hotgas, rHM, mass_HOTgas)
+
+        # warm gas vdisp
+        wgmask = abs(np.log10(temp_allgas)- 4.05) < 1/6
+        pos_warmgas = pos_allgas[wgmask]
+        vel_warmgas = vel_allgas[wgmask]
+        mass_warmgas = mass_allgas[wgmask]
+
+        vdisp_warmgas_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
+                                vel_warmgas, mass_warmgas)
+        vdisp_warmgas_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
+                                pos_warmgas-starcen, vel_warmgas, rHM, mass_warmgas
 
         # vdisp of gas near young stars (this is slow)
         indexes = []
@@ -260,6 +273,8 @@ def makeGalQtyCSV(gal, doQA=False):
 
         vdisp_gasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                 gaspos_sel-starcen, gasvel_sel, rHM, gasmass_sel)
+        vdisp_gasNearYS_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
+                gasvel_sel, gassmass_sel)
 
         hgmask = gastemp_sel>10000
         gaspos_selhot = gaspos_sel[hgmask]
@@ -270,6 +285,16 @@ def makeGalQtyCSV(gal, doQA=False):
                 mass_allgas, gasvel_selhot, gasmass_selhot)
         vdisp_hotgasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                 gaspos_selhot-starcen, gasvel_selhot, rHM, gasmass_selhot)
+
+        wgmask = abs(np.log10(gastemp_sel)- 4.05) < 1/6
+        gaspos_selwarm = gaspos_sel[wgmask]
+        gasmass_selwarm = gasmass_sel[wgmask]
+        gasvel_selwarm = gasvel_sel[wgmask]
+
+        vdisp_warmgasNearYS_global = util_galaxies.compute_vdisp_global(vel_allgas,
+                mass_allgas, gasvel_selwarm, gasmass_selwarm)
+        vdisp_warmgasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
+                gaspos_selwarm-starcen, gasvel_selwarm, rHM, gasmass_selwarm)
 
         # alpha from power fit
         # profile range
@@ -309,7 +334,9 @@ def makeGalQtyCSV(gal, doQA=False):
         fout.write(str(vdisp_allgas_global)+','+str(vdisp_allstars_los)+',')
         fout.write(str(vdisp_coldgas_global)+','+str(vdisp_coldgas_los)+',')
         fout.write(str(vdisp_hotgas_global)+','+str(vdisp_hotgas_los)+',')
-        fout.write(str(vdisp_hotgasNearYS_global)+','+str(vdisp_gasNearYS_los)+',')
+        fout.write(str(vdisp_warmgas_global)+','+str(vdisp_warmgas_los)+',')
+        fout.write(str(vdisp_warmgasNearYS_global)+','+str(vdisp_warmgasNearYS_los)+',')
+        fout.write(str(vdisp_gasNearYS_global)+','+str(vdisp_gasNearYS_los)+',')
         fout.write(str(alpha)+',')
         fout.write(str(SFR_10)+','+str(SFR_100)+','+str(sSFR_10)+
                     ','+str(sSFR_100)+'\n')
