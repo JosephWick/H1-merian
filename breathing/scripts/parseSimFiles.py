@@ -274,7 +274,7 @@ def makeGalQtyCSV(gal, doQA=False):
         vdisp_gasNearYS_los = util_galaxies.compute_vdisp_los(vel_allgas, mass_allgas,
                 gaspos_sel-starcen, gasvel_sel, rHM, gasmass_sel)
         vdisp_gasNearYS_global = util_galaxies.compute_vdisp_global(vel_allgas, mass_allgas,
-                gasvel_sel, gassmass_sel)
+                gasvel_sel, gasmass_sel)
 
         hgmask = gastemp_sel>10000
         gaspos_selhot = gaspos_sel[hgmask]
